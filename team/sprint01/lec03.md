@@ -10,3 +10,4 @@ Team: Anika Arora ✓, Rukmini Bapat ✓, Yvonne Liu ✓ , Calvin Dougher ✓
 
 # Meeting Notes 
 * We edited the README.md file and started on the AGREEMENTS.md file 
+[X]
