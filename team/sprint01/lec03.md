@@ -6,7 +6,7 @@ Meeting Time: lec03
 
 Type of Meeting: stand-up 
 
-Team: Anika Arora[x], Rukmini Bapat[x], Yvonne Liu[x], Calvin Dougher[x] 
+Team: Anika Arora ✓, Rukmini Bapat ✓, Yvonne Liu ✓ , Calvin Dougher ✓ 
 
 # Meeting Notes 
 * We edited the README.md file and started on the AGREEMENTS.md file 
