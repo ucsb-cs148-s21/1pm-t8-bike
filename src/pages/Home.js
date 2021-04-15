@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <Layout user={user}>
       <Container>
-        <h1>Hello! This is the Home page!</h1>
+        <h1>Hello World!</h1>
         <div style={textStyle}>
           This project was built in React, specically in Create React App
           (the officially supported version of React developed by Facebook).
