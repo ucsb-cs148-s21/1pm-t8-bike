@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <Layout user={user}>
       <Container>
-        <h1>Hello World!</h1>
+        <h1>Hello, World!</h1>
         <br />
         <br />
       </Container>
