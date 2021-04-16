@@ -12,7 +12,8 @@ A map of UCSB's bike path that has features such as lost and found, traffic, and
 * Walkers
 
 # User Permissions
-* @ucsb.edu users only
+* @ucsb.edu users only can view/create/respond to posts and access map functionality
+* non @ucsb.edu can view posts and access map functionality
 
 # Tech Stack: 
 * React frontend 
