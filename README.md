@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Project: Gaucho Bike Map 
 A map of UCSB's bike path that has features such as lost and found, traffic, and crash reports. Users can find the fastest route to their destination and an optimal time for departure. Users can also view overall traffic in their area. Bikers are able to also see nearby available bike racks and report crashes. Walkers are able to view/report/claim lost and found items that are found on the bike paths.
 
