@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+exiimport Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
 
