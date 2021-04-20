@@ -32,7 +32,5 @@ Ideas and Actions:
 
 ## Retro Assessment
 
-* A brief description of what retro outline or process you used.
-* A brief assessment of how it went.
-* What advice would you give to the next person leading a retro
-  based on what you learned today?
+For this first retrospective, I used the Quick Retrospective template from Atlassian. I asked everyone in the team what they thought had worked well and what needs to be improved from our last sprint, and everyone gave great action ideas for us to take to increase our productivity as a group. The retrospective went really well because all group members contributed their thoughts, and I was able to facilitate the retro well. To the next person leading a retro, I would advise them to always make sure to actively ask questions and engage the group so every member can contribute their ideas as much as possible.  
+
