@@ -2,20 +2,18 @@
 <!-- Create your homepage structure here! -->
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Bike Path Map</title>
-    <link href="index.css" rel="stylesheet" type="text/css" />
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./index.js"></script>
   </head>
   <body>
-    <div class="navbar">
-      <a href="#" class="disabled">Home</a>
-      <a href="button1.html">Button1</a>
-      <a href="button2.html">Button2</a>
-      <a href="button3.html">Button3</a>
-      <a href="button4.html">Button4</a>
-    </div>
-    
-    <script src="map.js"></script>
+    <div id="map"></div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq3fF5w4Iyumsgj95iSiLtR1sxQHQII4Y&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
   </body>
 </html>
