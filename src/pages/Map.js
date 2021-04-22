@@ -5,7 +5,7 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 const textStyle = {maxWidth: "100%", width: "700px"}
  
-export class Map extends Component {
+export class MapContainer extends Component {
   render() {
     return (
       <Map google={this.props.google} zoom={14}>
@@ -25,4 +25,4 @@ export class Map extends Component {
  
 export default GoogleApiWrapper({
   apiKey: (AIzaSyDq3fF5w4Iyumsgj95iSiLtR1sxQHQII4Y)
-})(Map)
+})(MapContainer)
