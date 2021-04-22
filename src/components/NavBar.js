@@ -20,11 +20,11 @@ export default function NavBar(props) {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="/">ReactGoogleAuthStarter</Navbar.Brand>
+        <Navbar.Brand href="/">Gaucho Bike Map</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/">Map</Nav.Link>
             {user && <Nav.Link href="/profile">Profile</Nav.Link>}
           </Nav>
           <Nav>

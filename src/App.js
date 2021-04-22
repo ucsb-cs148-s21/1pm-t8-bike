@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import CheckingSignedIn from "./pages/CheckingSignedIn";
-import Home from "./pages/Home";
+import Map from "./pages/Map";
 import Profile from "./pages/Profile";
 import Private from "./pages/Private";
 import PageNotFound from "./pages/PageNotFound";
@@ -50,7 +50,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" render={Home} />
+        <Route exact path="/" render={Map} />
         <PrivateRoute exact path="/profile" Component={Profile} />
         <Route path="/" render={PageNotFound} />
       </Switch>
