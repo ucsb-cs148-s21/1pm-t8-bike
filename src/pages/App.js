@@ -1,12 +1,18 @@
-import Layout from "../components/Layout";
-import Container from "react-bootstrap/Container";
-import getUser from "../utils/get-user";
-
-let map;
-
-function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8,
-  });
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import Map from './components/Map.js'
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <Map/>
+      </div>
+    );
+  }
 }
+export default App;
