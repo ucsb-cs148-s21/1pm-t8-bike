@@ -54,9 +54,9 @@ export default function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" render={Map} />
-        <Route path="/lostandfound" render={LostandFound} />
-        <Route path="/forum" render={Forum} />
-        <PrivateRoute exact path="/" Component={Profile} />
+        <Route exact path="/lostandfound" render={LostandFound} />
+        <Route exact path="/forum" render={Forum} />
+        <PrivateRoute exact path="/profile" Component={Profile} />
         <Route path="/" render={PageNotFound} />
         
       </Switch>
