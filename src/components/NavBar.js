@@ -23,10 +23,14 @@ export default function NavBar(props) {
         <Navbar.Brand href="/">Gaucho Bike Map</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
+
           <Nav className="mr-auto">
             <Nav.Link href="/">Map</Nav.Link>
+            <Nav.Link href="/lostandfound">Lost and Found</Nav.Link>
+            <Nav.Link href="/forum">Forum</Nav.Link>
             {user && <Nav.Link href="/profile">Profile</Nav.Link>}
           </Nav>
+
           <Nav>
             {!user ? (
               <div id="login-button" />
@@ -51,6 +55,7 @@ export default function NavBar(props) {
             )}
           </Nav>
         </Navbar.Collapse>
+
       </Container>
     </Navbar>
   );
