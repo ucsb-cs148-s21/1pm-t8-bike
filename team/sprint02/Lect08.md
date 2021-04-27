@@ -13,5 +13,5 @@ Team: Rukmini Bapat ✓, Anika Arora ✓, Calvin Dougher ✓, Yvonne Liu ✓
 * Anika and Rukmini (working together on navigation): looked into repositories for navigation, 
   planning to work on integrating Google Maps navigation starter code this week
 * Yvonne: Working on how to add comments/posts to the forum page
-
+ 
 
