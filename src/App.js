@@ -5,6 +5,7 @@ import CheckingSignedIn from "./pages/CheckingSignedIn";
 import Map from "./pages/Map";
 import LostandFound from "./pages/LostandFound";
 import Forum from "./pages/Forum";
+import ForumPost from "./pages/Forum_Post";
 import Profile from "./pages/Profile";
 import Private from "./pages/Private";
 import PageNotFound from "./pages/PageNotFound";
@@ -53,11 +54,13 @@ export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" render={Map} />
-        <Route exact path="/lostandfound" render={LostandFound} />
-        <Route exact path="/forum" render={Forum} />
+        <Route exact path="/" component={Map} />
+        <Route exact path="/lostandfound" component={LostandFound} />
+        <Route exact path="/forum" component={Forum} />
+        <Route exact path="/forum/item1" component={ForumPost} />
         <PrivateRoute exact path="/profile" Component={Profile} />
-        <Route path="/" render={PageNotFound} />
+        <Route exact path="/post/:id" component={ForumPost} />
+        <Route path="/" component={PageNotFound} />
         
       </Switch>
     </BrowserRouter>
