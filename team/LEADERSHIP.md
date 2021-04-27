@@ -11,8 +11,8 @@
 | Mon 04/19 | Calvin Dougher    | Calvin will lead planning meeting for sprint02                     | 
 | Tues 04/20| Rukmini Bapat     | Rukmini will lead first Retro on Tuesday                           | 
 | Th 04/22  | Anika Arora       | Led stand-up meeting and discussion of next steps toward MVP       | 
-| Fri 04/23 | Yvonne Liu        |                                                                    | 
-| Mon 04/26 | Calvin Dougher    |                                                                    | 
+| Fri 04/23 | Yvonne Liu        | ???                                                                | 
+| Mon 04/26 | Yvonne Liu        | Led stand-up meeting and discussion of next steps toward MVP       | 
 | Tues 04/27| Rukmini Bapat     |                                                                    | 
 | Wed 04/28 | Anika Arora       |                                                                    |
 | Th 04/29  | Yvonne Liu        |                                                                    | 
