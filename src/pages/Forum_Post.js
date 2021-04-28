@@ -25,7 +25,7 @@ export default function ForumPost() {
 
     //adding new comments to post
     function createComment(){
-        var txt = document.getElementById('addCommentTextArea').value;
+        var txt = document.getElementById('addCommentTextArea');
         if(txt.value !== ''){
             console.log(txt.value);
             // comment obj properties
@@ -81,6 +81,23 @@ export default function ForumPost() {
                 </p>
             </div>
         </div> 
+
+        //check user permissions for making comments
+        if(user){
+            var permCreateComment = 
+                <div class="createCommentBtn">
+                    <textarea id="addCommentTextArea" placeholder="Add a comment."></textarea>
+                    <button onClick={createComment}>Post</button>
+
+                    <hr></hr>
+                </div>
+        }
+        else{
+            var permCreateComment =
+                <div class="createCommentBtn">
+                    
+                </div>
+        }
             
   return (
     <Layout user={user}>
@@ -98,10 +115,8 @@ export default function ForumPost() {
         
             <hr></hr>
 
-            <textarea id="addCommentTextArea" placeholder="Add a comment."></textarea>
-            <button onClick={createComment}>Post</button>
+            {permCreateComment}
 
-            <hr></hr>
             {/*print out the comments array*/}
             <div class="comments">
                 {commentList}

@@ -30,6 +30,23 @@ export default function Forum() {
             container.push(html);
     } //end for loop
 
+    //checks to see if logged in
+    if(user){
+        var permCreatePost = 
+            <div class="createPostBtn">
+                <a href="forum/create-post">
+                    Create New Post
+                </a>
+                <br></br>
+            </div>
+    }
+    else{
+        var permCreatePost =
+            <div class="createPostBtn">
+                
+            </div>
+    }
+
   return (
     <Layout user={user}>
       <Container>
@@ -39,9 +56,8 @@ export default function Forum() {
         <br></br>
         <div class="main"> 
             {/* Create new post (should only be for users) */}         
-            <a href="forum/create-post">
-                Create New Post
-            </a>
+            
+            {permCreatePost}
 
             <ol>
                 {container} {/*rendering all of container list elements*/}
