@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
+import React, { useState } from 'react';
 import {threads} from "./data";
 import { useParams } from "react-router";
 import PageNotFound from "./PageNotFound";
@@ -9,10 +10,37 @@ const textStyle = {maxWidth: "100%", width: "700px"}
 
 // this is when you click on a post
 export default function ForumPost() {
-  const user = getUser();
+    
+    //var CommentList = [];
+    const user = getUser();
 
-  let postID = parseInt(useParams().id) - 1;
+    let postID = parseInt(useParams().id) - 1;
+    //creating hook for list
+    var initialCommentList = [];
+    for(let i = 0; i < threads[postID].comments.length; i++){
+        initializeCommentList(threads[postID].comments[i]);
+    } //end for loop
 
+    const [commentList, setCommentList] = useState(initialCommentList);
+    // first initialize the commentList with existing comments
+    function initializeCommentList(comment){
+        var commentPost = 
+            <div class="comment">
+                <div class="comment-header">
+                    <p class="comment-header">
+                        <span class="user">{comment.author}</span> - <small class="date"> {new Date(comment.date).toLocaleString()}</small>
+                    </p>
+                </div>
+                <div class="comment-content">
+                    {comment.content}
+                </div>
+                <hr></hr>
+            </div>
+        
+
+        //adding comment and then rerendering
+        initialCommentList.push(commentPost);     
+    }
   //console.log("The post id is " + postID);
   //console.log("threads length: " + threads.length);
 
@@ -42,7 +70,7 @@ export default function ForumPost() {
     }
 
     // add an existing obj comment to commentList
-    var commentList = [];
+    //var commentList = [];
     function addComment(comment){
         var commentPost = 
             <div class="comment">
@@ -56,15 +84,16 @@ export default function ForumPost() {
                 </div>
                 <hr></hr>
             </div>
-                    
-        commentList.push(commentPost);
         
+        console.log(commentList);
+        //adding comment and then rerendering
+        setCommentList(commentList => [...commentList, commentPost]);     
     }
 
   /*creates template for all comments currently in post to be on website*/
-    for(let i = 0; i < threads[postID].comments.length; i++){
-        addComment(threads[postID].comments[i]);
-    } //end for loop
+    // for(let i = 0; i < threads[postID].comments.length; i++){
+    //     addComment(threads[postID].comments[i]);
+    // } //end for loop
 
     /*creates template for the main post*/
     var rootPost = 
@@ -119,6 +148,7 @@ export default function ForumPost() {
 
             {/*print out the comments array*/}
             <div class="comments">
+                
                 {commentList}
             </div> 
         </body>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import CheckingSignedIn from "./pages/CheckingSignedIn";
 
 import Map from "./pages/Map";
@@ -37,7 +37,7 @@ export default function App() {
           });
         });
     });
-  }
+  } //end initGoogleSignIn
 
   function PrivateRoute(props) {
     const { Component, ...rest } = props;
@@ -50,15 +50,16 @@ export default function App() {
         render={() => (isSignedIn ? <Component /> : <Private />)}
       />
     );
-  }
+  } //end PrivateRoute
 
   return (
     <BrowserRouter>
       <Switch>
+        <Redirect from="/:url*(/+)" to={window.location.pathname.slice(0, -1)} />
         <Route exact path="/" component={Map} />
         <Route exact path="/lostandfound" component={LostandFound} />
         <Route exact path="/forum" component={Forum} />
-        <PrivateRoute exact path="/forum/create-post" Component={ForumCreatePost} />
+        <PrivateRoute path="/forum/create-post" Component={ForumCreatePost} />
         <Route path="/forum/:id(\d+)" component={ForumPost} />
         <PrivateRoute exact path="/profile" Component={Profile} />
         <Route path="/" component={PageNotFound} />
