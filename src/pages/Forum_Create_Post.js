@@ -1,53 +1,61 @@
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
+import { Redirect } from "react-router-dom";
+import {threads} from "./data";
+import Forum from "./Forum";
 
 const textStyle = {maxWidth: "100%", width: "700px"}
 
-export default function ForumPost() {
-  const user = getUser();
+// when you create a post in general
+export default function ForumCreatePost() {
+    const user = getUser();
+
+    function createNewPost(){
+        if(document.getElementById("newTitle").value !== "" && document.getElementById("categories").value !== "----"){
+            var newPost = {
+                id: threads.length + 1,
+                title: document.getElementById("newTitle").value,
+                category: document.getElementById("categories").value,
+                author: "Placeholder",
+                date: Date.now(),
+                content: document.getElementById("newDescription").value,
+                comments: [] //no comments  
+            } 
+            threads.push(newPost); 
+            console.log(threads);
+            //clear all inputs
+            document.getElementById("newTitle").value = "";
+            document.getElementById("categories").value = "----";
+            document.getElementById("newDescription").value = "";
+
+            //go back to forum main page
+            window.location.href = '/forum';
+            console.log("return forum...");
+        }    
+    }
 
   return (
     <Layout user={user}>
       <Container>
-        <h1>
+        <h1> {/*title*/}
             Bike Forum
         </h1>
         <br></br>
         <body>
-            <div class="header-root-post">
-                <h4 class="title">
-                    Thread 1
-                </h4>
-                <div class="root-content">
-                    This is stuff inside of the post and has a lot of words for no reason.
-                </div>
-                <div class="bottom">
-                    <p class="info-line">
-                        <span class="author">Author</span> - <span class="date">04/26/2021</span> - <span class="comment-count">5 comments</span>
-                    </p>
-                </div>
-            </div> 
-
-            <hr></hr>
-
-            <textarea>Add a comment</textarea>
-            <button>Post</button>
-
-            <hr></hr>
-            <div class="comments">
-                <div class="comment">
-                    <div class="comment-header">
-                        <p class="comment-header">
-                            <span class="user">User</span> - <small class="date">04/26/2021</small>
-                        </p>
-                    </div>
-                    <div class="comment-content">
-                        Comment text here
-                    </div>
-                    <hr></hr>
-                </div>
-            </div>
+            <textarea id="newTitle" placeholder="New Title"></textarea>
+            <br></br>
+            <select name="categories" id="categories">
+                <option value="----">----</option>
+                <option value="Announcements">Announcements</option>
+                <option value="Lost and Found">Lost and Found</option>
+                <option value="Crash Reports">Crash Reports</option>
+                <option value="Others">Others</option>
+            </select>
+            <br></br>
+            <textarea id="newDescription" placeholder="Your Description"></textarea>
+            <br></br>
+            <button onClick={createNewPost}>Post it!</button>           
         </body>
       </Container>
     </Layout>

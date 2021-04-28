@@ -37,7 +37,12 @@ export default function Forum() {
             Bike Forum
         </h1>
         <br></br>
-        <div class="main">
+        <div class="main"> 
+            {/* Create new post (should only be for users) */}         
+            <a href="forum/create-post">
+                Create New Post
+            </a>
+
             <ol>
                 {container} {/*rendering all of container list elements*/}
             </ol>
@@ -48,34 +53,3 @@ export default function Forum() {
   );
 }
 
-
-
-/*<body>
-    <ol> 
-        <li class="row"> 
-            <a href="forum/item1"> 
-                <div class="title">
-                    <h3> Title 1 <small> Category </small> </h3>
-                </div>
-                <div class="bottom">
-                    <p class="info-line">
-                        <span class="author">Author</span> - <span class="date">04/26/2021</span> - <span class="comment-count">5 comments</span>
-                    </p>
-                </div>
-            </a> 
-        </li>
-        <li class="row">
-            <a href="forum/item2"> 
-                <div class="title">
-                    <h3> Title 2 <small> Category </small> </h3>
-                </div>
-                <div class="bottom">
-                    <p class="info-line">
-                        <span class="author">Author</span> - <span class="date">04/26/2021</span> - <span class="comment-count">5 comments</span>
-                    </p>
-                </div>
-            </a> 
-        </li>
-    </ol>
-</body>
-*/

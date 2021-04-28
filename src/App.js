@@ -9,6 +9,7 @@ import ForumPost from "./pages/Forum_Post";
 import Profile from "./pages/Profile";
 import Private from "./pages/Private";
 import PageNotFound from "./pages/PageNotFound";
+import ForumCreatePost from "./pages/Forum_Create_Post";
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
@@ -57,6 +58,7 @@ export default function App() {
         <Route exact path="/" component={Map} />
         <Route exact path="/lostandfound" component={LostandFound} />
         <Route exact path="/forum" component={Forum} />
+        <Route exact path="/forum/create-post" component={ForumCreatePost} />
         <Route path="/forum/:id(\d+)" component={ForumPost} />
         <PrivateRoute exact path="/profile" Component={Profile} />
         <Route path="/" component={PageNotFound} />
