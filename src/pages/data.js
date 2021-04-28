@@ -3,6 +3,7 @@ var defaultThreads = [
     { //1st post
         id: 1,
         title: "Thread 1",
+        category: "Announcement",
         author: "First",
         date: Date.now(),
         content: "Thread content",
@@ -22,6 +23,7 @@ var defaultThreads = [
     { // 2nd post
         id: 2,
         title: "Thread 2",
+        category: "Lost and Found",
         author: "Second",
         date: Date.now(),
         content: "Thread content",

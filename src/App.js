@@ -57,9 +57,8 @@ export default function App() {
         <Route exact path="/" component={Map} />
         <Route exact path="/lostandfound" component={LostandFound} />
         <Route exact path="/forum" component={Forum} />
-        <Route exact path="/forum/item1" component={ForumPost} />
+        <Route path="/forum/:id(\d+)" component={ForumPost} />
         <PrivateRoute exact path="/profile" Component={Profile} />
-        <Route exact path="/post/:id" component={ForumPost} />
         <Route path="/" component={PageNotFound} />
         
       </Switch>

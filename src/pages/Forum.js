@@ -15,9 +15,9 @@ export default function Forum() {
     for(let i = 0; i < threads.length; i++){
         var html = 
             <li class="row">
-                <a href={`/post/${threads[i].id}`}>
+                <a href={`/forum/${threads[i].id}`}>
                     <h4 class = "title">
-                        {threads[i].title}
+                        {threads[i].title} <small>{threads[i].category}</small>
                     </h4>
                     <div class="bottom">
                         <p class="info-line">
@@ -39,7 +39,7 @@ export default function Forum() {
         <br></br>
         <div class="main">
             <ol>
-                {container} {/*prints out all of container*/}
+                {container} {/*rendering all of container list elements*/}
             </ol>
         </div>
         
