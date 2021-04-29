@@ -8,6 +8,7 @@ import Forum from "./pages/Forum";
 import Profile from "./pages/Profile";
 import Private from "./pages/Private";
 import PageNotFound from "./pages/PageNotFound";
+import LFCreatePost from "./pages/LF_Create_Post";
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
@@ -55,6 +56,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" render={Map} />
         <Route exact path="/lostandfound" render={LostandFound} />
+        <PrivateRoute path="/lostandfound/create-post" Component={LFCreatePost} />
         <Route exact path="/forum" render={Forum} />
         <PrivateRoute exact path="/profile" Component={Profile} />
         <Route path="/" render={PageNotFound} />

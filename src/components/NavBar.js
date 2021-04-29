@@ -40,7 +40,7 @@ export default function NavBar(props) {
                   <span>
                     Hello, {user.Te}{" "}
                     <img
-                      src={user.EI}
+                      src={user.iJ}
                       alt="profile"
                       style={{ width: "24px", height: "24px" }}
                     />{" "}
