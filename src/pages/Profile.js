@@ -16,7 +16,6 @@ export default function Profile() {
         <div>
           Email: {user.email}
         </div>
-        <br />
         <div>
           Bio: I'm a sophomore CS student who needs help navigating the bike paths!
         </div>
