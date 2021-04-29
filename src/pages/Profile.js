@@ -13,12 +13,11 @@ export default function Profile() {
       <Container>
         <h1>{user.fullName}</h1>
         <img src={user.imageUrl} style={profileStyle} alt="profilePic" />
-        <div>
-          Email: {user.email}
-        </div>
+        <div>Email: {user.email}</div>
         <br />
         <div>
-          Bio: I'm a sophomore CS student who needs help navigating the bike paths!
+          Bio: I'm a sophomore CS student who needs help navigating the bike
+          paths!
         </div>
       </Container>
     </Layout>

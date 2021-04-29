@@ -13,7 +13,6 @@ export default function NavBar(props) {
         <Navbar.Brand href="/">Gaucho Bike Map</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-
           <Nav className="mr-auto">
             <Nav.Link href="/">Map</Nav.Link>
             <Nav.Link href="/lostandfound">Lost and Found</Nav.Link>
@@ -45,7 +44,6 @@ export default function NavBar(props) {
             )}
           </Nav>
         </Navbar.Collapse>
-
       </Container>
     </Navbar>
   );
