@@ -11,13 +11,10 @@ export default function Profile() {
   return (
     <Layout user={user}>
       <Container>
-        <h1>{user.Ue}</h1>
-        <img src={user.iJ} style={profileStyle} alt="profilePic" />
+        <h1>{user.fullName}</h1>
+        <img src={user.imageUrl} style={profileStyle} alt="profilePic" />
         <div>
-          Email: {user.Qt}
-        </div>
-        <div>
-          Your name is "{user.fullName}" and your email is "{user.email}."
+          Email: {user.email}
         </div>
         <br />
       </Container>

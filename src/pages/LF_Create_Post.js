@@ -16,12 +16,6 @@ function UploadButton() {
         multiple
         type="file"
       />
-      <label htmlFor="contained-button-file">
-        <Button variant="contained" color="primary" component="span">
-          Upload
-        </Button>
-      </label>
-      <PhotoCamera />
     </div>
   );
 }
@@ -62,9 +56,14 @@ export default function LFCreatePost() {
             <TextField required id="item" label="Item"/>
             <br />
             <TextField required id="desc" multiline rowsMax={3} label="Description"/>
-            <br />
-            {UploadButton()}
-            <br />
+            <br /><br />
+            <input
+              accept="images/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+            />
+            <br /><br />
             <Button onClick={createPost}>Create</Button>
           </form>
         </body>

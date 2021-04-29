@@ -6,6 +6,8 @@ import Card from "react-bootstrap/Card";
 import getUser from "../utils/get-user";
 import { threads } from "./dataLF";
 
+const cardStyle = { maxWidth: "100%", width: "150px", height: "auto" };
+
 const textStyle = {maxWidth: "100%", width: "700px"}
 
 export default function LostandFound() {
@@ -20,9 +22,10 @@ export default function LostandFound() {
   console.log(threads);
   var container = [];
   for(let i = 0; i < threads.length; i++){
-     var html = 
+    console.log(threads[i].img); 
+    var html = 
          <Card style={{ width: '18rem' }}>
-          <img variant="top" src={threads[i].img} />
+          <Card.Img variant="top" style={cardStyle} src={threads[i].img} />
           <Card.Body>
             <Card.Title>{threads[i].item}</Card.Title>
             <Card.Subtitle>{threads[i].author}</Card.Subtitle>

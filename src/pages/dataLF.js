@@ -1,3 +1,6 @@
+import Hydro from "../images/hydro.jpg"
+import Frisbee from "../images/frisbee.jpg"
+
 var threads = [
     {
         id: 1,
@@ -5,7 +8,7 @@ var threads = [
         author: "Calvin Dougher",
         date: Date(),
         desc: "Light blue with UCSB sticker",
-        img: "../images/hydro.jpg"
+        img: Hydro
     },
     {
         id: 2,
@@ -13,7 +16,7 @@ var threads = [
         author: "Duncan Brin",
         date: Date(),
         desc: "White with Black Tide logo",
-        img: "../images/frisbee.jpg"
+        img: Frisbee
     },
 ]
 
