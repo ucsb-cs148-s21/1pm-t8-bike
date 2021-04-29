@@ -1,9 +1,7 @@
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
-import { Redirect } from "react-router-dom";
 import { threads } from "./dataLF";
-import LostandFound from "./LostandFound";
 import { Button, TextField }  from '@material-ui/core';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 

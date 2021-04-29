@@ -1,9 +1,8 @@
 import React from 'react';
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
-import { Button, TextField }  from '@material-ui/core';
+import { Button }  from '@material-ui/core';
 import Card from "react-bootstrap/Card";
-import Hydro from "../images/hydro.jpg";
 import getUser from "../utils/get-user";
 import { threads } from "./dataLF";
 
@@ -11,18 +10,11 @@ const textStyle = {maxWidth: "100%", width: "700px"}
 
 export default function LostandFound() {
   const user = getUser();
-  if({user}){
-    var createPost = 
-        <div class="createPostBtn">
-            <Button variant="contained" color="primary" href="lostandfound/create-post">Create Post</Button>
-            <br></br>
-        </div>
+  if(user){
+    var createPost = <Button variant="contained" color="primary" href="lostandfound/create-post">Create Post</Button>
   }
   else{
-    var createPost =
-        <div class="createPostBtn">
-            
-        </div>
+    var createPost = null
   }
 
   console.log(threads);
@@ -30,7 +22,7 @@ export default function LostandFound() {
   for(let i = 0; i < threads.length; i++){
      var html = 
          <Card style={{ width: '18rem' }}>
-          <Card.Img variant="top" src="Hydro" />
+          <img variant="top" src={threads[i].img} />
           <Card.Body>
             <Card.Title>{threads[i].item}</Card.Title>
             <Card.Subtitle>{threads[i].author}</Card.Subtitle>
@@ -54,7 +46,7 @@ export default function LostandFound() {
         <h1>Lost and Found</h1>
         <br />
         {createPost}
-        <br />
+        <br /><br />
         {container}
       </Container>
     </Layout>

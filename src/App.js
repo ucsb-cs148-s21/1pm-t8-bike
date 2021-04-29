@@ -18,7 +18,7 @@ export default function App() {
     script.src = "https://apis.google.com/js/platform.js";
     script.onload = () => initGoogleSignIn();
     document.body.appendChild(script);
-  }, []);
+  }, [isSignedIn]);
 
   function initGoogleSignIn() {
     window.gapi.load("auth2", () => {
@@ -36,17 +36,22 @@ export default function App() {
           });
         });
     });
+    window.gapi.load("signin2", () => {
+      window.gapi.signin2.render("login-button", {
+        theme: "dark",
+      });
+    });
   }
 
   function PrivateRoute(props) {
-    const { Component, ...rest } = props;
+    const { component, ...rest } = props;
     if (isSignedIn === null) {
       return <CheckingSignedIn />;
     }
     return (
       <Route
         {...rest}
-        render={() => (isSignedIn ? <Component /> : <Private />)}
+        component={isSignedIn ? component : Private}
       />
     );
   }
@@ -54,12 +59,12 @@ export default function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" render={Map} />
-        <Route exact path="/lostandfound" render={LostandFound} />
-        <PrivateRoute path="/lostandfound/create-post" Component={LFCreatePost} />
-        <Route exact path="/forum" render={Forum} />
-        <PrivateRoute exact path="/profile" Component={Profile} />
-        <Route path="/" render={PageNotFound} />
+        <Route exact path="/" component={Map} />
+        <Route exact path="/lostandfound" component={LostandFound} />
+        <PrivateRoute path="/lostandfound/create-post" component={LFCreatePost} />
+        <Route exact path="/forum" component={Forum} />
+        <PrivateRoute exact path="/profile" component={Profile} />
+        <Route path="/" component={PageNotFound} />
         
       </Switch>
     </BrowserRouter>

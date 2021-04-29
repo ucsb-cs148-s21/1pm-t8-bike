@@ -17,7 +17,7 @@ export default function Profile() {
           Email: {user.Qt}
         </div>
         <div>
-          Blurb: 
+          Your name is "{user.fullName}" and your email is "{user.email}."
         </div>
         <br />
       </Container>
