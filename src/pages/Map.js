@@ -12,13 +12,7 @@ export default function Map() {
       <Container>
         <h1>Welcome to Gaucho Bike Map!</h1>
         <br />
-        <div style={textStyle}>
-          hello world!
-        </div>
-        <br />
-        <div style={textStyle}>
-          goodbye world!
-        </div>
+        <div style={textStyle}><a href="tel:18058932000">CALL CSO</a></div>
         <br />
       </Container>
     </Layout>
