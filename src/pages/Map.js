@@ -30,19 +30,20 @@ const textStyle = {maxWidth: "100%", width: "700px"}
 
 export default function Map() {
   const user = getUser();
-
+  const [data, setData] = useState("test");
+  useEffect(() => {
+    fetch("http://localhost:3001/api")
+      .then((res) => res.json())
+      .then((data) => setData(data.message));
+  }, []);
   return (
     <Layout user={user}>
       <Container>
-        <h1>Welcome to Gaucho Bike Map!</h1>
+        <h1>Welcome to Gaucho Bike Map!</h1> 
+        {data}
+        <button onClick={() => setData("hello")}>click</button>
         <br />
-        <div style={textStyle}>
-          hello world!
-        </div>
-        <br />
-        <div style={textStyle}>
-          goodbye world!
-        </div>
+        <div style={textStyle}><a href="tel:18058932000">CALL CSO</a></div>
         <br />
         <div style={{ width: "50vw", height: "50vh" }}>
       <MapWrapped
