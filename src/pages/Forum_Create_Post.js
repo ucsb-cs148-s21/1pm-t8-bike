@@ -10,7 +10,7 @@ const textStyle = {maxWidth: "100%", width: "700px"}
 // when you create a post in general
 export default function ForumCreatePost() {
     const user = getUser();
-
+    
     function createNewPost(){
         if(document.getElementById("newTitle").value !== "" && document.getElementById("categories").value !== "----"){
             var newPost = {
