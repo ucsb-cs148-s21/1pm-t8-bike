@@ -22,9 +22,6 @@ export default function Forum() {
           <div class="bottom">
             <p class="info-line">
                 <span class="author">Author</span> - <span class="date">{new Date(threads[i].date).toLocaleString()}</span> - <span class="comment-count">{threads[i].comments.length} comments</span>
-              <span class="comment-count">
-                {threads[i].comments.length} comments
-              </span>
             </p>
           </div>
         </a>
