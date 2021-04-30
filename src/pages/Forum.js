@@ -13,7 +13,7 @@ export default function Forum() {
   console.log(threads);
   var container = [];
   for (let i = 0; i < threads.length; i++) {
-    var html = (
+    var html = 
       <li class="row">
         <a href={`/forum/${threads[i].id}`}>
           <h4 class="title">
@@ -21,11 +21,7 @@ export default function Forum() {
           </h4>
           <div class="bottom">
             <p class="info-line">
-              <span class="author">Author</span> -{" "}
-              <span class="date">
-                {new Date(threads[i].date).toLocaleString()}
-              </span>{" "}
-              -{" "}
+                <span class="author">Author</span> - <span class="date">{new Date(threads[i].date).toLocaleString()}</span> - <span class="comment-count">{threads[i].comments.length} comments</span>
               <span class="comment-count">
                 {threads[i].comments.length} comments
               </span>
@@ -33,8 +29,9 @@ export default function Forum() {
           </div>
         </a>
       </li>
-    );
-}
+
+    container.push(html);
+  }
 
     //checks to see if logged in
     var permCreatePost =
