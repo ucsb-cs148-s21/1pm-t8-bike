@@ -34,6 +34,7 @@ export default function Forum() {
         </a>
       </li>
     );
+}
 
     //checks to see if logged in
     var permCreatePost =
