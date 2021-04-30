@@ -1,11 +1,9 @@
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
-import { Redirect } from "react-router-dom";
 import {threads} from "./data";
-import Forum from "./Forum";
 
-const textStyle = {maxWidth: "100%", width: "700px"}
+//const textStyle = {maxWidth: "100%", width: "700px"}
 
 // when you create a post in general
 export default function ForumCreatePost() {
