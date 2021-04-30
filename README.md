@@ -18,7 +18,7 @@ A map of UCSB's bike path that has features such as lost and found, traffic, and
 # Tech Stack: 
 * React frontend 
 * Node.js backend 
-* Firebase (potentially MongoDB) 
+* MongoDB
 * Heroku 
 
 # Installation

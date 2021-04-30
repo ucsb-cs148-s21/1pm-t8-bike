@@ -50,27 +50,27 @@ export default function App() {
     if (isSignedIn === null) {
       return <CheckingSignedIn />;
     }
-    return (
-      <Route
-        {...rest}
-        component={isSignedIn ? component : Private}
-      />
-    );
+    return <Route {...rest} component={isSignedIn ? component : Private} />;
   } //end PrivateRoute
 
   return (
     <BrowserRouter>
       <Switch>
-        <Redirect from="/:url*(/+)" to={window.location.pathname.slice(0, -1)} />
+        <Redirect
+          from="/:url*(/+)"
+          to={window.location.pathname.slice(0, -1)}
+        />
         <Route exact path="/" component={Map} />
         <Route exact path="/lostandfound" component={LostandFound} />
-        <PrivateRoute path="/lostandfound/create-post" component={LFCreatePost} />
+        <PrivateRoute
+          path="/lostandfound/create-post"
+          component={LFCreatePost}
+        />
         <Route exact path="/forum" component={Forum} />
         <PrivateRoute path="/forum/create-post" Component={ForumCreatePost} />
         <Route path="/forum/:id(\d+)" component={ForumPost} />
         <PrivateRoute exact path="/profile" Component={Profile} />
         <Route path="/" component={PageNotFound} />
-        
       </Switch>
     </BrowserRouter>
   );
