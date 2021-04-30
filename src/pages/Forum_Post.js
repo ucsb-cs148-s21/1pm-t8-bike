@@ -6,7 +6,7 @@ import { threads } from "./data";
 import { useParams } from "react-router";
 import PageNotFound from "./PageNotFound";
 
-const textStyle = { maxWidth: "100%", width: "700px" };
+//const textStyle = {maxWidth: "100%", width: "700px"}
 
 // this is when you click on a post
 export default function ForumPost() {
@@ -95,47 +95,41 @@ export default function ForumPost() {
   }
 
   /*creates template for all comments currently in post to be on website*/
-  // for(let i = 0; i < threads[postID].comments.length; i++){
-  //     addComment(threads[postID].comments[i]);
-  // } //end for loop
+    // for(let i = 0; i < threads[postID].comments.length; i++){
+    //     addComment(threads[postID].comments[i]);
+    // } //end for loop
 
-  /*creates template for the main post*/
-  var rootPost = (
-    <div class="header-root-post">
-      <h4 class="title">{threads[postID].title}</h4>
-      <div class="root-content">{threads[postID].content}</div>
-      <div class="bottom">
-        <p class="info-line">
-          <span class="author">{threads[postID].author}</span> -{" "}
-          <span class="date">
-            {new Date(threads[postID].date).toLocaleString()}
-          </span>{" "}
-          -{" "}
-          <span class="comment-count">
-            {threads[postID].comments.length} comments
-          </span>
-        </p>
-      </div>
-    </div>
-  );
+    /*creates template for the main post*/
+    var rootPost = 
+        <div class="header-root-post">
+            <h4 class="title">
+                {threads[postID].title}
+            </h4>  
+            <div class="root-content">
+                {threads[postID].content}
+            </div>
+            <div class="bottom">
+                <p class="info-line">
+                    <span class="author">{threads[postID].author}</span> - <span class="date">{new Date(threads[postID].date).toLocaleString()}</span> - <span class="comment-count">{threads[postID].comments.length} comments</span>
+                </p>
+            </div>
+        </div> 
 
-  //check user permissions for making comments
-  if (user) {
-    var permCreateComment = (
-      <div class="createCommentBtn">
-        <textarea
-          id="addCommentTextArea"
-          placeholder="Add a comment."
-        ></textarea>
-        <button onClick={createComment}>Post</button>
+        //check user permissions for making comments
+        var permCreateComment = 
+            <div class="createCommentBtn">
+                    
+            </div>;
+        if(user){
+            permCreateComment = 
+                <div class="createCommentBtn">
+                    <textarea id="addCommentTextArea" placeholder="Add a comment."></textarea>
+                    <button onClick={createComment}>Post</button>
 
-        <hr></hr>
-      </div>
-    );
-  } else {
-    var permCreateComment = <div class="createCommentBtn"></div>;
-  }
-
+                    <hr></hr>
+                </div>
+        }
+            
   return (
     <Layout user={user}>
       <Container>
