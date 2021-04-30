@@ -67,9 +67,9 @@ export default function App() {
           component={LFCreatePost}
         />
         <Route exact path="/forum" component={Forum} />
-        <PrivateRoute path="/forum/create-post" Component={ForumCreatePost} />
+        <PrivateRoute path="/forum/create-post" component={ForumCreatePost} />
         <Route path="/forum/:id(\d+)" component={ForumPost} />
-        <PrivateRoute exact path="/profile" Component={Profile} />
+        <PrivateRoute exact path="/profile" component={Profile} />
         <Route path="/" component={PageNotFound} />
       </Switch>
     </BrowserRouter>
