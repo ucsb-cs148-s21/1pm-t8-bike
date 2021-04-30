@@ -22,7 +22,7 @@ Ideas and Actions:
 
 * a goal: to start a Google doc for listing an agenda of things to talk about before starting our meeting
 * a change:  Meet more times in the week for group updates and to eliminate blockers
-* a measurement: A way to measure whether any of the above changes helped us achieve our goals is to see if we are able to make more progress with 
+* a measurement: A way to measure whether the above changes helped us achieve our goals is to see if we are able to make more progress with 
    respect to the kanban board. If we are able to check off more tasks on the board, it will measure our increase in group productivity in the next few weeks.
    This means we would also have to meet to discuss if we need to add more issues to the kanban board.
   
@@ -33,4 +33,10 @@ Ideas and Actions:
 ## Retro Assessment
 
 For this first retrospective, I used the Quick Retrospective template from Atlassian. I asked everyone in the team what they thought had worked well and what needs to be improved from our last sprint, and everyone gave great action ideas for us to take to increase our productivity as a group. The retrospective went really well because all group members contributed their thoughts, and I was able to facilitate the retro well. To the next person leading a retro, I would advise them to always make sure to actively ask questions and engage the group so every member can contribute their ideas as much as possible.  
+
+## Outcome
+
+Scheduled an extra meeting on Wednesday wherein we added several new issues to the kanban, assigned everyone who was not already working on a task to an issue related to the development of our MVP, and moved in progress issues into the completed category upon filling out acceptance criteria and linking a merged pull request.
+
+
 
