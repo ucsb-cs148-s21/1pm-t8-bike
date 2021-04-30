@@ -13,8 +13,13 @@ var corsOptions = {
 app.use(express.static(path.resolve(__dirname, "../../build")));
 
 app.get("/api", cors(corsOptions), (req, res) => {
-  res.json({ message: "Hello from server!" });
+  res.json({ message: "from the backend" });
 });
+
+app.get("/hi", cors(corsOptions), (req,res) => {
+  res.json({ message: "Goodbye from server!" });
+});
+//=> function w/o a name
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
