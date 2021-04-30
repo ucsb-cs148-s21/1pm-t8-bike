@@ -8,5 +8,13 @@
 | Tues 04/13| Rukmini Bapat     | Led team through "Hello World" debugging with Vincent              | 
 | Th 04/15  | Anika Arora       | Led team discussion of leadership, learning, and kanban board      | 
 | Fri 04/16 | Yvonne Liu        | Led team through lab02                                             | 
-| Mon 04/19 | Calvin Dougher    | Yvonne will lead planning meeting for sprint02                     | 
-| Tues 04/20| Rukmini Bapat     | Calvin will lead first Retro on Tuesday                            | 
+| Mon 04/19 | Calvin Dougher    | Calvin will lead planning meeting for sprint02                     | 
+| Tues 04/20| Rukmini Bapat     | Rukmini will lead first Retro on Tuesday                           | 
+| Th 04/22  | Anika Arora       | Led stand-up meeting and discussion of next steps toward MVP       | 
+| Fri 04/23 | Yvonne Liu        | Updated README.md                                                  | 
+| Mon 04/26 | Yvonne Liu        | Led stand-up meeting and discussion of next steps toward MVP       | 
+| Tues 04/27| Rukmini Bapat     |                                                                    | 
+| Wed 04/28 | Anika Arora       |                                                                    |
+| Th 04/29  | Yvonne Liu        |                                                                    | 
+| Fri 04/30 | Calvin Dougher    |                                                                    | 
+| Mon 05/03 | Rukmini Bapat     |                                                                    | 
