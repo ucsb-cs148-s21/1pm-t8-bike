@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import CheckingSignedIn from "./pages/CheckingSignedIn";
-
-import Map from "./pages/Map";
+import homePage from "./pages/Home_Page";
+//import Map from "./pages/Map";
 import LostandFound from "./pages/LostandFound";
 import Forum from "./pages/Forum";
 import ForumPost from "./pages/Forum_Post";
@@ -11,10 +11,10 @@ import Private from "./pages/Private";
 import PageNotFound from "./pages/PageNotFound";
 import LFCreatePost from "./pages/LF_Create_Post";
 import ForumCreatePost from "./pages/Forum_Create_Post";
+import "./App.css";
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
-
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://apis.google.com/js/platform.js";
@@ -60,7 +60,7 @@ export default function App() {
           from="/:url*(/+)"
           to={window.location.pathname.slice(0, -1)}
         />
-        <Route exact path="/" component={Map} />
+        <Route exact path="/" component={homePage} />
         <Route exact path="/lostandfound" component={LostandFound} />
         <PrivateRoute
           path="/lostandfound/create-post"

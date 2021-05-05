@@ -2,6 +2,11 @@
   "name": "starter-code",
   "version": "0.1.0",
   "private": true,
+  "keywords": [
+    "map",
+    "leaflet",
+    "react"
+  ],
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
@@ -13,6 +18,8 @@
     "cors": "^2.8.5",
     "firebase": "^8.4.2",
     "husky": "^6.0.0",
+    "leaflet": "latest",
+    "leaflet-plugins": "^3.4.0",
     "lint-staged": "^10.5.4",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
@@ -20,6 +27,7 @@
     "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
     "react-google-maps": "^9.4.5",
+    "react-leaflet": "^3.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
