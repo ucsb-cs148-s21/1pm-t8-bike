@@ -4,7 +4,10 @@ import getUser from "../utils/get-user";
 import React, { Component } from "react";
 import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet"; 
 import L from 'leaflet';
-
+<head>
+  <link rel="stylesheet" href="stylesheets/atlas.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+</head>
 function MyMap() {
   React.useEffect(() => {
     // create map
@@ -20,7 +23,7 @@ function MyMap() {
     });
   }, []);
   console.log("hey"); 
-  return <div id="map"></div>
+  return (<div id="map"></div>)
 }
 
 export default MyMap;
