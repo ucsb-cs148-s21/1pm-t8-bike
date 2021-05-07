@@ -1,6 +1,6 @@
 
 //import React from 'react';
-import { isSameCrash } from "./src/pages/Map";
+import { isSameCrash } from "../pages/Map";
 
 // test('two coords are same crash', () => {
 //   expect(isSameCrash(34.41359, -119.84634,34.41342,-119.84635)).toBe(true);

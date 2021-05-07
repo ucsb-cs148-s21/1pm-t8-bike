@@ -31,6 +31,7 @@ function MyMap() {
   );
 }
 
+//jest - create factory warning for withGoogleMap(MyMap) (maybe outdated)
 const MapWrapped = withScriptjs(withGoogleMap(MyMap));
 
 const textStyle = { maxWidth: "100%", width: "700px" };
@@ -39,7 +40,7 @@ export default function Map() {
   const user = getUser();
   const [data, setData] = useState("test");
   useEffect(() => {
-    fetch("http://localhost:3001/api")
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api`) 
       .then((res) => res.json())
       .then((data) => setData(data.message));
   }, []);
