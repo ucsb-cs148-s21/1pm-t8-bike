@@ -10,6 +10,17 @@ import {
   InfoWindow,
 } from "react-google-maps";
 
+//create comp for crashes in future
+export function isSameCrash(long1,lati1 ,long2, lati2){
+  //200ft range: .000544 for long, .000664 for lati
+  if(Math.abs(long1-long2) <= 0.000544 && Math.abs(lati1-lati2) <= 0.000664){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
 function MyMap() {
   return (
     <GoogleMap
@@ -20,6 +31,7 @@ function MyMap() {
   );
 }
 
+//jest - create factory warning for withGoogleMap(MyMap) (maybe outdated)
 const MapWrapped = withScriptjs(withGoogleMap(MyMap));
 
 const textStyle = { maxWidth: "100%", width: "700px" };
@@ -28,7 +40,7 @@ export default function Map() {
   const user = getUser();
   const [data, setData] = useState("test");
   useEffect(() => {
-    fetch("http://localhost:3001/api")
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api`) 
       .then((res) => res.json())
       .then((data) => setData(data.message));
   }, []);
@@ -55,3 +67,4 @@ export default function Map() {
     </Layout>
   );
 }
+
