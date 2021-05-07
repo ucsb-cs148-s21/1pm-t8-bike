@@ -13,8 +13,8 @@
 | Th 04/22  | Anika Arora       | Led stand-up meeting and discussion of next steps toward MVP       | 
 | Fri 04/23 | Yvonne Liu        | Updated README.md                                                  | 
 | Mon 04/26 | Yvonne Liu        | Led stand-up meeting and discussion of next steps toward MVP       | 
-| Tues 04/27| Rukmini Bapat     |                                                                    | 
-| Wed 04/28 | Anika Arora       |                                                                    |
-| Th 04/29  | Yvonne Liu        |                                                                    | 
-| Fri 04/30 | Calvin Dougher    |                                                                    | 
-| Mon 05/03 | Rukmini Bapat     |                                                                    | 
+| Tues 04/27| Rukmini Bapat     | Led stand-up meeting                                               | 
+| Th 04/29  | Anika Arora       | Led stand-up meeting and worked on MVP video and script            | 
+| Fri 04/30 | Yvonne Liu        | Led discussion for lab03                                           | 
+| Th 05/06  | Rukmini Bapat     | Led sprint 03 planning meeting                                     | 
+| Fri 05/07 | Calvin Dougher    | Led stand-up and lab04                                             | 
