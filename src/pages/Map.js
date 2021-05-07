@@ -10,6 +10,17 @@ import {
   InfoWindow,
 } from "react-google-maps";
 
+//create comp for crashes in future
+export function isSameCrash(long1,lati1 ,long2, lati2){
+  //200ft range: .000544 for long, .000664 for lati
+  if(Math.abs(long1-long2) <= 0.000544 && Math.abs(lati1-lati2) <= 0.000664){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
 function MyMap() {
   return (
     <GoogleMap
@@ -55,3 +66,4 @@ export default function Map() {
     </Layout>
   );
 }
+
