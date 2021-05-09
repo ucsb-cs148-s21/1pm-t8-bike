@@ -9,8 +9,8 @@ function MyMap() {
   React.useEffect(() => {
     // create map
     L.map('map', {
-      center: [49.8419, 24.0315],
-      zoom: 16,
+      center: [34.413170, -119.857048],
+      zoom: 15,
       layers: [
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
           attribution:
@@ -26,15 +26,7 @@ function MyMap() {
 export default MyMap;
 
 
-
-
-// import {
-//   withGoogleMap,
-//   withScriptjs,
-//   GoogleMap,
-//   Marker,
-//   InfoWindow,
-// } from "react-google-maps";
+// //google maps stuff below 
 
 // function MyMap() {
 //   return (
