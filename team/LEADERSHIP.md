@@ -18,3 +18,4 @@
 | Fri 04/30 | Yvonne Liu        | Led discussion for lab03                                           | 
 | Th 05/06  | Rukmini Bapat     | Led sprint 03 planning meeting                                     | 
 | Fri 05/07 | Calvin Dougher    | Led stand-up and lab04                                             | 
+| Mon 05/10 | Rukmini Bapat     | Led stand-up meeting 
