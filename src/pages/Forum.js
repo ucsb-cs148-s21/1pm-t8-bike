@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
 import { threads } from "./data";
 
-const textStyle = { maxWidth: "100%", width: "700px" };
+//const textStyle = {maxWidth: "100%", width: "700px"}
 
 // this is the main page of forum, see list of posts
 export default function Forum() {
@@ -36,18 +36,17 @@ export default function Forum() {
     );
 
     container.push(html);
-  } //end for loop
+  }
 
   //checks to see if logged in
+  var permCreatePost = <div class="createPostBtn"></div>;
   if (user) {
-    var permCreatePost = (
+    permCreatePost = (
       <div class="createPostBtn">
         <a href="forum/create-post">Create New Post</a>
         <br></br>
       </div>
     );
-  } else {
-    var permCreatePost = <div class="createPostBtn"></div>;
   }
 
   return (

@@ -1,32 +1,39 @@
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
-import React, { Component } from "react";
-import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet"; 
-import L from 'leaflet';
+import React, { Component, useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
 
 function MyMap() {
   React.useEffect(() => {
     // create map
-    L.map('map', {
-      center: [34.413170, -119.857048],
+    L.map("map", {
+      center: [34.41317, -119.857048],
       zoom: 15,
       layers: [
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
           attribution:
-            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         }),
-      ]
+      ],
     });
   }, []);
-  console.log("hey"); 
-  return (<div id="map"></div>)
+  console.log("hey");
+  return <div id="map"></div>;
 }
+class Map extends Component{ 
+  render() {
+        return (
+          <div className="homepage">
+            <MyMap />
+          </div>
+        );
+      }
+}
+export default Map;
 
-export default MyMap;
-
-
-// //google maps stuff below 
+// //google maps stuff below
 
 // function MyMap() {
 //   return (

@@ -6,7 +6,7 @@ import { threads } from "./data";
 import { useParams } from "react-router";
 import PageNotFound from "./PageNotFound";
 
-const textStyle = { maxWidth: "100%", width: "700px" };
+//const textStyle = {maxWidth: "100%", width: "700px"}
 
 // this is when you click on a post
 export default function ForumPost() {
@@ -120,8 +120,9 @@ export default function ForumPost() {
   );
 
   //check user permissions for making comments
+  var permCreateComment = <div class="createCommentBtn"></div>;
   if (user) {
-    var permCreateComment = (
+    permCreateComment = (
       <div class="createCommentBtn">
         <textarea
           id="addCommentTextArea"
@@ -132,8 +133,6 @@ export default function ForumPost() {
         <hr></hr>
       </div>
     );
-  } else {
-    var permCreateComment = <div class="createCommentBtn"></div>;
   }
 
   return (
