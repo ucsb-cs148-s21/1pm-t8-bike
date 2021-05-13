@@ -20,3 +20,4 @@
 | Fri 05/07 | Calvin Dougher    | Led second retrospective                                           | 
 | Mon 05/10 | Rukmini Bapat     | Led stand-up meeting                                               | 
 | Tues 05/11| Anika Arora       | Led stand-up meeting                                               | 
+| Th 05/13  | Yvonne Liu        | Led stand-up meeting                                               |
