@@ -17,4 +17,7 @@
 | Th 04/29  | Anika Arora       | Led stand-up meeting and worked on MVP video and script            | 
 | Fri 04/30 | Yvonne Liu        | Led discussion for lab03                                           | 
 | Th 05/06  | Rukmini Bapat     | Led sprint 03 planning meeting                                     | 
-| Fri 05/07 | Calvin Dougher    | Led stand-up and lab04                                             | 
+| Fri 05/07 | Calvin Dougher    | Led second retrospective                                           | 
+| Mon 05/10 | Rukmini Bapat     | Led stand-up meeting                                               | 
+| Tues 05/11| Anika Arora       | Led stand-up meeting                                               | 
+| Th 05/13  | Yvonne Liu        | Led stand-up meeting                                               |
