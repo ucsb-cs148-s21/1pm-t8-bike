@@ -1,14 +1,15 @@
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
-import React, { useState } from "react";
+import axios from 'axios';
+import React, { useState, Component } from "react";
 import { threads } from "./data";
 import { useParams } from "react-router";
 import PageNotFound from "./PageNotFound";
+import { Category, TransferWithinAStationSharp } from "@material-ui/icons";
 
 //const textStyle = {maxWidth: "100%", width: "700px"}
 
-// this is when you click on a post
 export default function ForumPost() {
   //var CommentList = [];
   const user = getUser();
@@ -151,3 +152,4 @@ export default function ForumPost() {
     </Layout>
   );
 }
+
