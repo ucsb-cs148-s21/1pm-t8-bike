@@ -66,7 +66,7 @@ import { threads } from "./data";
 //   );
 // }      
 
-const user = getUser();
+
 // Post Component
 const Post = props => (
   <li class="row">
@@ -87,12 +87,14 @@ const Post = props => (
 export default class ForumPost extends Component{
   constructor(props){
     super(props);
-    this.state = {posts: []};
+    this.state = {posts: [],user: getUser()};
     //this.isLoggedIn = getUser();
   }
+  
 
   // this function grabs the list of posts from db
   componentDidMount(){
+    console.log(this.state.user);
     axios.get('http://localhost:3001/posts') //get request
          .then(res=>{
            this.setState({posts: res.data}) //sets posts array to db array
@@ -133,18 +135,19 @@ export default class ForumPost extends Component{
       
   render(){
     return(
-      <Layout user={user}>
+      <Layout user={this.state.user}>
         <Container>
           <h1>Bike Forum</h1>
           <br></br>
           <div class="main">
             {/* Create new post (should only be for users) */}
-
-            {/* <div class="createPostBtn">
-              { user && <a href="forum/create-post">Create New Post</a>}  
-              { user && <br></br>}       
-            </div> */}
-
+            
+            { <div class="createPostBtn">
+              { this.state.user && <a href="forum/create-post">Create New Post</a>}  
+              { this.state.user && <br></br>}       
+            </div> } 
+            <pre>{JSON.stringify(this.state.user, null, 2)}</pre>
+          
             <ol>
               {this.postList()} {/*rendering all of container list elements*/}
             </ol>
