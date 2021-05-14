@@ -33,7 +33,7 @@ A map of UCSB's bike path that has features such as lost and found, traffic, and
 * Google OAuth
 * Google Maps
 
-* [Deployment Instructions](./docs/DEPLOY.md)
+# [Deployment Instructions](./docs/DEPLOY.md)
 
 # Functionality
 * First, login to your ucsb gmail account. There are four tabs to the website: Map, Lost & Found (L&F), Forum, Profile
