@@ -70,7 +70,6 @@ import React, {Component} from 'react';
 //   );
 // }
 
-const user = getUser();
 export default class ForumCreatePost extends Component{
   
   constructor(props){
@@ -84,6 +83,7 @@ export default class ForumCreatePost extends Component{
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     
+    
     // set 'this' with default values
     this.state = {
       //all the properties in db post, default values
@@ -94,6 +94,7 @@ export default class ForumCreatePost extends Component{
       numComments: 0,
       comments: [],
       date: new Date(),
+      user: getUser(),
 
     }// end this.state
 
@@ -165,7 +166,7 @@ export default class ForumCreatePost extends Component{
 
   render(){
     return(
-      <Layout user={user}>
+      <Layout user={this.state.user}>
         <Container>
           <h1>
             {" "}
