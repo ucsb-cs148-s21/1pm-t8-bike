@@ -33,5 +33,10 @@ Continue:
 * This particular retrospective went very well, and I think the recent MVP demo played a big part in guiding the direction we want to to continue working toward with the development of our product. 
 * In terms of advice I'd give to the next retrospective leader, I suggest choosing a simple outline and coming prepared with some ideas in order to facilitate discussion within the group at first.
 
-## Outcome
+## Retro Outcome Assessment
+
+* Based on the last retrospective our team planned to address the feedback we recieved within the MVP demo.
+* We chose to measure our outcome based on the progress of our kanban board, and whether we are able to label certain issues as "feedback"-related.
+* The outcome according to this metric was beneficial in that we were able to move MVP issues into the done category and assigned everyone to a new "feedback"-related issue which is currently in progress.
+* Based on this outcome, we plan to continue following a similar experiment, modified based on the feedback we recieve at the end of each sprint.
 

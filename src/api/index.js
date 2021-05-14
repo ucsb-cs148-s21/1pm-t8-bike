@@ -11,6 +11,9 @@ const mongoose = require('mongoose');
 
 //so it can read the .env from root dir
 require('dotenv').config({ path: '.env'});
+// =======
+// require('dotenv').config({ path: '../../.env'});
+// >>>>>>> main
 
 // create express server
 const app = express();
@@ -31,7 +34,6 @@ app.use('/posts',postsRouter);
 
 // connect uri db
 const uri = process.env.ATLAS_URI;
-console.log(uri);
 mongoose.connect(uri,{useNewUrlParser: true, useCreateIndex: true,useUnifiedTopology: true});
 const connection = mongoose.connection;
 
