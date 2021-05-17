@@ -1,13 +1,51 @@
-const express = require("express");
-const cors = require("cors");
-const PORT = process.env.PORT || 3001;
-const path = require("path");
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const path = require('path');
 
+// adding routes to schema
+const postsRouter = require('./routes/posts');
+
+// connect db
+const mongoose = require('mongoose');
+
+//so it can read the .env from root dir
+require('dotenv').config({ path: '.env'});
+// =======
+// require('dotenv').config({ path: '../../.env'});
+// >>>>>>> main
+
+// create express server
 const app = express();
 var corsOptions = {
   origin: "*",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
+
+// gets port
+const port = process.env.PORT || 3001;
+
+// middleware, allow parse json
+app.use(cors());
+app.use(express.json());
+//will load everything in postsRouter if on /posts directory
+app.use('/posts',postsRouter);
+
+
+// connect uri db
+const uri = process.env.ATLAS_URI;
+mongoose.connect(uri,{useNewUrlParser: true, useCreateIndex: true,useUnifiedTopology: true});
+const connection = mongoose.connection;
+
+// once the connection is open, db connection was established successfully
+connection.once('open',() => {
+  console.log("MongoDB database connection established successfully");
+});
+
+// listening to set port
+app.listen(port, () => {
+  console.log(`Server listening on ${port}`);
+});
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "../../build")));
@@ -21,6 +59,3 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../../build", "index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
