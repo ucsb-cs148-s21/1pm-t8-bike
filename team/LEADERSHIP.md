@@ -23,6 +23,8 @@
 | Th 05/13  | Yvonne Liu        | Led stand-up meeting                                               |
 | Fri 05/14 | Calvin Dougher    | Led lab06-pt1 and standup during 1pm section                       |
 | Mon 05/17 | Rukmini Bapat     | Led stand-up meeting                                               | 
+| Tues 05/18| Anika Arora       | Let stand-up meeting                                               | 
+
 
 * Product Owner: Yvonne
 * Scrum Master: Rukmini
