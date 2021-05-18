@@ -78,7 +78,7 @@ export default class ForumCreatePost extends Component{
     // link Component 'this' to the function 'this'
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
-    //this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeDate = this.onChangeDate.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -124,11 +124,11 @@ export default class ForumCreatePost extends Component{
   
   //new posts will always have zero comments and items in array
 
-  // onChangeDate(date){
-  //   this.setState({
-  //     date: date //e.target.value == textbox 
-  //   });
-  // }
+  onChangeDate(date){
+    this.setState({
+      date: date //e.target.value == textbox 
+    });
+  }
 
   // onSubmit button to create post
   onSubmit(e){

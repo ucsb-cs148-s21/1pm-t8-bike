@@ -5,6 +5,7 @@ import CheckingSignedIn from "./pages/CheckingSignedIn";
 import Map from "./pages/Map";
 import LostandFound from "./pages/LostandFound";
 import Forum from "./pages/Forum";
+//import ForumPost from "./pages/Forum_Post_OLD";
 import ForumPost from "./pages/Forum_Post";
 import Profile from "./pages/Profile";
 import Private from "./pages/Private";
@@ -68,7 +69,7 @@ export default function App() {
         />
         <Route exact path="/forum" component={() => <Forum/>} />
         <PrivateRoute path="/forum/create-post" component={() => <ForumCreatePost/>} />
-        <Route path="/forum/:id(\d+)" component={ForumPost} />
+        <Route path="/forum/:id" component={() => <ForumPost/>} />
         <PrivateRoute exact path="/profile" component={Profile} />
         <Route path="/" component={PageNotFound} />
       </Switch>
