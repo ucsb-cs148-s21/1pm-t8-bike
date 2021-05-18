@@ -1,4 +1,4 @@
-import React, {Compo} from "react";
+import React from "react";
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import { Button } from "@material-ui/core";
@@ -7,8 +7,6 @@ import getUser from "../utils/get-user";
 import { threads } from "./dataLF";
 
 const cardStyle = { maxWidth: "100%", width: "150px", height: "auto" };
-
-const textStyle = { maxWidth: "100%", width: "700px" };
 
 export default function LostandFound() {
   const user = getUser();
@@ -25,15 +23,17 @@ export default function LostandFound() {
       </Button>
     );
   } else {
-    var createPost = <Button
-    data-testid="createPost"
-    variant="contained"
-    color="primary"
-    href="lostandfound/create-post"
-    disabled
-  >
-    Create Post
-  </Button>;
+    createPost = (
+      <Button
+        data-testid="createPost"
+        variant="contained"
+        color="primary"
+        href="lostandfound/create-post"
+        disabled
+      >
+        Create Post
+      </Button>
+    );
   }
 
   console.log(threads);

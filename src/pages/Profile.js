@@ -1,26 +1,53 @@
-import { Card } from "@material-ui/core";
 import React from "react";
 import Container from "react-bootstrap/Container";
 import Layout from "../components/Layout";
 import getUser from "../utils/get-user";
-import { bio, itinerary } from "./dataProfile";
+import Card from "react-bootstrap/Card";
+import { TextField, Button } from "@material-ui/core"
+import { bio, itinerary, cache } from "./dataProfile";
 
 const profileStyle = { maxWidth: "100%", width: "100px", height: "auto" };
 
 export default function Profile() {
   const user = getUser();
 
-  var container = [];
+  console.log(itinerary);
+  var schedule = [];
   for (let i = 0; i < itinerary.length; i++) {
     var html = (
       <Card style={{width: "18 rem"}}>
         <Card.Body>
-          <Card.Title>{threads[i].item}</Card.Title>
-          <Card.Subtitle>{threads[i].author}</Card.Subtitle>
-          <Card.Text>{threads[i].desc}</Card.Text>
-        <Card.Body />
-      <Card />
+          <Card.Title>{itinerary[i].course}</Card.Title>
+          <Card.Subtitle>{itinerary[i].location}</Card.Subtitle>
+          <Card.Text >
+            {itinerary[i].days}&nbsp;
+            {itinerary[i].start.substr(0,2) % 12}:{itinerary[i].start.substr(2,2)} {parseInt(itinerary[i].start.substr(0,2)) >= 12 ? "pm" : "am"} -&nbsp;
+            {itinerary[i].end.substr(0,2) % 12}:{itinerary[i].end.substr(2,2)} {parseInt(itinerary[i].end.substr(0,2)) >= 12 ? "pm" : "am"}
+          </Card.Text>
+        </Card.Body >
+      </Card >
     );
+    schedule.push(html);
+    schedule.push(<br />);
+  }
+
+  console.log(cache);
+  var history = [];
+  for (let i = 0; i < cache.length; i++) {
+    var html = (
+      <Card style={{width: "18 rem"}}>
+        <Card.Body>
+          <Card.Title>{cache[i].item}</Card.Title>
+          <Card.Subtitle>{cache[i].author}</Card.Subtitle>
+          <Card.Text>{cache[i].desc}</Card.Text>
+        </Card.Body >
+        <Card.Footer>
+          {cache[i].date}
+        </Card.Footer>
+      </Card >
+    );
+    history.push(html);
+    history.push(<br />);
   }
 
   return (
@@ -34,7 +61,10 @@ export default function Profile() {
           Bio: {bio}
         </div>
         <div>
-          Schedule: {container}
+          Schedule: {schedule}
+        </div>
+        <div>
+          History: {history}
         </div>
       </Container>
     </Layout>
