@@ -2,15 +2,15 @@ import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
 import { threads } from "./dataLF";
+import { cache } from "./dataProfile";
 import { Button, TextField } from "@material-ui/core";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
 const textStyle = { maxWidth: "100%", width: "700px" };
 
 function UploadButton() {
   return (
     <div>
-      <input accept="image/*" id="contained-button-file" multiple type="file" />
+      <input accept="image/*" id="contained-button-file" type="file" />
     </div>
   );
 }
@@ -28,6 +28,7 @@ export default function LFCreatePost() {
         desc: document.getElementById("desc").value,
         img: document.getElementById("contained-button-file").accept,
       };
+      cache.push(newPost);
       threads.push(newPost);
       console.log(threads);
 
