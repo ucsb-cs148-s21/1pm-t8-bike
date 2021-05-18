@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Post = require('../models/post.model');
+let Comment = require('../models/comment.model');
 
 // get all posts info from db
 router.route('/').get((req,res) => {
@@ -16,8 +17,10 @@ router.route('/add').post((req,res) => {
     const title = req.body.title;
     const description = req.body.description;
     const date = req.body.date;
+    const comments = [];
+    const numComments = 0;
 
-    const newPost = new Post({username,category,title,description,date});
+    const newPost = new Post({username,category,title,description,date,comments,numComments});
 
     newPost.save()
         .then(() => res.json('Post added!'))
@@ -59,6 +62,36 @@ router.route('/update/:id').post((req,res) => {
         .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
 
 }); //ends update specific post
+
+// adds a comment
+router.route('/update/:id/add-comment').post((req,res) => {
+    //args for comment
+    Post.findById(req.params.id)
+        .then(post => {
+            const comment = {
+                username: req.body.username,
+                description: req.body.description,
+                date: Date.parse(req.body.date),
+            }
+        
+            //push comment to comments array
+            post.comments.push(comment);
+            post.numComments = post.comments.length;
+        
+            post.save()
+                .then(() => res.json('Comment added!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
+})
+
+//get all the comments in post and returns it
+router.route('/:id/get-comments').get((req,res) => {
+    //get the post from id
+    Post.findById(req.params.id)
+        .then(post => res.json(post.comments)) //if found, return post.comments
+        .catch(err => res.status(400).json('Error: ' + err)); //if not, throw err
+})
 
 // in future, will add ability to add comments and update numComments
 module.exports = router;
