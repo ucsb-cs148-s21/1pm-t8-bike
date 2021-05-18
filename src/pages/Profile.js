@@ -37,9 +37,10 @@ export default function Profile() {
     var html = (
       <Card style={{width: "18 rem"}}>
         <Card.Body>
-          <Card.Title>{cache[i].item}</Card.Title>
-          <Card.Subtitle>{cache[i].author}</Card.Subtitle>
-          <Card.Text>{cache[i].desc}</Card.Text>
+          <Card.Title>{cache[i].title}</Card.Title>
+          <Card.Subtitle>{cache[i].category}</Card.Subtitle>
+          <Card.Text>{cache[i].description}</Card.Text>
+          <Button variant="primary" onClick="">Close Post</Button>
         </Card.Body >
         <Card.Footer>
           {cache[i].date}
@@ -55,16 +56,18 @@ export default function Profile() {
       <Container>
         <h1>{user.fullName}</h1>
         <img src={user.imageUrl} style={profileStyle} alt="profilePic" />
+        <br />
+        <br />
         <div>Email: {user.email}</div>
         <br />
+        <div>Bio: {bio}</div>
         <div>
-          Bio: {bio}
+          <h2>Schedule</h2>
+          {schedule}
         </div>
         <div>
-          Schedule: {schedule}
-        </div>
-        <div>
-          History: {history}
+          <h2>History</h2>
+          {history}
         </div>
       </Container>
     </Layout>

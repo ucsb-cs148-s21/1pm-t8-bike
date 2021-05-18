@@ -22,10 +22,11 @@ var itinerary = [
 var cache = [
   {
     id: 1,
-    item: "Hydroflask",
     author: "Calvin Dougher",
+    category: "Lost and Found",
+    title: "Hydroflask",
+    description: "Light blue with UCSB sticker",
     date: Date(),
-    desc: "Light blue with UCSB sticker",
     img: Hydro
   }
 ];
