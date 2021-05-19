@@ -15,6 +15,15 @@ import {
   labelIndex,
 } from "react-google-maps";
 
+export function isSameCrash(long1,lati1 ,long2, lati2){
+  //200ft range: .000544 for long, .000664 for lati
+  if(Math.abs(long1-long2) <= 0.000544 && Math.abs(lati1-lati2) <= 0.000664){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
 
 function MyMap() {
   return (
