@@ -1,6 +1,6 @@
 const router = require('express').Router();
 let Post = require('../models/post.model');
-let Comment = require('../models/comment.model');
+//let Comment = require('../models/comment.model');
 
 // get all posts info from db
 router.route('/').get((req,res) => {
@@ -75,7 +75,7 @@ router.route('/update/:id/add-comment').post((req,res) => {
             }
         
             //push comment to comments array
-            post.comments.push(comment);
+            post.comments = [comment].concat(post.comments);
             post.numComments = post.comments.length;
         
             post.save()
