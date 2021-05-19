@@ -11,6 +11,7 @@ import Private from "./pages/Private";
 import PageNotFound from "./pages/PageNotFound";
 import LFCreatePost from "./pages/LF_Create_Post";
 import ForumCreatePost from "./pages/Forum_Create_Post";
+import Home_Page from "./pages/Home_Page"; 
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
@@ -60,7 +61,7 @@ export default function App() {
           from="/:url*(/+)"
           to={window.location.pathname.slice(0, -1)}
         />
-        <Route exact path="/" component={Map} />
+        <Route exact path="/" component={Home_Page} />
         <Route exact path="/lostandfound" component={LostandFound} />
         <PrivateRoute
           path="/lostandfound/create-post"
