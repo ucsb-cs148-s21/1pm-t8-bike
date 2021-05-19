@@ -2,6 +2,20 @@ const router = require('express').Router();
 let Post = require('../models/post.model');
 //let Comment = require('../models/comment.model');
 
+const multer = require('multer');
+//let uuidv4 = require('uuid/v4');
+
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, './public/uploads/')
+    },
+    filename: (req, file, callback) => {
+        callback(null, file.originalname)
+    }
+});
+
+const upload = multer({ storage: storage,});
+
 // get all posts info from db
 router.route('/').get((req,res) => {
     Post.find()
@@ -11,16 +25,21 @@ router.route('/').get((req,res) => {
 }); // end get all 
 
 // add a new post to db
-router.route('/add').post((req,res) => {
+router.route('/add').post(upload.single("img"),(req,res) => {
     const username = req.body.username;
     const category = req.body.category;
     const title = req.body.title;
     const description = req.body.description;
     const date = req.body.date;
+    //optional to include img
+    var img = '';
+    if(req.file){
+        img = req.file.originalname;
+    }
     const comments = [];
     const numComments = 0;
 
-    const newPost = new Post({username,category,title,description,date,comments,numComments});
+    const newPost = new Post({username,category,title,description,date,img,comments,numComments});
 
     newPost.save()
         .then(() => res.json('Post added!'))
@@ -45,7 +64,7 @@ router.route('/:id').delete((req,res) => {
 
 }); //end del specific post
 
-router.route('/update/:id').post((req,res) => {
+router.route('/update/:id').post(upload.single("img"),(req,res) => {
     Post.findById(req.params.id)
         .then(post => {
             post.username = req.body.username;
@@ -53,6 +72,7 @@ router.route('/update/:id').post((req,res) => {
             post.title = req.body.title;
             post.description = req.body.description;
             post.date = Date.parse(req.body.date);
+            post.img = req.file.originalname;
 
             // saving updated post
             post.save()

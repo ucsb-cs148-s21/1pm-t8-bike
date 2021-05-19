@@ -16,6 +16,11 @@ const postSchema = new Schema(
     title: {type: String, required: true},
     description: {type: String, required: true},
     date: {type: Date, required: true},
+    img:
+    {   
+        type: String,
+        required: false,
+    },
     comments: [commentSchema],
     //numComments: comments.length, //keeps track of comments length
     numComments: {type: Number, required: true, default: 0 },

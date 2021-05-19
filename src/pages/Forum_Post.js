@@ -15,14 +15,18 @@ const Post = props => (
             <h4 class="title">
                 {props.post.title}
             </h4>  
-            <div class="root-description">
-                {props.post.description}
-            </div>
-            <div class="bottom">
+            <div class="info-line">
                 <p class="info-line">
                 <span class="author">{props.post.username}</span> - <span class="date">{(props.post.date).toString().substring(0,10)}</span> - <span class="comment-count">{props.post.numComments} comments</span>
                 </p>
             </div>
+            <div class="root-description">
+                {props.post.description}
+            </div>
+            <div className="pic">
+                <img src={`/uploads/${props.post.img}`} alt={`${props.post.img}`} style={{width: "50%", height: "auto"}}/>
+            </div>
+            
         </div> 
 )
 
@@ -73,7 +77,7 @@ class ForumPost extends Component{
         this.commentDate = new Date();
     
         this.state = { 
-            post: {username: '',category: '',title: '',description: '',numComments: 0,comments: [],date: new Date(),},
+            post: {username: '',category: '',title: '',description: '',img: '', numComments: 0,comments: [],date: new Date(),},
             comments: [], 
             user: getUser(), 
         }
