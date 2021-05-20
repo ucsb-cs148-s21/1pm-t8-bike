@@ -5,22 +5,28 @@ import React, { useState, useEffect } from "react";
 import Map from "./Map"; 
 import Marker from './Marker';
 
-function addMarker(setPosition) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var lat=position.coords.latitude;
-        var lng=position.coords.longitude;
-        console.log(lat); 
-        console.log(lng);
-        setPosition({"lat":lat,"lng":lng});
-    });
+// function setPositions (current => [...current, {
+//     // lat: event.latlng.lat(),
+//     // lng: event.latlng.lng(),
+//     time: new Date(),
+// }]);
 
-}
+// function addMarker(setPositions) {
+//     //get current time and add that to the marker 
+//     navigator.geolocation.getCurrentPosition(function(position) {
+//         var lat=position.coords.latitude;
+//         var lng=position.coords.longitude;
+//         console.log(lat); 
+//         console.log(lng);
+//     }); 
+// }
+
 
 
 export default function Home_Page() {
     const user = getUser();
     const [data, setData] = useState("test");
-    const [position, setPosition] = useState("test"); //create positions array 
+    const [positions, setPositions] = useState([]); //create positions array 
     // useEffect(() => {
     //     fetch(`${process.env.REACT_APP_SERVER_URL}/api`) 
     //     .then((res) => res.json())
@@ -35,12 +41,17 @@ export default function Home_Page() {
             <br />
             <br />
             <div style={{ width: "75vw", height: "75vh" }}>
-                <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} position={position}></Map>
+                <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
             </div>
         </Container>
         <Container >
             <button style={{float: "right"}} href="tel:18058932000">CALL CSO</button>
-            <button style={{float: "right"}} onClick={() => addMarker(setPosition)}>Report</button>
+            <button style={{float: "right"}} 
+                onClick={(event) => setPositions(current => [...current, {
+                    lat: event.latlng.lat(),
+                    lng: event.latlng.lng(),
+                    time: new Date(),
+                }])}>Report</button>
         </Container>
         </Layout>
     ); 
