@@ -7,34 +7,26 @@ import { Button, TextField } from "@material-ui/core";
 
 const textStyle = { maxWidth: "100%", width: "700px" };
 
-function UploadButton() {
-  return (
-    <div>
-      <input accept="image/*" id="contained-button-file" type="file" />
-    </div>
-  );
-}
-
 export default function LFCreatePost() {
   const user = getUser();
 
   function createPost() {
-    if (document.getElementById("item").value !== "") {
+    if (document.getElementById("title").value !== "" && document.getElementById("description").value !== "") {
       var newPost = {
         id: threads.length + 1,
-        item: document.getElementById("item").value,
+        item: document.getElementById("title").value,
         author: user,
         date: Date(),
-        desc: document.getElementById("desc").value,
-        img: document.getElementById("contained-button-file").accept,
+        desc: document.getElementById("description").value,
+        img: document.getElementById("image").accept,
       };
       cache.push(newPost);
       threads.push(newPost);
       console.log(threads);
 
       //clear all inputs
-      document.getElementById("item").value = "";
-      document.getElementById("desc").value = "";
+      document.getElementById("title").value = "";
+      document.getElementById("description").value = "";
 
       //go back to forum main page
       window.location.href = "/lostandfound";
@@ -49,24 +41,22 @@ export default function LFCreatePost() {
         <br></br>
         <body>
           <form autoComplete="off">
-            <TextField required id="item" label="Item" />
+            <TextField required id="title" label="Title" />
             <br />
             <TextField
               required
-              id="desc"
               multiline
               rowsMax={3}
+              id="description"
               label="Description"
             />
             <br />
             <br />
-            <input
-              accept="images/*"
-              id="contained-button-file"
-              multiple
-              type="file"
-            />
-            <br />
+              <input
+                accept="images/*"
+                id="image"
+                type="file"
+              />
             <br />
             <Button onClick={createPost}>Create</Button>
           </form>
