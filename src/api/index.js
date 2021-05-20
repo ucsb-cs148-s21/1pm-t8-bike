@@ -11,9 +11,6 @@ const mongoose = require('mongoose');
 
 //so it can read the .env from root dir
 require('dotenv').config({ path: '.env'});
-// =======
-// require('dotenv').config({ path: '../../.env'});
-// >>>>>>> main
 
 // create express server
 const app = express();
