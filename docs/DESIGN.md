@@ -1,8 +1,8 @@
-# UCSB Bike Design Docuement
+# UCSB Bike Design Document
 
 ## Architecture Diagram
 
-![Lab6PT1Diagram](https://user-images.githubusercontent.com/56051313/119193971-3fb92d00-ba37-11eb-8245-699bc4a1c890.png)
+![Lab6PT1Diagram](https://user-images.githubusercontent.com/56051313/119194521-0f25c300-ba38-11eb-821e-ba5239b92ff3.png)
 
 ## Architecture Description
 
