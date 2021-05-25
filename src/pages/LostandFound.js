@@ -1,4 +1,4 @@
-import React, {Compo} from "react";
+import React from "react";
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import { Button } from "@material-ui/core";
@@ -6,9 +6,7 @@ import Card from "react-bootstrap/Card";
 import getUser from "../utils/get-user";
 import { threads } from "./dataLF";
 
-const cardStyle = { maxWidth: "100%", width: "150px", height: "auto" };
-
-const textStyle = { maxWidth: "100%", width: "700px" };
+const cardStyle = { maxWidth: "150px", maxHeight: "150px", width: "auto" };
 
 export default function LostandFound() {
   const user = getUser();
@@ -25,28 +23,29 @@ export default function LostandFound() {
       </Button>
     );
   } else {
-    var createPost = <Button
-    data-testid="createPost"
-    variant="contained"
-    color="primary"
-    href="lostandfound/create-post"
-    disabled
-  >
-    Create Post
-  </Button>;
+    createPost = (
+      <Button
+        data-testid="createPost"
+        variant="contained"
+        color="primary"
+        href="lostandfound/create-post"
+        disabled
+      >
+        Create Post
+      </Button>
+    );
   }
 
   console.log(threads);
   var container = [];
   for (let i = 0; i < threads.length; i++) {
-    console.log(threads[i].img);
     var html = (
       <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" style={cardStyle} src={threads[i].img} />
+        <Card.Img variant="top" style={cardStyle} src={threads[i].image} />
         <Card.Body>
-          <Card.Title>{threads[i].item}</Card.Title>
+          <Card.Title>{threads[i].title}</Card.Title>
           <Card.Subtitle>{threads[i].author}</Card.Subtitle>
-          <Card.Text>{threads[i].desc}</Card.Text>
+          <Card.Text>{threads[i].description}</Card.Text>
           <Button variant="primary" onClick="">
             View Route
           </Button>

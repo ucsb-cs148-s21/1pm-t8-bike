@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const commentSchema = new Schema(
+    {
+        username: {type:String, required: true, trim: true},
+        description: {type: String, required: true},
+        date: {type: Date, required: true},
+    }
+)
 const postSchema = new Schema(
 {   
     //_id: Schema.Types.ObjectId,
@@ -9,7 +16,12 @@ const postSchema = new Schema(
     title: {type: String, required: true},
     description: {type: String, required: true},
     date: {type: Date, required: true},
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment', default: []}],
+    img:
+    {   
+        type: String,
+        required: false,
+    },
+    comments: [commentSchema],
     //numComments: comments.length, //keeps track of comments length
     numComments: {type: Number, required: true, default: 0 },
     

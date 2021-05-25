@@ -4,20 +4,22 @@ import Frisbee from "../images/frisbee.jpg";
 var threads = [
   {
     id: 1,
-    item: "Hydroflask",
     author: "Calvin Dougher",
+    catergory: "Lost and Found",
+    title: "Hydroflask",
+    description: "Light blue with UCSB sticker",
     date: Date(),
-    desc: "Light blue with UCSB sticker",
-    img: Hydro,
+    image: Hydro
   },
   {
     id: 2,
-    item: "Frisbee",
     author: "Duncan Brin",
+    category: "Lost and Found",
+    title: "Frisbee",
+    description: "White with Black Tide logo",
     date: Date(),
-    desc: "White with Black Tide logo",
-    img: Frisbee,
-  },
+    image: Frisbee
+  }
 ];
 
 export { threads };

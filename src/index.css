@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -5,9 +6,64 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
+
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.imageBox {
+  position: relative;
+  width: 100%;
+  opacity: 1;
+}
+
+.memberImg{
+  width: 50%;
+  height: auto;
+  transition: opacity 0.6s;
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  float: left;
+}
+
+.h3-member-name {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 20px;
+  color: black;
+  font-weight: 600;
+  margin-top: 5px;
+  margin-bottom: 0;
+  padding-bottom: 0;  
+}
+
+.p-member-role{
+  font-family: 'Quicksand', sans-serif;
+  font-size: 18px;
+  color: black;
+  margin: 0;
+  padding: 0;
+  font-weight: 500;  
+}
+
+.p-member-description {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 17px;
+  color: black;
+  margin-top: 15px;  
+}
+
+.paragraph-text {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 17px;
+  color: black;
+  text-align: center;
+}
+

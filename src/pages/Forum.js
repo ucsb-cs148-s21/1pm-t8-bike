@@ -70,7 +70,7 @@ import { threads } from "./data";
 // Post Component
 const Post = props => (
   <li class="row">
-    <a href={`/forum/${props.key}`}>
+    <a href={`/forum/${props.post._id}`}>
       <h4 class="title">
         {props.post.title} <small>{props.post.category}</small>
       </h4>
@@ -146,7 +146,7 @@ export default class ForumPost extends Component{
               { this.state.user && <a href="forum/create-post">Create New Post</a>}  
               { this.state.user && <br></br>}       
             </div> } 
-            <pre>{JSON.stringify(this.state.user, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(this.state.user, null, 2)}</pre> */}
           
             <ol>
               {this.postList()} {/*rendering all of container list elements*/}

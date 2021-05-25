@@ -78,9 +78,10 @@ export default class ForumCreatePost extends Component{
     // link Component 'this' to the function 'this'
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
-    //this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeDate = this.onChangeDate.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeImg = this.onChangeImg.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     
     
@@ -91,6 +92,7 @@ export default class ForumCreatePost extends Component{
       category: '',
       title: '',
       description: '',
+      img: '',
       numComments: 0,
       comments: [],
       date: new Date(),
@@ -121,34 +123,50 @@ export default class ForumCreatePost extends Component{
       description: e.target.value //e.target.value == textbox 
     });
   }
+  onChangeImg(e){
+    this.setState({
+      img: e.target.files[0] //e.target.value == textbox 
+    });
+  }
   
   //new posts will always have zero comments and items in array
 
-  // onChangeDate(date){
-  //   this.setState({
-  //     date: date //e.target.value == textbox 
-  //   });
-  // }
+  onChangeDate(date){
+    this.setState({
+      date: date //e.target.value == textbox 
+    });
+  }
 
   // onSubmit button to create post
   onSubmit(e){
     e.preventDefault(); // does not set post as default, instead set as below
-
-    const post = {
-      username: this.state.username,
-      category: this.state.category,
-      title: this.state.title,
-      description: this.state.description,
-      date: this.state.date,
-      numComments: this.state.numComments,
-      comments: this.state.comments
-    }
+    
+    const formData = new FormData();
+    formData.append("username", this.state.username);
+    formData.append("category", this.state.category);
+    formData.append("title", this.state.title);
+    formData.append("description", this.state.description);
+    formData.append("date", this.state.date);
+    formData.append("img", this.state.img);
+    formData.append("numComments", this.state.numComments);
+    formData.append("comments", this.state.comments);
+    
+    // const post = {
+    //   username: this.state.username,
+    //   category: this.state.category,
+    //   title: this.state.title,
+    //   description: this.state.description,
+    //   date: this.state.date,
+    //   img: this.state.img,
+    //   numComments: this.state.numComments,
+    //   comments: this.state.comments
+    // }
 
     //prints out what is going to be posted
-    console.log(post);
+    //console.log(post);
 
     //add to db
-    axios.post('http://localhost:3001/posts/add/',post)
+    axios.post('http://localhost:3001/posts/add/',formData)
          .then(res => console.log(res.data));
 
     // redirect back to the forums page
@@ -176,7 +194,7 @@ export default class ForumCreatePost extends Component{
           <br></br>
           
           <div>
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.onSubmit} encType="multipart/form-data">
 
               {/*write a username */}
               <div className="form-group">
@@ -225,6 +243,17 @@ export default class ForumCreatePost extends Component{
                       className="form-control"
                       value={this.state.description}
                       onChange={this.onChangeDescription}
+                />
+              </div>
+
+              {/* upload image */}
+              <div className="form-group">
+                <label htmlFor="file">Image: </label>
+                <input type="file"  
+                       filename="img"
+                       className="form-control-file"
+                       accept="image/jpg, image/jpeg, image/png"
+                       onChange={this.onChangeImg}
                 />
               </div>
 

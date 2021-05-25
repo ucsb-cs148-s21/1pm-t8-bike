@@ -5,6 +5,7 @@ import CheckingSignedIn from "./pages/CheckingSignedIn";
 import Map from "./pages/Map";
 import LostandFound from "./pages/LostandFound";
 import Forum from "./pages/Forum";
+//import ForumPost from "./pages/Forum_Post_OLD";
 import ForumPost from "./pages/Forum_Post";
 import Profile from "./pages/Profile";
 import Private from "./pages/Private";
@@ -12,6 +13,7 @@ import PageNotFound from "./pages/PageNotFound";
 import LFCreatePost from "./pages/LF_Create_Post";
 import ForumCreatePost from "./pages/Forum_Create_Post";
 import Home_Page from "./pages/Home_Page"; 
+import AboutUs from "./pages/AboutUs"; 
 
 export default function App() {
   const [isSignedIn, setIsSignedIn] = useState(null);
@@ -63,13 +65,14 @@ export default function App() {
         />
         <Route exact path="/" component={Home_Page} />
         <Route exact path="/lostandfound" component={LostandFound} />
+        <Route exact path="/aboutus" component={AboutUs} />
         <PrivateRoute
           path="/lostandfound/create-post"
           component={LFCreatePost}
         />
         <Route exact path="/forum" component={() => <Forum/>} />
         <PrivateRoute path="/forum/create-post" component={() => <ForumCreatePost/>} />
-        <Route path="/forum/:id(\d+)" component={ForumPost} />
+        <Route path="/forum/:id" component={() => <ForumPost/>} />
         <PrivateRoute exact path="/profile" component={Profile} />
         <Route path="/" component={PageNotFound} />
       </Switch>
