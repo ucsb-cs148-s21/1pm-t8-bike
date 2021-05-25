@@ -20,7 +20,7 @@ const Post = props => (
             </h6>
             <div className="info-line">
                 <p className="info-line">
-                <span className="author">{props.post.username}</span> - <span className="date">{(props.post.date).toString().substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span> <input type="button" value="Delete Post" style={{float: "right"}} onClick={() => {props.deletePost()}}/> <input type="button" value="Edit Post" style={{float: "right"}} onClick={() => {props.editPost()}}/>
+                <span className="author">{props.post.username}</span> - <span className="date">{(props.post.date).toString().substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span> <input type="button" value="Delete Post" style={{float: "right"}} onClick={() => {props.deletePost()}}/> <input type="button" value="Edit Post" style={{float: "right"}} onClick={() => {props.editPost()}}/> <input type="button" value="Change Status" style={{float: "right"}} onClick={() => {props.changeStatus()}}/>
                 </p>
             </div>
             <hr></hr>
@@ -100,7 +100,7 @@ class ForumPost extends Component{
         this.commentEditDate = new Date();
     
         this.state = { 
-            post: {username: '',category: '',title: '',description: '',img: '', state: '', numComments: 0,comments: [],date: new Date(),},
+            post: {username: '',category: '',title: '',description: '',img: '', status: '', numComments: 0,comments: [],date: new Date(),},
             comments: [], 
             user: getUser(), 
         }
@@ -146,7 +146,7 @@ class ForumPost extends Component{
     //return the post in format
     viewPost(){
             //console.log("viewPost(): " + JSON.stringify(this.state.post,null,2));
-            return <Post post = {this.state.post} deletePost={this.deletePost} editPost={this.editPost} />
+            return <Post post = {this.state.post} deletePost={this.deletePost} editPost={this.editPost} changeStatus={this.changeStatus} />
              
     }// end viewPost
 
@@ -282,39 +282,39 @@ class ForumPost extends Component{
         //when clicked will check state status, if closed=>open, open=>closed
         //do an update in db and get post again
         const updatedStatus = new FormData();
-        updatedStatus.append("username", this.state.username);
-        updatedStatus.append("category", this.state.category);
-        updatedStatus.append("title", this.state.title);
-        updatedStatus.append("description", this.state.description);
-        updatedStatus.append("date", this.state.date);
-        updatedStatus.append("img", this.state.img);
-        updatedStatus.append("numComments", this.state.numComments);
-        updatedStatus.append("comments", this.state.comments);
+        updatedStatus.append("username", this.state.post.username);
+        updatedStatus.append("category", this.state.post.category);
+        updatedStatus.append("title", this.state.post.title);
+        updatedStatus.append("description", this.state.post.description);
+        updatedStatus.append("date", this.state.post.date);
+        updatedStatus.append("img", this.state.post.img);
+        updatedStatus.append("numComments", this.state.post.numComments);
+        updatedStatus.append("comments", this.state.post.comments);
 
-        if(this.status === "CLOSED"){          
+        if(this.state.post.status === "CLOSED"){          
             updatedStatus.append("status", "OPEN");        
         }
-        else if(this.status === "OPEN"){          
+        else if(this.state.post.status === "OPEN"){          
             updatedStatus.append("status", "CLOSED");        
         }
         else{
             updatedStatus.append("status","");
         }
 
+        // update post in db
         axios.post(`http://localhost:3001/posts/update/${this.postID}`,updatedStatus)
             .then(res => {
-            console.log(res.data); 
+                console.log(res.data); 
+                //re get the post info and update, no need to update comments as its the same
+                axios.get(`http://localhost:3001/posts/${this.postID}`)
+                .then(res=>{
+                    console.log("compDidMount: get post from db");
+                    this.setState({post: res.data})
+                })
+                .catch(err => {
+                    console.log(err);
+                })
             })
-
-        //re get the post info and update, no need to update comments as its the same
-        axios.get(`http://localhost:3001/posts/${this.postID}`)
-        .then(res=>{
-            console.log("compDidMount: get post from db");
-            this.setState({post: res.data})
-        })
-        .catch(err => {
-            console.log(err);
-        })
     
     }
 

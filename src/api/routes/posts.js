@@ -28,6 +28,35 @@ router.route('/').get((req,res) => {
 
 }); // end get all 
 
+// get all Announcement posts info from db
+router.route('/Announcements').get((req,res) => {
+    Post.find({ category: "Announcement" })
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Lost and Found posts info from db
+router.route('/Lost-And-Founds').get((req,res) => {
+    Post.find({ category: 
+        "Lost and Found" })
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Crash Report posts info from db
+router.route('/Crash-Reports').get((req,res) => {
+    Post.find({ category: "Crash Report" })
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Others posts info from db
+router.route('/Others').get((req,res) => {
+    Post.find({ category: "Other" })
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 // add a new post to db
 router.route('/add').post(upload.single("img"),(req,res) => {
     const username = req.body.username;

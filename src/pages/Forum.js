@@ -4,6 +4,7 @@ import axios from 'axios';
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
 import { threads } from "./data";
+import { ThreeSixtySharp } from "@material-ui/icons";
 
 //const textStyle = {maxWidth: "100%", width: "700px"}
 
@@ -22,8 +23,8 @@ const Post = props => (
         </p>
       </div>
     </a>
-    <p className="buttons" style={{"font-size":"10px"}}>
-        <input type="button" value="Delete Post" style={{float: "center"}} onClick={() => {props.deletePost()}}/> <input type="button" value="Edit Post" style={{float: "center"}} onClick={() => {props.editPost()}}/>
+    <p className="buttons" style={{"fontSize":"10px"}}>
+        <input type="button" value="Delete Post" style={{float: "center"}} onClick={() => {props.deletePost()}}/> <input type="button" value="Edit Post" style={{float: "center"}} onClick={() => {props.editPost()}}/> <input type="button" value="Change Status" style={{float: "center"}} onClick={() => {props.changeStatus()}}/>
     </p>
   </li>
 )
@@ -35,7 +36,8 @@ export default class ForumPost extends Component{
     this.editPost = this.editPost.bind(this);
     this.deletePost = this.deletePost.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
-    this.state = {posts: [],user: getUser()};
+    this.onChangeFilter = this.onChangeFilter.bind(this);
+    this.state = {posts: [],user: getUser(),filter: "All"};
     //this.isLoggedIn = getUser();
   }
   
@@ -85,44 +87,48 @@ export default class ForumPost extends Component{
   }
 
   /* change the status, if open -> closed, closed -> open */
-  changeStatus(){
-      //when clicked will check state status, if closed=>open, open=>closed
-      //do an update in db and get post again
-      const updatedStatus = new FormData();
-      updatedStatus.append("username", this.state.username);
-      updatedStatus.append("category", this.state.category);
-      updatedStatus.append("title", this.state.title);
-      updatedStatus.append("description", this.state.description);
-      updatedStatus.append("date", this.state.date);
-      updatedStatus.append("img", this.state.img);
-      updatedStatus.append("numComments", this.state.numComments);
-      updatedStatus.append("comments", this.state.comments);
+  changeStatus(id){
+    //when clicked will check state status, if closed=>open, open=>closed
+    //do an update in db and get post again
+    
+    //get info of specific post
+    axios.get(`http://localhost:3001/posts/${id}`)
+         .then(res => {
+            const updatedStatus = new FormData();
+            updatedStatus.append("username", res.data.username);
+            updatedStatus.append("category", res.data.category);
+            updatedStatus.append("title", res.data.title);
+            updatedStatus.append("description", res.data.description);
+            updatedStatus.append("date", res.data.date);
+            updatedStatus.append("img", res.data.img);
+            updatedStatus.append("numComments", res.data.numComments);
+            updatedStatus.append("comments", res.data.comments);
 
-      if(this.status === "CLOSED"){          
-          updatedStatus.append("status", "OPEN");        
-      }
-      else if(this.status === "OPEN"){          
-          updatedStatus.append("status", "CLOSED");        
-      }
-      else{
-          updatedStatus.append("status","");
-      }
+            if(res.data.status === "CLOSED"){          
+              updatedStatus.append("status", "OPEN");        
+            }
+            else if(res.data.status === "OPEN"){          
+                updatedStatus.append("status", "CLOSED");        
+            }
+            else{
+                updatedStatus.append("status","");
+            }
 
-      axios.post(`http://localhost:3001/posts/update/${this.postID}`,updatedStatus)
-          .then(res => {
-          console.log(res.data); 
-          })
-
-      //re get the post info and update, no need to update comments as its the same
-      axios.get(`http://localhost:3001/posts/${this.postID}`)
-      .then(res=>{
-          console.log("compDidMount: get post from db");
-          this.setState({post: res.data})
-      })
-      .catch(err => {
-          console.log(err);
-      })
-  
+            // update post in db
+            axios.post(`http://localhost:3001/posts/update/${id}`,updatedStatus)
+            .then(res => {
+                console.log(res.data); 
+                //re get the forum db from mongo
+                axios.get(`http://localhost:3001/posts/`)
+                .then(res=>{
+                    console.log("compDidMount: get post from db");
+                    this.setState({posts: res.data})
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            })
+         })
   }
 
   // returns each individual post component
@@ -132,6 +138,7 @@ export default class ForumPost extends Component{
                    key = {currPost._id}
                    deletePost={() => this.deletePost(currPost._id)}
                    editPost={() => this.editPost(currPost._id)}
+                   changeStatus={() => this.changeStatus(currPost._id)}
              />
     })
 
@@ -156,19 +163,87 @@ export default class ForumPost extends Component{
       }
   }
       
+  // will rerender state 'posts' as just the category it chooses
+  onChangeFilter(e){
+    this.setState({
+      filter : e.target.value,
+    },() => {
+      if(this.state.filter === "All"){
+        axios.get('http://localhost:3001/posts') //get request
+              .then(res=>{
+                this.setState({posts: res.data}) //sets posts array to db array
+              }) 
+              .catch(err => {
+                console.log(err);
+              })
+      }
+      else if(this.state.filter === "Announcements"){
+        axios.get('http://localhost:3001/posts/Announcements') //get request
+              .then(res=>{
+                this.setState({posts: res.data}) //sets posts array to db array
+              }) 
+              .catch(err => {
+                console.log(err);
+              })
+      }
+      else if(this.state.filter === "Lost and Found"){
+        axios.get('http://localhost:3001/posts/Lost-And-Founds') //get request
+              .then(res=>{
+                this.setState({posts: res.data}) //sets posts array to db array
+              }) 
+              .catch(err => {
+                console.log(err);
+              })
+      }
+      else if(this.state.filter === "Crash Reports"){
+        axios.get('http://localhost:3001/posts/Crash-Reports') //get request
+              .then(res=>{
+                this.setState({posts: res.data}) //sets posts array to db array
+              }) 
+              .catch(err => {
+                console.log(err);
+              })
+      }
+      else if(this.state.filter === "Others"){
+        axios.get('http://localhost:3001/posts/Others') //get request
+              .then(res=>{
+                this.setState({posts: res.data}) //sets posts array to db array
+              }) 
+              .catch(err => {
+                console.log(err);
+              })
+      }
+    })
+
+  }
+
   render(){
     return(
       <Layout user={this.state.user}>
         <Container>
-          <h1><a href="/forum" style={{"text-decoration": "none", "color":"inherit"}}>Bike Forum</a></h1>
+          <h1><a href="/forum" style={{"textDecoration": "none", "color":"inherit"}}>Bike Forum</a></h1>
           <br></br>
           <div className="main">
             {/* Create new post (should only be for users) */}
             
             { <div className="createPostBtn">
-              { this.state.user && <a href="forum/create-post">Create New Post</a>}  
+              { this.state.user && <input type="button" value="Create New Post" onClick={() => {window.location = "forum/create-post"}}/>}  
               { this.state.user && <br></br>}       
             </div> } 
+
+            <select ref="categoryInput" 
+                        required className="form-control" 
+                        value={this.state.filter} 
+                        onChange={this.onChangeFilter}
+            >
+              <option> All </option>
+              <option>Announcements</option>
+              <option>Lost and Found</option>
+              <option>Crash Reports</option>
+              <option>Others</option>
+
+            </select>
+            <br/>
             {/* <pre>{JSON.stringify(this.state.user, null, 2)}</pre> */}
           
             <ol>
