@@ -21,6 +21,7 @@ const postSchema = new Schema(
         type: String,
         required: false,
     },
+    status: {type: String, required: true, default: 'OPEN'},
     comments: [commentSchema],
     //numComments: comments.length, //keeps track of comments length
     numComments: {type: Number, required: true, default: 0 },

@@ -1,8 +1,10 @@
 const router = require('express').Router();
+const path = require('path');
 let Post = require('../models/post.model');
 //let Comment = require('../models/comment.model');
 
 const multer = require('multer');
+const fs = require('fs');
 //let uuidv4 = require('uuid/v4');
 
 const storage = multer.diskStorage({
@@ -10,7 +12,9 @@ const storage = multer.diskStorage({
         callback(null, './public/uploads/')
     },
     filename: (req, file, callback) => {
-        callback(null, file.originalname)
+        let fn = file.originalname.split(path.extname(file.originalname))[0] + '-' + Date.now() + path.extname(file.originalname);
+        file.originalname = fn;
+        callback(null, fn)
     }
 });
 
@@ -36,10 +40,11 @@ router.route('/add').post(upload.single("img"),(req,res) => {
     if(req.file){
         img = req.file.originalname;
     }
+    const status = req.body.status;
     const comments = [];
     const numComments = 0;
 
-    const newPost = new Post({username,category,title,description,date,img,comments,numComments});
+    const newPost = new Post({username,category,title,description,date,img,status,comments,numComments});
 
     newPost.save()
         .then(() => res.json('Post added!'))
@@ -59,8 +64,22 @@ router.route('/:id').get((req,res) => {
 // delete a specific post
 router.route('/:id').delete((req,res) => {
     Post.findByIdAndDelete(req.params.id)
-        .then(() => res.json('Post deleted!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .then(() => res.json("Post Deleted!"));
+
+    // Post.findById(req.params.id)
+    //     .then(post => {
+    //         //del pic from uploads
+    //         if(post.img !== ''){
+    //            const filePath = path.resolve(post.img);
+    //             fs.unlinkSync(filePath);
+    //         }
+
+    //         //then deletePost
+    //         Post.findByIdAndDelete(req.params.id)
+    //             .then(() => res.json("Post Deleted!"))
+            
+    //     })
+    //     .catch(err => res.status(400).json('Error: ' + err));
 
 }); //end del specific post
 
@@ -72,7 +91,27 @@ router.route('/update/:id').post(upload.single("img"),(req,res) => {
             post.title = req.body.title;
             post.description = req.body.description;
             post.date = Date.parse(req.body.date);
-            post.img = req.file.originalname;
+            //optional to update img
+            if(req.file){ // incase change img
+                //del prev
+                // if(post.img !== ''){
+                //     const filePath = path.resolve('./' + post.img);
+                //     fs.unlinkSync(filePath);
+                // }
+                //reassign
+                post.img = req.file.originalname; //equal new file upload name
+            } 
+            else if(req.body.img === ''){ //incase delete img
+                // if(post.img !== ''){
+                //     const filePath = path.resolve('./' + post.img);
+                //     fs.unlinkSync(filePath);
+                // }
+                post.img = ''; //equal ''
+            }     
+            else{ //incase no change
+                post.img = post.img; //equal to itself from db 
+            }    
+            post.status = req.body.status;
 
             // saving updated post
             post.save()
@@ -103,6 +142,40 @@ router.route('/update/:id/add-comment').post((req,res) => {
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
+})
+
+// updates a comment
+router.route('/update/:id/update-comment/:cId').post((req,res) => {
+    Post.findById(req.params.id)
+        .then(post => {
+            post.update({'comments._id': req.params.cId}, {'$set': {
+                'comments.$.username': res.body.username,
+                'comments.$.description': res.body.description,
+                'comments.$.date': new Date(),
+            }})
+            // saving updated post
+            post.save()
+                .then(() => res.json('Post updated'))
+                .catch(err => res.status(400).json('Error: ' + err)); //throws if not all params filled
+        })
+        .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
+})
+
+//del comment from array
+router.route('/:id/delete-comment/:cId').delete((req,res) => {
+    //get the post from id
+    Post.findById(req.params.id)
+        .then(post => {
+            var removeIndex = post.comments.map(comment => {return comment._id;}).indexOf(req.params.cId);
+            //remove the comment
+            post.comments.splice(removeIndex, 1);
+
+            //save the post
+            post.save()
+                .then(() => res.json('Comment Deleted'))
+                .catch(err => res.status(400).json('Error: ' + err)); //throws if not all params filled
+        }) //if found, return post.comments
+        .catch(err => res.status(400).json('Error: ' + err)); //if not, throw err
 })
 
 //get all the comments in post and returns it

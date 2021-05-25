@@ -2,73 +2,9 @@ import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
 import axios from 'axios';
-import {threads} from "./data";
 import React, {Component} from 'react';
 
 //const textStyle = {maxWidth: "100%", width: "700px"}
-
-// when you create a post in general
-// export default function ForumCreatePost() {
-//   const user = getUser();
-
-//   function onSubmit() {
-//     if (
-//       document.getElementById("newTitle").value !== "" &&
-//       document.getElementById("categories").value !== "----"
-//     ) {
-//       var newPost = {
-//         id: threads.length + 1,
-//         title: document.getElementById("newTitle").value,
-//         category: document.getElementById("categories").value,
-//         author: "Placeholder",
-//         date: Date.now(),
-//         content: document.getElementById("newDescription").value,
-//         comments: [], //no comments
-//       };
-//       threads.push(newPost);
-//       console.log(threads);
-//       //clear all inputs
-//       document.getElementById("newTitle").value = "";
-//       document.getElementById("categories").value = "----";
-//       document.getElementById("newDescription").value = "";
-
-//       //go back to forum main page
-//       window.location.href = "/forum";
-//       console.log("return forum...");
-//     }
-//   }
-
-//   return (
-//     <Layout user={user}>
-//       <Container>
-//         <h1>
-//           {" "}
-//           {/*title*/}
-//           Bike Forum
-//         </h1>
-//         <br></br>
-//         <body>
-//           <textarea id="newTitle" placeholder="New Title"></textarea>
-//           <br></br>
-//           <select name="categories" id="categories">
-//             <option value="----">----</option>
-//             <option value="Announcements">Announcements</option>
-//             <option value="Lost and Found">Lost and Found</option>
-//             <option value="Crash Reports">Crash Reports</option>
-//             <option value="Others">Others</option>
-//           </select>
-//           <br></br>
-//           <textarea
-//             id="newDescription"
-//             placeholder="Your Description"
-//           ></textarea>
-//           <br></br>
-//           <button onClick={onSubmit}>Post it!</button>
-//         </body>
-//       </Container>
-//     </Layout>
-//   );
-// }
 
 export default class ForumCreatePost extends Component{
   
@@ -93,10 +29,12 @@ export default class ForumCreatePost extends Component{
       title: '',
       description: '',
       img: '',
+      status: 'OPEN',
       numComments: 0,
       comments: [],
       date: new Date(),
       user: getUser(),
+      currFile: null,
 
     }// end this.state
 
@@ -124,8 +62,10 @@ export default class ForumCreatePost extends Component{
     });
   }
   onChangeImg(e){
+    console.log("createpost: " + e.target.files);
     this.setState({
-      img: e.target.files[0] //e.target.value == textbox 
+      img: e.target.files[0], //e.target.value == textbox 
+      currFile:  URL.createObjectURL( e.target.files[0]),     
     });
   }
   
@@ -148,20 +88,10 @@ export default class ForumCreatePost extends Component{
     formData.append("description", this.state.description);
     formData.append("date", this.state.date);
     formData.append("img", this.state.img);
+    formData.append("status", this.state.status);
     formData.append("numComments", this.state.numComments);
     formData.append("comments", this.state.comments);
     
-    // const post = {
-    //   username: this.state.username,
-    //   category: this.state.category,
-    //   title: this.state.title,
-    //   description: this.state.description,
-    //   date: this.state.date,
-    //   img: this.state.img,
-    //   numComments: this.state.numComments,
-    //   comments: this.state.comments
-    // }
-
     //prints out what is going to be posted
     //console.log(post);
 
@@ -173,24 +103,11 @@ export default class ForumCreatePost extends Component{
     window.location = '/forum';
   } // end onSubmit
 
-  // componentDidMount(){
-  //   this.setState({
-  //     username: 'test user',
-  //     title: 'test title',
-  //     description: 'test description',
-      
-  //   })
-  // }
-
   render(){
     return(
       <Layout user={this.state.user}>
         <Container>
-          <h1>
-            {" "}
-            {/*title*/}
-            Bike Forum
-          </h1>
+          <h1><a href="/forum" style={{"text-decoration": "none", "color":"inherit"}}>Bike Forum</a></h1>
           <br></br>
           
           <div>
@@ -248,14 +165,20 @@ export default class ForumCreatePost extends Component{
 
               {/* upload image */}
               <div className="form-group">
-                <label htmlFor="file">Image: </label>
+                {/* checks if img = updated, if not update */}
+                <p>Current Image: <img src={this.state.currFile} alt={`${this.state.img}`} style={{width: "10%", height: "auto"}}/></p>              
+                <br/>
+                <label htmlFor="file">Change Image: </label>
                 <input type="file"  
                        filename="img"
                        className="form-control-file"
                        accept="image/jpg, image/jpeg, image/png"
+                       style = {{color: "rgba(0, 0, 0, 0)"}}
                        onChange={this.onChangeImg}
                 />
+                <input type="button" value="Delete Image" onClick={() => this.setState({img: '', currFile: null})}  />
               </div>
+              
 
               {/* Date should automatically be set as current date */}
 
