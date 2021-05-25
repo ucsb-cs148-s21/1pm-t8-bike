@@ -24,7 +24,11 @@
 | Fri 05/14 | Calvin Dougher    | Led lab06-pt1 and standup during 1pm section                       |
 | Mon 05/17 | Rukmini Bapat     | Led stand-up meeting                                               | 
 | Tues 05/18| Anika Arora       | Let stand-up meeting                                               | 
-| Th 05/20  | Yvonne Liu        | Led stand-up meeting
+| Th 05/20  | Yvonne Liu        | Led stand-up meeting                                               |
+| Fri 05/21 | Calvin Dougher    | Finished up lab06-pt1 and standup, got done with deployment doc    |
+| Mon 05/24 | Rukmini Bapat     | Led stand-up meeting                                               | 
+| Tues 05/25| Anika Arora       |                                                                    | 
+| Th 05/27  | Yvonne Liu        |                                                                    |
 
 
 * Product Owner: Yvonne
