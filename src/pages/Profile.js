@@ -24,7 +24,7 @@ export default function Profile() {
     }
     var mm = time.substr(2,5);
     var mid = (parseInt(time.substr(0,2)) >= 12) ? " pm" : " am" ;
-    return hh + mm + " " + mid;
+    return hh + mm + mid;
   }
 
   function deleteCourse() {
