@@ -17,6 +17,7 @@ export default function NavBar(props) {
             <Nav.Link href="/">Map</Nav.Link>
             <Nav.Link href="/lostandfound">Lost and Found</Nav.Link>
             <Nav.Link href="/forum">Forum</Nav.Link>
+            <Nav.Link href="/aboutus">About Us</Nav.Link>
             {user && <Nav.Link href="/profile">Profile</Nav.Link>}
           </Nav>
 
