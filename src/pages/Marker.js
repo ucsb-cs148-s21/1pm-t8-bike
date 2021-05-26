@@ -6,9 +6,10 @@ const Marker = (props) => {
     return (
       <div className="marker"
         style={{ backgroundColor: color, cursor: 'pointer'}}
-        title={name}
+        category={name}
         lat={props.lat}
         lng={props.lng}
+        time={props.key}
       />
     );
   };
