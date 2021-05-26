@@ -4,20 +4,16 @@ import "../index.css"
 
 function NewMember(props) {
   return (
-    <div style={{ padding: 0, margin: 100 }}>
-      <div className="w3-cell-row">
-        <div className="w3-cell w3-cell-top w3-cell-img w3-section">
-          <div className="imageBox">
-            <div className="memberImg">
-              <img
-                src={props.member.image}
-                alt="member image"
-                className="memberImg"
-              />
-            </div>
-          </div>
+    <div style={{ padding: 0, margin: 0 , float: 'left'}}>
+      <div className="imageBox">
+        <div className="memberImg">
+          <img
+            src={props.member.image}
+            alt="member image"
+            className="memberImg"
+          />
         </div>
-        <div className="w3-cell w3-cell-text w3-padding-0">
+        <div>
             <h3 className="h3-member-name">{props.member.name}</h3>
             <p className="p-member-role">{props.member.role}</p>
             <p className="p-member-description">{props.member.description}</p>

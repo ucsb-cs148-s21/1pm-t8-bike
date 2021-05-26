@@ -11,17 +11,35 @@ import Marker from './Marker';
 //     time: new Date(),
 // }]);
 
-// function addMarker(setPositions) {
+// function getcurrentLat(){
 //     //get current time and add that to the marker 
-//     navigator.geolocation.getCurrentPosition(function(position) {
-//         var lat=position.coords.latitude;
-//         var lng=position.coords.longitude;
-//         console.log(lat); 
-//         console.log(lng);
+//     return navigator.geolocation.getCurrentPosition(function(position) {
+//         console.log(position.coords.latitude)
+//         return position.coords.latitude;
+//     }); 
+
+// }
+
+// function getcurrentLng(){
+//     //get current time and add that to the marker 
+//     return navigator.geolocation.getCurrentPosition(function(position) {
+//         return position.coords.longitude;
 //     }); 
 // }
 
+function addMarker(setPositions) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var lat=position.coords.latitude;
+        var lng=position.coords.longitude;
+        console.log(lat); 
+        console.log(lng);
+        setPositions(current => [...current, {
+            lat: lat,
+            lng: lng,
+            time: new Date(),}]);
+    });
 
+}
 
 export default function Home_Page() {
     const user = getUser();
@@ -47,12 +65,15 @@ export default function Home_Page() {
         <Container >
             <button style={{float: "right"}} href="tel:18058932000">CALL CSO</button>
             <button style={{float: "right"}} 
-                onClick={(event) => setPositions(current => [...current, {
-                    lat: event.latlng.lat(),
-                    lng: event.latlng.lng(),
-                    time: new Date(),
-                }])}>Report</button>
+                onClick={() => addMarker(setPositions)}>Report</button>
         </Container>
         </Layout>
     ); 
 }; 
+
+
+// onClick={(event) => setPositions(current => [...current, {
+//     lat: getcurrentLat(),
+//     lng: getcurrentLng(),
+//     time: new Date(),
+// }])}>

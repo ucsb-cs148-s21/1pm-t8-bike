@@ -23,8 +23,14 @@ const Map = (props) => {
             color="blue"
           /> */}
           {props.positions.map(position => 
-            <Marker key={position.time.toISOString()} 
-                    position={{lat: position.lat, lng: position.lng}} />)}
+            <Marker key={position.time.toISOString()}
+                    lat= {position.lat} 
+                    lng= {position.lng} />)}
+          {/* <Marker key={"hello"}
+                  lat={'34.4134'}
+                  lng={'-119.8433'} />
+          <Marker key={"hi"}
+                    position={{lat: '34.4134', lng: '-119.8433'}} /> */}
         </GoogleMapReact>
       </div>
     );
