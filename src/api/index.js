@@ -5,6 +5,7 @@ const path = require('path');
 
 // adding routes to schema
 const postsRouter = require('./routes/posts');
+const markersRouter = require('./routes/markers');
 
 // connect db
 const mongoose = require('mongoose');
@@ -27,6 +28,7 @@ app.use(cors());
 app.use(express.json());
 //will load everything in postsRouter if on /posts directory
 app.use('/posts',postsRouter);
+app.use('/markers',markersRouter);
 
 
 // connect uri db
