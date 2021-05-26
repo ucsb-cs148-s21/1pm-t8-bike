@@ -5,7 +5,7 @@ const markerSchema = new Schema(
 {   
     //_id: Schema.Types.ObjectId,
     lat: {type: Number, required: true},
-    long: {type: Number, required: true},
+    lng: {type: Number, required: true},
     category: {type: String, required: true},
     numReports: {type: Number, required: true},
     date: {type: Date, required: true},

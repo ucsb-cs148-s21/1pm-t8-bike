@@ -27,12 +27,12 @@ router.route('/Hard-Coded-Markers').get((req,res) => {
 // add a new marker to db
 router.route('/add').post((req,res) => {
     const lat = req.body.lat;
-    const long = req.body.long;
-    const category = req.body.long;
+    const lng = req.body.lng;
+    const category = req.body.lng;
     const date = req.body.date;
     const numReports = req.body.numReports;
 
-    const newMarker = new Marker({lat, long, category, date, numReports});
+    const newMarker = new Marker({lat, lng, category, date, numReports});
 
     newMarker.save()
         .then(() => res.json('Marker added!'))
@@ -60,7 +60,7 @@ router.route('/update/:id').post((req,res) => {
     Post.findById(req.params.id)
         .then(marker => {
             marker.lat = req.body.lat;
-            marker.long = req.body.long;
+            marker.lng = req.body.lng;
             marker.category = req.body.category;
             marker.numReports = req.body.numReports;
             marker.date = Date.parse(req.body.date);
