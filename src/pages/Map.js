@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
-import Marker from './Marker';
+import Marker from './Marker'; 
 
 
 const Map = (props) => {
@@ -25,7 +25,9 @@ const Map = (props) => {
           {props.positions.map(position => 
             <Marker key={position.time.toISOString()}
                     lat= {position.lat} 
-                    lng= {position.lng} />)}
+                    lng= {position.lng} 
+                    name= {"crash"} 
+                    />)}
           {/* <Marker key={"hello"}
                   lat={'34.4134'}
                   lng={'-119.8433'} />
