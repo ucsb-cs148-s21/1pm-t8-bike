@@ -28,6 +28,8 @@ import Marker from './Marker';
 // }
 
 function addMarker(setPositions) {
+    // should add to db, before however should check for any exisiting markers, if markers exists, increment the numReports instead
+    
     navigator.geolocation.getCurrentPosition(function(position) {
         var lat=position.coords.latitude;
         var lng=position.coords.longitude;
