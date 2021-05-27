@@ -9,7 +9,7 @@ const markerSchema = new Schema(
     category: {type: String, required: true},
     numReports: {type: Number, required: true},
     date: {type: Date, required: true},
-    expireAt: {type: Date, expires: '1800', default: Date.now }
+    expireAt: {type: Date, default: Date.now, index: { expires: '1800' } }, //expires after 30mins (1800s)
 
 },{
     timestamps: true,

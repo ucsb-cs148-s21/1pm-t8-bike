@@ -22,12 +22,18 @@ const Map = (props) => {
             name="My Marker"
             color="blue"
           /> */}
+
           {props.positions.map(position => 
-            <Marker key={position.time.toISOString()}
+            <Marker 
+                    key={position._id}
+                    date={position.date}
                     lat= {position.lat} 
                     lng= {position.lng} 
-                    name= {"crash"} 
-                    />)}
+                    category= {position.category} 
+                    numReports= {position.numReports}
+            />
+          )}
+
           {/* <Marker key={"hello"}
                   lat={'34.4134'}
                   lng={'-119.8433'} />

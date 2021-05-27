@@ -4,15 +4,15 @@ import './Marker.css';
 const Marker = (props) => {
     return (
       <div className="marker"
+        key={props.key}
         style={{ cursor: 'pointer', backgroundImage: `url("crash_icon1.png")`}}
-        category={props.name}
+        category={props.category}
         lat={props.lat}
         lng={props.lng}
-        time={props.key} 
+        numReports={props.numReports}
+        date={props.date} 
         
       />
-      
-      
     );
   };
 

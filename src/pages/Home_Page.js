@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
 import React, { useState, useEffect } from "react";
 import Map from "./Map"; 
+import axios from 'axios';
 import Marker from './Marker';
 
 // function setPositions (current => [...current, {
@@ -29,29 +30,53 @@ import Marker from './Marker';
 
 function addMarker(setPositions) {
     // should add to db, before however should check for any exisiting markers, if markers exists, increment the numReports instead
-    
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var lat=position.coords.latitude;
-        var lng=position.coords.longitude;
-        console.log(lat); 
-        console.log(lng);
-        setPositions(current => [...current, {
-            lat: lat,
-            lng: lng,
-            time: new Date(),}]);
-    });
+    navigator.geolocation.getCurrentPosition(function(position){
+        const tempMarker = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+            category: 'Crash Marker',
+            numReports: 1,
+            date: new Date(),
+            //expireAt is auto set to current date
+
+        }
+        
+        //add to db, then setPositions
+        axios.post(`http://localhost:3001/markers/add`,tempMarker)
+            .then(res => {
+                console.log(res.data)
+                setPositions(current => [...current, {tempMarker}])
+                window.alert('Marker Added!');
+            })
+            .catch(err => console.log('Error: ' + err));
+    })
 
 }
 
 export default function Home_Page() {
     const user = getUser();
+    const [positions, setPositions] = useState([]);
     const [data, setData] = useState("test");
-    const [positions, setPositions] = useState([]); //create positions array 
-    // useEffect(() => {
-    //     fetch(`${process.env.REACT_APP_SERVER_URL}/api`) 
-    //     .then((res) => res.json())
-    //     .then((data) => setData(data.message));
-    // }, []);
+    var positionsArr = [];
+    //const map =  <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>;
+    
+    //positions is state variable array of markers
+    // set positions to array in db
+    axios.get(`http://localhost:3001/markers`)
+        .then(res => {
+            setPositions(res.data); //create positions array from db
+        })
+        .catch(err => console.log('Error: ' + err));
+    
+    useEffect(() => {
+        //componentDidMount essentially
+        positionsArr = positions;
+        
+
+    },[]); //everytime positions changes, run this usEffect
+    
+    console.log('homepage');
+
     return(
         <Layout user={user}>
         <Container float="left">
@@ -61,7 +86,8 @@ export default function Home_Page() {
             <br />
             <br />
             <div style={{ width: "75vw", height: "75vh" }}>
-                <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
+                
+                {/* <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positionsArr}></Map> */}
             </div>
         </Container>
         <Container >

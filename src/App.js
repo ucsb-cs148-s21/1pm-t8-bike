@@ -57,6 +57,7 @@ export default function App() {
     return <Route {...rest} component={isSignedIn ? component : Private} />;
   } //end PrivateRoute
 
+  console.log('app.js');
   return (
     <BrowserRouter>
       <Switch>
