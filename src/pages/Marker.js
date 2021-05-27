@@ -1,15 +1,18 @@
 import React from 'react';
-import './Marker.css';
+import './Marker.css';  
 
 const Marker = (props) => {
-    const { color, name, id } = props;
     return (
       <div className="marker"
-        style={{ backgroundColor: color, cursor: 'pointer'}}
-        title={name}
+        style={{ cursor: 'pointer', backgroundImage: `url("crash_icon1.png")`}}
+        category={props.name}
         lat={props.lat}
         lng={props.lng}
+        time={props.key} 
+        
       />
+      
+      
     );
   };
 
