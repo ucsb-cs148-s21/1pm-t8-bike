@@ -98,19 +98,22 @@ export default class ForumCreatePost extends Component{
 
     //add to db
     axios.post('http://localhost:3001/posts/add/',formData)
-         .then(res => console.log(res.data));
+         .then(res => {
+           console.log(res.data);
+           window.location = '/forum';
+            window.alert("Post Added!");
+         });
 
     // redirect back to the forums page
     
-    window.location = '/forum';
-    window.alert("Post Added!");
+    
   } // end onSubmit
 
   render(){
     return(
       <Layout user={this.state.user}>
         <Container>
-          <h1><a href="/forum" style={{"text-decoration": "none", "color":"inherit"}}>Bike Forum</a></h1>
+          <h1><a href="/forum" style={{"textDecoration": "none", "color":"inherit"}}>Bike Forum</a></h1>
           <hr/>
           <br></br>
           
@@ -125,6 +128,17 @@ export default class ForumCreatePost extends Component{
                       className="form-control"
                       value={this.state.username}
                       onChange={this.onChangeUsername}
+                />
+              </div>
+
+              {/* write title */}
+              <div className="form-group">
+                <label>Title: </label>
+                <input type="text"
+                      required  
+                      className="form-control"
+                      value={this.state.title}
+                      onChange={this.onChangeTitle}
                 />
               </div>
 
@@ -143,17 +157,6 @@ export default class ForumCreatePost extends Component{
                   <option>Other</option>
 
                 </select>
-              </div>
-
-              {/* write title */}
-              <div className="form-group">
-                <label>Title: </label>
-                <input type="text"
-                      required  
-                      className="form-control"
-                      value={this.state.title}
-                      onChange={this.onChangeTitle}
-                />
               </div>
 
               {/* write description */}

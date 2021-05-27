@@ -176,9 +176,9 @@ const EditComment = props => {
 
                     {/* Submit/Cancel Button */}
                     <div className="form-group">
-                        <body>
+                        <p>
                             <input type="submit" value="Update" className="btn btn-primary"/>  <input type="button" value="Cancel"className="btn btn-primary"onClick={()=>{props.cancelComment()}}/>
-                        </body>
+                        </p>
                     </div>
                 </form>
             </div>
@@ -315,14 +315,15 @@ class ForumPost extends Component{
             axios.delete(`http://localhost:3001/posts/${this.postID}`)
                 .then(res => {
                     console.log(res.data)
+                    console.log("delPost");
+                    window.alert("Post Deleted!");
+                    window.location = '/forum';
                 })
                 .catch(err =>{
                     console.log('Error: ' + err);
                 })
             
-            console.log("delPost");
-            window.alert("Post Deleted!");
-            window.location = '/forum';
+            
         }
         
        

@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
         callback(null, './public/uploads/')
     },
     filename: (req, file, callback) => {
-        let fn = file.originalname.split(path.extname(file.originalname))[0] + '-' + Date.now() + path.extname(file.originalname);
+        let fn = file.originalname.replace(/ /g,"-").split(path.extname(file.originalname))[0] + '-' + Date.now() + path.extname(file.originalname);
         file.originalname = fn;
         callback(null, fn)
     }
@@ -136,23 +136,26 @@ router.route('/:id').get((req,res) => {
 
 // delete a specific post
 router.route('/:id').delete((req,res) => {
-    Post.findByIdAndDelete(req.params.id)
-        .then(() => res.json("Post Deleted!"));
+    // Post.findByIdAndDelete(req.params.id)
+    //     .then(() => res.json("Post Deleted!"));
+    Post.findById(req.params.id)
+        .then(post => {
+            //del pic from uploads
+            if(post.img !== ''){
+                try{
+                    fs.unlinkSync(`public/uploads/${post.img}`)
+                }
+                catch(err){
+                    console.log("fs.unlink had an error")
+                }
+            }
 
-    // Post.findById(req.params.id)
-    //     .then(post => {
-    //         //del pic from uploads
-    //         if(post.img !== ''){
-    //            const filePath = path.resolve(post.img);
-    //             fs.unlinkSync(filePath);
-    //         }
-
-    //         //then deletePost
-    //         Post.findByIdAndDelete(req.params.id)
-    //             .then(() => res.json("Post Deleted!"))
+            //then deletePost
+            Post.findByIdAndDelete(req.params.id)
+                .then(() => res.json("Post Deleted!"))
             
-    //     })
-    //     .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
 
 }); //end del specific post
 
@@ -168,18 +171,26 @@ router.route('/update/:id').post(upload.single("img"),(req,res) => {
             //optional to update img
             if(req.file){ // incase change img
                 //del prev
-                // if(post.img !== ''){
-                //     const filePath = path.resolve('./' + post.img);
-                //     fs.unlinkSync(filePath);
-                // }
-                //reassign
+                if(post.img !== ''){
+                    try{
+                        fs.unlinkSync(`public/uploads/${post.img}`)
+                    }
+                    catch(err){
+                        console.log("fs.unlink had an error")
+                    }
+                }
                 post.img = req.file.originalname; //equal new file upload name
             } 
             else if(req.body.img === ''){ //incase delete img
-                // if(post.img !== ''){
-                //     const filePath = path.resolve('./' + post.img);
-                //     fs.unlinkSync(filePath);
-                // }
+                //del pic from uploads
+                if(post.img !== ''){
+                    try{
+                        fs.unlinkSync(`public/uploads/${post.img}`)
+                    }
+                    catch(err){
+                        console.log("fs.unlink had an error")
+                    }
+                }
                 post.img = ''; //equal ''
             }     
             else{ //incase no change

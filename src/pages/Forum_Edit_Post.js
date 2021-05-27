@@ -149,6 +149,17 @@ class ForumEditPost extends Component{
                 />
               </div>
 
+              {/* write title */}
+              <div className="form-group">
+                <label>Title: </label>
+                <input type="text"
+                      required  
+                      className="form-control"
+                      value={this.state.title}
+                      onChange={this.onChangeTitle}
+                />
+              </div>
+
               {/* choose a category from dropdown */}
               <div className="form-group">
                 <label>Category: </label>
@@ -164,17 +175,6 @@ class ForumEditPost extends Component{
                   <option>Other</option>
 
                 </select>
-              </div>
-
-              {/* write title */}
-              <div className="form-group">
-                <label>Title: </label>
-                <input type="text"
-                      required  
-                      className="form-control"
-                      value={this.state.title}
-                      onChange={this.onChangeTitle}
-                />
               </div>
 
               {/* write description */}
@@ -211,9 +211,9 @@ class ForumEditPost extends Component{
 
               {/* Submit Button */}
               <div className="form-group">
-                <body>
+                <p>
                 <input type="submit" value="Edit Post" className="btn btn-primary"/>     <input type="button" value="Cancel" className="btn btn-primary" onClick={()=>{ window.location = `/forum/${this.props.match.params.id}`;}}/>
-                </body>
+                </p>
               </div>
             </form>
           </div>

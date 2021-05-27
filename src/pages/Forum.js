@@ -107,6 +107,8 @@ export default class ForumPost extends Component{
       axios.delete(`http://localhost:3001/posts/${id}`)
           .then(res => {
               console.log(res.data)
+              window.alert("Post Deleted!");
+              window.location = '/forum';
               //update post
               axios.get('http://localhost:3001/posts') //get request
                     .then(res=>{
@@ -119,10 +121,6 @@ export default class ForumPost extends Component{
           .catch(err =>{
               console.log('Error: ' + err);
           })
-      
-      console.log("delPost");
-      window.alert("Post Deleted!");
-      window.location = '/forum';
     }
   }
 
