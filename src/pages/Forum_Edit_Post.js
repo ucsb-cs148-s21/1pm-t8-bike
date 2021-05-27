@@ -109,7 +109,7 @@ class ForumEditPost extends Component{
     formData.append("username", this.state.username);
     formData.append("category", this.state.category);
     formData.append("title", this.state.title);
-    formData.append("description", this.state.description);
+    formData.append("description", this.state.description.trim());
     formData.append("date", this.state.date);
     formData.append("img", this.state.img);
     formData.append("status", this.state.status);
@@ -124,7 +124,7 @@ class ForumEditPost extends Component{
          .then(res => {console.log(res.data); window.location = `/forum/${this.props.match.params.id}`;});
 
     // redirect back to the specific post
-    
+    window.alert("Post Updated!");
   } // end onSubmit
 
   render(){
@@ -132,6 +132,7 @@ class ForumEditPost extends Component{
       <Layout user={this.state.user}>
         <Container>
           <h1><a href="/forum" style={{"text-decoration": "none", "color":"inherit"}}>Bike Forum</a></h1>
+          <hr/>
           <br></br>
           
           <div>
@@ -179,8 +180,10 @@ class ForumEditPost extends Component{
               {/* write description */}
               <div className="form-group">
                 <label>Description: </label>
-                <input type="text"
+                <textarea
                       required  
+                      wrap = 'hard'
+                      rows = '10'
                       className="form-control"
                       value={this.state.description}
                       onChange={this.onChangeDescription}
@@ -208,10 +211,9 @@ class ForumEditPost extends Component{
 
               {/* Submit Button */}
               <div className="form-group">
-                <input type="submit"
-                      value="Edit Post"
-                      className="btn btn-primary"
-                />
+                <body>
+                <input type="submit" value="Edit Post" className="btn btn-primary"/>     <input type="button" value="Cancel" className="btn btn-primary" onClick={()=>{ window.location = `/forum/${this.props.match.params.id}`;}}/>
+                </body>
               </div>
             </form>
           </div>

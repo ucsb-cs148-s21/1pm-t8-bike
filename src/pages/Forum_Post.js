@@ -2,66 +2,189 @@ import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
 import axios from 'axios';
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {  withRouter } from "react-router";
 //import PageNotFound from "./PageNotFound";
 //import { Category, RemoveShoppingCartSharp, TransferWithinAStation, TransferWithinAStationSharp } from "@material-ui/icons";
 
-//const textStyle = {maxWidth: "100%", width: "700px"}
+//styles
+const styles = {
+    commentStyle: {
+        borderBottomStyle: 'ridge',
+        width: '100%',
+        marginTop: "5px",
+        marginBottom: "5px",
+        textAlign: 'left',
+        padding: '5px',
+        overflowWrap: 'break-word',
+        position: 'relative',
+    },
+    commentHeader: {
+        borderBottomStyle: 'ridge',
+        fontSize: '16px',
+        overflowWrap: 'break-word',
+        width: 'fit-content',
+    },
+    commentEditDStyle: {
+        resize: 'vertical',
+        width: '80vw',
+        height: 'auto',
+        overflowWrap: 'break-word',
+        position: 'relative',
+       
+    },
+    delEditButtons:{
+        fontSize: '13px',
+        float: 'left',
+    },
+    postStyle: {
+        overflowWrap: 'break-word'
+    },
+    categoryStyle: {
+        borderRadius: '20px',
+        padding: '5px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
+        fontSize: '12px',
+        textDecoration: 'none',
+        background: 'blue',
+        color: "white",
+    },
+      statusStyle: {
+        borderRadius: '20px',
+        padding: '5px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
+        fontSize: '12px',
+        textDecoration: 'none',
+        background: 'red',
+        color: "white",
+    },
+  }
 
 //post format to view component
 const Post = props => (
-    <div className="header-root-post">
+    <div className="header-root-post" style={styles.postStyle}>
             <h3 className="title">
                 {props.post.title}  
             </h3>  
             <h6 className="tags">
-                {props.post.category}{ props.post.status == 'CLOSED' && ' - ' + props.post.status}
+                <span style={styles.categoryStyle}>{props.post.category}</span> { props.post.status === 'CLOSED' &&  <span style={styles.statusStyle}>{props.post.status}</span>}
             </h6>
-            <div className="info-line">
+            <div className="info-line" >
                 <p className="info-line">
-                <span className="author">{props.post.username}</span> - <span className="date">{(props.post.date).toString().substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span> <input type="button" value="Delete Post" style={{float: "right"}} onClick={() => {props.deletePost()}}/> <input type="button" value="Edit Post" style={{float: "right"}} onClick={() => {props.editPost()}}/> <input type="button" value="Change Status" style={{float: "right"}} onClick={() => {props.changeStatus()}}/>
+                    <span className="author">{props.post.username}</span> - <span className="date">{(props.post.date).toString().substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span> <span style={{float: 'right'}}><input type="button" value="Change Status" onClick={() => {props.changeStatus()}}/>  <input type="button" value="Edit" onClick={() => {props.editPost()}}/>  <input type="button" value="Delete" onClick={() => {props.deletePost()}}/></span>
                 </p>
             </div>
             <hr></hr>
-            <div className="root-description">
-                {props.post.description}
+            <div className="root-description" style={{ "whiteSpace": "pre-wrap"}}>
+                {props.post.description}            
             </div>
             <div className="pic">
-                <img src={`/uploads/${props.post.img}`} alt={`${props.post.img}`} style={{width: "25%", height: "auto"}}/>
+                {props.post.img!=='' && <br/>}         
+                {props.post.img!=='' && <img src={`/uploads/${props.post.img}`} alt={`${props.post.img}`} style={{width: "25%", height: "auto"}}/>}         
             </div>
             
         </div> 
 )
 
 //comment component that will list out
-const Comment = props => (
+const ViewComment = props => (
     <li className="row">
-        <div className="comment">
+        <div className="comment" style={styles.commentStyle}>
             <div className="comment-header">
-                <p className="comment-header" style={{fontSize: "16px"}}>
+                <p className="comment-header" style={styles.commentHeader}>
                     {console.log("making a Comment obj")}
                     <span className="user">{props.comment.username}</span> - {" "}
                     <small className="date">
                     {" "}
-                    {props.comment.date}
+                    {(props.comment.date).toString().substring(0,10)}
                     </small>
                 </p>
             </div>
-            <div className="comment-content">
-                <p className="comment-context" style={{fontSize: "16px"}}>
+            <div className="comment-content" style={{ "whiteSpace": "pre-wrap"}}>
+                <p className="comment-context" style={{fontSize: "16px", position: 'relative',}}>
                     {props.comment.description}
                 </p>
             </div>
             <div className="buttons">
-                <p className="buttons">
-                    <input type="button" value="Delete" style={{float: "center"}} onClick={() => {props.deleteComment()}}/> <input type="button" value="Edit" style={{float: "center"}} onClick={() => {props.editComment()}}/>
+                <p className="buttons" style={styles.delEditButtons}>
+                    <input type="button" value="Edit" onClick={() => {props.editComment()}}/> <input type="button" value="Delete" onClick={() => {props.deleteComment()}}/>
                 </p>
             </div>
-            <hr></hr>
         </div>
     </li>
 )
+
+//comment component that will create edit comp
+const EditComment = props => {
+    //setting state var
+    const [description, setDescription] = useState(props.comment.description);
+    
+    //setting on change
+    function onChangeD(e){
+        setDescription(e.target.value);
+    }
+    function onSubmitEditComment(e){   
+        e.preventDefault();
+
+        //template comment to be submitted
+        const comment = {
+            username: props.comment.username,
+            description: description.trim(),
+            date: new Date(),
+        }
+        //console.log(comment);
+
+        //update to db
+        axios.post(`http://localhost:3001/posts/update/${props.postID}/update-comment/${props.commentID}`,comment)
+            .then(res => {               
+                 props.afterOnSubmitEditComment();
+            })
+
+        //should go back to normal submissions
+
+    }
+
+    //setting onSubmit
+    return(
+                
+        <li className="row" style={styles.commentStyle}>
+            
+            <div className="createCommentBtn">
+                <form name="editCom" onSubmit={onSubmitEditComment}>      
+                    <p className="comment-header" style={styles.commentHeader}>
+                        <span className="user">{props.comment.username}</span> - {" "}
+                        <small className="date">
+                        {" "}
+                        {(props.comment.date).toString().substring(0,10)}
+                        </small>
+                    </p>        
+
+                    {/* Write your comment */}
+                    <div className="form-group">
+                        <textarea
+                            required  
+                            placeholder="Add a comment"
+                            className="form-control"
+                            style={styles.commentEditDStyle}
+                            name="commentDesc"
+                            value={description}
+                            onChange={onChangeD}
+                        />
+                    </div>
+
+                    {/* Submit/Cancel Button */}
+                    <div className="form-group">
+                        <body>
+                            <input type="submit" value="Update" className="btn btn-primary"/>  <input type="button" value="Cancel"className="btn btn-primary"onClick={()=>{props.cancelComment()}}/>
+                        </body>
+                    </div>
+                </form>
+            </div>
+        </li>
+    );
+}
 
 //component to view post + comments + addcomments
 class ForumPost extends Component{
@@ -70,6 +193,7 @@ class ForumPost extends Component{
         super(props);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+
         this.viewPost = this.viewPost.bind(this);
         this.commentList = this.commentList.bind(this);
         this.permCreateComment = this.permCreateComment.bind(this);
@@ -93,15 +217,12 @@ class ForumPost extends Component{
         this.commentUser = "";
         this.commentDesc = "";
         this.commentDate = new Date();
-
-        //placeholder vars for updating an exisiting comment
-        this.commentEditUser = "";
-        this.commentEditDesc = "";
-        this.commentEditDate = new Date();
     
         this.state = { 
             post: {username: '',category: '',title: '',description: '',img: '', status: '', numComments: 0,comments: [],date: new Date(),},
             comments: [], 
+            isEditComment: false,
+            editCommentId: 0,
             user: getUser(), 
         }
     }// end constructor
@@ -113,7 +234,11 @@ class ForumPost extends Component{
         axios.get(`http://localhost:3001/posts/${this.postID}`)
              .then(res=>{
                  console.log("compDidMount: get post from db");
-                 this.setState({post: res.data})
+                 this.setState({post: res.data},()=>{
+                     if(this.state.post.category === ''){
+                        window.location.href = '/PageNotFound';
+                     }
+                 })
              })
              .catch(err => {
                  console.log(err);
@@ -133,14 +258,45 @@ class ForumPost extends Component{
 
     //returns every comment in comment format
     commentList(){
-        console.log("print comment list");
-        return this.state.comments.map(currComment => {
-            return <Comment comment = {currComment}
+        if(this.state.isEditComment === false){
+            console.log("commentList: isEditComment = false");
+            return this.state.comments.map(currComment => {
+                return <ViewComment 
+                            comment = {currComment}
                             key = {currComment._id}
                             deleteComment = {() => this.deleteComment(this.postID,currComment._id)}
-                            editComment = {() => this.editComment(this.postID,currComment._id)}
-                    />
-        })
+                            editComment = {() => this.editComment(currComment._id)}
+                        />
+            })
+        }
+        else if(this.state.isEditComment === true){
+            return this.state.comments.map(currComment => {
+                //console.log("commentList: isEditComment = true");
+                console.log("editCommentId: " + this.state.editCommentId);
+        
+                if(currComment._id === this.state.editCommentId){
+                    console.log("edit comment: "+ currComment._id);
+                    return <EditComment 
+                            comment = {currComment}
+                            postID = {this.postID}
+                            commentID = {currComment._id}
+                            key = {currComment._id}
+                            afterOnSubmitEditComment = {() => this.afterOnSubmitEditComment()}
+                            cancelComment = {() => this.setState({isEditComment:false, editCommentId: 0})}
+                        />
+                }
+                else{
+                    console.log("view comment: " + currComment._id);
+                    return <ViewComment 
+                                comment = {currComment}
+                                key = {currComment._id}
+                                deleteComment = {() => this.deleteComment(this.postID,currComment._id)}
+                                editComment = {() => this.editComment(currComment._id)}
+                        />
+                }
+            })
+        }
+        
     }// end commentList
 
     //return the post in format
@@ -155,16 +311,21 @@ class ForumPost extends Component{
     says 'Post deleted!'
     */
     deletePost(){
-        axios.delete(`http://localhost:3001/posts/${this.postID}`)
-             .then(res => {
-                 console.log(res.data)
-             })
-             .catch(err =>{
-                 console.log('Error: ' + err);
-             })
+        if (window.confirm("Are you sure you want to delete this post?")) {
+            axios.delete(`http://localhost:3001/posts/${this.postID}`)
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(err =>{
+                    console.log('Error: ' + err);
+                })
+            
+            console.log("delPost");
+            window.alert("Post Deleted!");
+            window.location = '/forum';
+        }
         
-        console.log("delPost");
-        window.location = '/forum';
+       
     }
 
     /* edit the post: redirect to createPost page with every info in to resumbit,, after
@@ -177,104 +338,85 @@ class ForumPost extends Component{
 
     //delete comment
     deleteComment(id,cId){
-        axios.delete(`http://localhost:3001/posts/${id}/delete-comment/${cId}`)
-            .then(res => {
-                console.log(res.data)
-                //refresh comments
-                 axios.get(`http://localhost:3001/posts/${id}/get-comments`)
-                       .then(res=>{
-                            console.log("compDidMount: get comments from db");
-                            this.setState({comments: res.data})
+        if (this.state.isEditComment === false ) {
+            if(window.confirm("Are you sure you want to delete this comment?")){
+                axios.delete(`http://localhost:3001/posts/${id}/delete-comment/${cId}`)
+                    .then(res => {
+                        console.log(res.data)
+                        //refresh comments
+                        axios.get(`http://localhost:3001/posts/${id}/get-comments`)
+                            .then(res=>{
+                                //console.log("compDidMount: get comments from db");
+                                this.setState({comments: res.data})
+                                //console.log("this is comments: " + JSON.stringify(res.data))
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                        //refresh post
+                        axios.get(`http://localhost:3001/posts/${id}`)
+                        .then(res=>{
+                            //console.log("compDidMount: get comments from db");
+                            this.setState({post: res.data})
                             //console.log("this is comments: " + JSON.stringify(res.data))
                         })
-                       .catch(err => {
+                        .catch(err => {
                             console.log(err);
                         })
-            })
-            .catch(err => {
-                console.log('Error: ' + err);
-            })
-    }
-
-    editComment(id, cId){
-        //set the commentEditUser and commentEditDescription
-
-        <form name="editCom" onSubmit={() => this.onSubmitEdit(id,cId)}>
-            {/*write a username (TEMP) */}
-            <div className="form-group">
-                <label>Username: </label>
-                <input type="text"
-                        required 
-                        className="form-control"
-                        name="commentEditUser"
-                        //value=""
-                        onChange={this.onChangeEditU}
-                />
-            </div>
-
-            {/* Write your comment */}
-            <div className="form-group">
-                <label>Description: </label>
-                <input type="text"
-                    required  
-                    className="form-control"
-                    name="commentEditDesc"
-                    //value="description"
-                    onChange={this.onChangeEditD}
-                />
-            </div>
-
-            {/* Submit Button */}
-            <div className="form-group">
-                <input type="submit"
-                    value="Update Comment"
-                    className="btn btn-primary"
-                />
-            </div>
-        </form>
-    }
-
-    onSubmitEdit(e, id, cId){
-        e.preventDefault();
-
-        //template comment to be submitted
-        const comment = {
-            username: this.commentEditUser,
-            description: this.commentEditDesc,
-            date: this.commentEditDate,
-        }
-        //console.log(comment);
-
-        //add to db
-        axios.post(`http://localhost:3001/posts/update/${id}/update-comment/${cId}`,comment)
-            .then(res => {
-                 console.log("onSubmit: " + res.data)
-                 console.log("after updating new comment to db");
-
-                 //update this.state.comments with new comments
-                 axios.get(`http://localhost:3001/posts/${id}/get-comments`)
-                    .then(res=>{
-                        console.log("onSubmit: get comments from db")
-                        this.setState({comments: res.data})
-                        //console.log("this is comments: " + JSON.stringify(res.data))
-                    })
-                .catch(err => {
-                    console.log(err);
-                })
-                
-                //update post
-                axios.get(`http://localhost:3001/posts/${this.postID}`)
-                    .then(res=>{
-                        console.log("compDidMount: get post from db");
-                        this.setState({post: res.data})
                     })
                     .catch(err => {
-                        console.log(err);
+                        console.log('Error: ' + err);
                     })
-            })
+                window.alert("Comment Deleted!");
+            }   
+        }
+        else if(this.state.isEditComment === true){
+            this.setState({isEditComment: false},()=>{
+                this.deleteComment(id,cId);
+            });
+            
+        }
+    }
 
-        //should clear submissions
-        e.target.reset();
+    editComment(cId){
+        //check if 'isEditComment' is false
+        //if false, set true, cont
+        //if true, then convert everything back to viewComments, then cont
+        if(this.state.isEditComment === false){
+            //set true, then do
+            this.setState({isEditComment: true, editCommentId: cId});
+        }
+        else if(this.state.isEditComment === true){
+            //first reverts comment back to normal, then reset editComment
+            this.setState({editCommentId: cId});
+        }
+
+        
+    }
+
+    afterOnSubmitEditComment(){
+        //update this.state.comments with new comments
+        axios.get(`http://localhost:3001/posts/${this.postID}/get-comments`)
+            .then(res=>{
+                console.log("onSubmit: get comments from db")
+                this.setState({comments: res.data, isEditComment: false, editCommentId:0})
+                //console.log("this is comments: " + JSON.stringify(res.data))
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        
+        //update post
+        axios.get(`http://localhost:3001/posts/${this.postID}`)
+            .then(res=>{
+                console.log("compDidMount: get post from db");
+                this.setState({post: res.data})
+                window.alert("Comment Updated!");
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        
     }
 
     /* change the status, if open -> closed, closed -> open */
@@ -384,10 +526,10 @@ class ForumPost extends Component{
                     <form name="createCom" onSubmit={this.onSubmit}>
                         {/*write a username (TEMP) */}
                         <div className="form-group">
-                            <label>Username: </label>
                             <input type="text"
                                    required 
                                    className="form-control"
+                                   placeholder="Enter Username"
                                    name="commentUser"
                                    //value=""
                                    onChange={this.onChangeU}
@@ -396,10 +538,10 @@ class ForumPost extends Component{
 
                         {/* Write your comment */}
                         <div className="form-group">
-                            <label>Description: </label>
-                            <input type="text"
+                            <textarea
                                 required  
                                 className="form-control"
+                                placeholder="Add a Comment"
                                 name="commentDesc"
                                 //value="description"
                                 onChange={this.onChangeD}
@@ -430,16 +572,16 @@ class ForumPost extends Component{
             <Layout user={this.state.user}>
                 <Container>
                     <h1><a href="/forum"style={{"textDecoration": "none", "color":"inherit"}}>Bike Forum</a></h1>
-
+                    <hr/>
                     <br></br>
 
                     <div>
                         <div className="root">{this.viewPost()}</div>
 
                         <hr></hr>
-
                         {this.permCreateComment()}
                         <hr></hr>
+                            <h3 style={{borderBottomStyle: 'solid',width: 'fit-content'}}>Comments ({this.state.post.numComments})</h3>
                         {/*print out the comments array*/}
                         <ol className="comments">{this.commentList()}</ol>
                     </div>

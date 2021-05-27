@@ -22,7 +22,7 @@ const upload = multer({ storage: storage,});
 
 // get all posts info from db
 router.route('/').get((req,res) => {
-    Post.find()
+    Post.find().sort({"date":-1})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 
@@ -30,7 +30,7 @@ router.route('/').get((req,res) => {
 
 // get all Announcement posts info from db
 router.route('/Announcements').get((req,res) => {
-    Post.find({ category: "Announcement" })
+    Post.find({ category: "Announcement" }).sort({"date":-1})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -38,21 +38,49 @@ router.route('/Announcements').get((req,res) => {
 // get all Lost and Found posts info from db
 router.route('/Lost-And-Founds').get((req,res) => {
     Post.find({ category: 
-        "Lost and Found" })
+        "Lost and Found" }).sort({"date":-1})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // get all Crash Report posts info from db
 router.route('/Crash-Reports').get((req,res) => {
-    Post.find({ category: "Crash Report" })
+    Post.find({ category: "Crash Report" }).sort({"date":-1})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // get all Others posts info from db
 router.route('/Others').get((req,res) => {
-    Post.find({ category: "Other" })
+    Post.find({ category: "Other" }).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Open posts info from db
+router.route('/Open-Posts').get((req,res) => {
+    Post.find({ status: "OPEN" }).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Closed posts info from db
+router.route('/Closed-Posts').get((req,res) => {
+    Post.find({ status: "CLOSED" }).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Closed LF posts info from db
+router.route('/LF/Closed-Posts').get((req,res) => {
+    Post.find({ status: "CLOSED", category: "Lost and Found"}).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Open LF posts info from db
+router.route('/LF/Closed-Posts').get((req,res) => {
+    Post.find({ status: "OPEN", category: "Lost and Found"}).sort({"date":-1})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -83,11 +111,27 @@ router.route('/add').post(upload.single("img"),(req,res) => {
 
 // get info of a specific post
 router.route('/:id').get((req,res) => {
-    //get the post from id
-    Post.findById(req.params.id)
+    Post.countDocuments({_id : req.params.id}, function (err, count) {
+        if(count>0){
+            Post.findById(req.params.id)
         .then(post => res.json(post)) //if found, return info
-        .catch(err => res.status(400).json('Error: ' + err)); //if not, throw err
-
+        .catch(err => res.status(400).json('Error: ' + err));
+        }      
+        else{
+            const post = {
+                username: '',
+                category: '',
+                title: '',
+                description: '',
+                img: '', 
+                status: '',
+                numComments: 0,
+                comments: [],
+                date: new Date(),
+            }
+            res.json(post);
+        }                
+    });
 }); // end get specific post
 
 // delete a specific post
@@ -112,6 +156,7 @@ router.route('/:id').delete((req,res) => {
 
 }); //end del specific post
 
+// update a specific post
 router.route('/update/:id').post(upload.single("img"),(req,res) => {
     Post.findById(req.params.id)
         .then(post => {
@@ -175,19 +220,12 @@ router.route('/update/:id/add-comment').post((req,res) => {
 
 // updates a comment
 router.route('/update/:id/update-comment/:cId').post((req,res) => {
-    Post.findById(req.params.id)
-        .then(post => {
-            post.update({'comments._id': req.params.cId}, {'$set': {
-                'comments.$.username': res.body.username,
-                'comments.$.description': res.body.description,
-                'comments.$.date': new Date(),
-            }})
-            // saving updated post
-            post.save()
-                .then(() => res.json('Post updated'))
-                .catch(err => res.status(400).json('Error: ' + err)); //throws if not all params filled
-        })
-        .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
+    Post.updateOne(
+        { _id: req.params.id, "comments._id": req.params.cId },
+        { $set: { "comments.$.username" : req.body.username, "comments.$.description" : req.body.description, "comments.$.date": Date.parse(req.body.date)} },
+     )
+     .then(() => res.json('Comment Updated'))
+    .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
 })
 
 //del comment from array
@@ -198,6 +236,7 @@ router.route('/:id/delete-comment/:cId').delete((req,res) => {
             var removeIndex = post.comments.map(comment => {return comment._id;}).indexOf(req.params.cId);
             //remove the comment
             post.comments.splice(removeIndex, 1);
+            post.numComments = post.comments.length;
 
             //save the post
             post.save()

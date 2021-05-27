@@ -63,6 +63,7 @@ export default function App() {
           from="/:url*(/+)"
           to={window.location.pathname.slice(0, -1)}
         />
+
         <Route exact path="/" component={Home_Page} />
         <Route exact path="/lostandfound" component={LostandFound} />
         <PrivateRoute
@@ -74,7 +75,9 @@ export default function App() {
         <PrivateRoute path="/forum/edit-post/:id" component={() => <ForumEditPost/>} />
         <Route path="/forum/:id" component={() => <ForumPost/>} />
         <PrivateRoute exact path="/profile" component={Profile} />
+        <Route path="/PageNotFound" component={PageNotFound} />
         <Route path="/" component={PageNotFound} />
+        
       </Switch>
     </BrowserRouter>
   );

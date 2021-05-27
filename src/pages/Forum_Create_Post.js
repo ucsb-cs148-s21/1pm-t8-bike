@@ -4,6 +4,7 @@ import getUser from "../utils/get-user";
 import axios from 'axios';
 import React, {Component} from 'react';
 
+
 //const textStyle = {maxWidth: "100%", width: "700px"}
 
 export default class ForumCreatePost extends Component{
@@ -85,7 +86,7 @@ export default class ForumCreatePost extends Component{
     formData.append("username", this.state.username);
     formData.append("category", this.state.category);
     formData.append("title", this.state.title);
-    formData.append("description", this.state.description);
+    formData.append("description", this.state.description.trim());
     formData.append("date", this.state.date);
     formData.append("img", this.state.img);
     formData.append("status", this.state.status);
@@ -100,7 +101,9 @@ export default class ForumCreatePost extends Component{
          .then(res => console.log(res.data));
 
     // redirect back to the forums page
+    
     window.location = '/forum';
+    window.alert("Post Added!");
   } // end onSubmit
 
   render(){
@@ -108,6 +111,7 @@ export default class ForumCreatePost extends Component{
       <Layout user={this.state.user}>
         <Container>
           <h1><a href="/forum" style={{"text-decoration": "none", "color":"inherit"}}>Bike Forum</a></h1>
+          <hr/>
           <br></br>
           
           <div>
@@ -155,8 +159,10 @@ export default class ForumCreatePost extends Component{
               {/* write description */}
               <div className="form-group">
                 <label>Description: </label>
-                <input type="text"
+                <textarea
                       required  
+                      wrap = 'hard'
+                      rows = '10'
                       className="form-control"
                       value={this.state.description}
                       onChange={this.onChangeDescription}
