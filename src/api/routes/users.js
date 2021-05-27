@@ -1,4 +1,69 @@
 const router = require('express').Router();
-let User = require('..models/user.model');
+let User = require('../models/user.model');
+let Post = require('../models/post.model');
 
-const multer = require('multer');
+// get specific user info from db
+router.route('/:email').get((req,res) => {
+    User.find({username: req.params.email})
+        .then(users => res.json(users))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// create new user
+router.route('/:email').post((req,res) => {
+    const username = req.params.email;
+    const bio = "Hello World!";
+    const itinerary = [];
+    const cache = [];
+
+    const newUser = new User({username, bio, itinerary, cache});
+
+    newUser.save()
+        .then(() => res.json('User created!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// add a new course to db
+router.route('/:email/add-course').post((req,res) => {
+    User.find({username: req.params.email})
+        .then(user => {
+            const course = {
+                title: req.body.title,
+                location: req.body.location,
+                days: req.body.days,
+                start: req.body.start,
+                end: req.body.end
+            }
+        
+            //push course to itinerary array
+            user.itinerary = [course].concat(user.itinerary);
+            user.numCourses = user.itinerary.length;
+        
+            user.save()
+                .then(() => res.json('Course added!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not foun
+}); // end add func
+
+// delete a course from db
+router.route('/:email/delete-course').post((req,res) => {
+    User.find(req.params.email)
+        .then(post => {
+            post.username = req.body.username;
+            post.category = req.body.category;
+            post.title = req.body.title;
+            post.description = req.body.description;
+            post.date = Date.parse(req.body.date);
+            post.img = req.file.originalname;
+
+            // saving updated post
+            post.save()
+                .then(() => res.json('Post updated'))
+                .catch(err => res.status(400).json('Error: ' + err)); //throws if not all params filled
+        })
+        .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
+
+}); // end add func
+
+module.exports = router;

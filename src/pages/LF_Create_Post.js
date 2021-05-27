@@ -1,8 +1,7 @@
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
-import { threads } from "./dataLF";
-import { cache } from "./dataProfile";
+import axios from "axios";
 import { Button, TextField } from "@material-ui/core";
 
 const textStyle = { maxWidth: "100%", width: "700px" };
@@ -12,24 +11,30 @@ export default function LFCreatePost() {
 
   function createPost() {
     if (document.getElementById("title").value !== "" && document.getElementById("description").value !== "") {
-      var newPost = {
-        id: threads.length + 1,
-        item: document.getElementById("title").value,
-        author: user,
-        date: Date(),
-        desc: document.getElementById("description").value,
-        img: document.getElementById("image").accept,
-      };
-      cache.push(newPost);
-      threads.push(newPost);
-      console.log(threads);
+      const formData = new FormData();
+      formData.append("username", user.email);
+      formData.append("category", "Lost and Found");
+      formData.append("title", document.getElementById("title").value);
+      formData.append("description", document.getElementById("description").value);
+      formData.append("date", new Date());
+      formData.append("img", document.getElementById("image").value);
+      formData.append("status", "OPEN"); 
+      formData.append("numComments", 0);
+      formData.append("comments", []);
+      
+
+      axios.post(`http://localhost:3001/posts/add`,formData)
+        .then(res => console.log(res.data))
+
+      axios.post(`http://localhost:3001/users/${user.email}/addPost`, formData)
+        .then(res => console.log(res.data))
 
       //clear all inputs
       document.getElementById("title").value = "";
       document.getElementById("description").value = "";
 
       //go back to forum main page
-      window.location.href = "/lostandfound";
+      window.location = '/lostandfound';
       console.log("return lostandfound...");
     }
   }

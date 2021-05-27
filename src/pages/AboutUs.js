@@ -1,11 +1,14 @@
 import React from "react";
 import Layout from "../components/Layout"; 
-import "../index.css"
+import getUser from "../utils/get-user";
+import "../index.css";
 
 
 export default function MemberPage() {
+  const user = getUser();
+
   return (
-    <Layout>
+    <Layout user={user}>
       <div>
         <div style={{ maxWidth: 10000, paddingTop: 10, paddingBottom: 20, paddingLeft: 145, paddingRight: 145}}>
           {/* remove className="aboutUs" to left-align "Team Members" */}

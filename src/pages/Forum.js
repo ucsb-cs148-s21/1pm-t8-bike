@@ -95,7 +95,7 @@ export default class ForumPost extends Component{
   // this function grabs the list of posts from db
   componentDidMount(){
     console.log(this.state.user);
-    axios.get('http://localhost:3001/posts') //get request
+    axios.get(`http://localhost:3001/posts`) //get request
          .then(res=>{
            this.setState({posts: res.data}) //sets posts array to db array
          }) 
