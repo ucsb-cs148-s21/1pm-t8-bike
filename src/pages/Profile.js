@@ -25,9 +25,9 @@ function timeFormat(time) {
 
 const Course = props => (
   <div>
-    <Card id={props.course._id} style={{width: "18 rem"}}>
+    <Card style={{width: "18 rem"}}>
         <Card.Header>
-          <Card.Button class="close" onClick="deleteCourse">
+          <Card.Button id={props.course._id} class="close" onClick={this.deleteCourse}>
             <span aria-hidden="false">&times;</span>
           </Card.Button>
         </Card.Header>
@@ -66,6 +66,9 @@ export default class Profile extends Component{
   constructor(props){
     super(props);
     this.state = {bio: "", courses: [], posts: [], user: getUser(), exists: false};
+    this.handleChangeBio = this.handleChangeBio.bind(this)
+    this.addCourse = this.addCourse.bind(this)
+    this.deleteCourse = this.deleteCourse.bind(this)
     //this.isLoggedIn = getUser();
   }
   
@@ -74,30 +77,42 @@ export default class Profile extends Component{
     console.log(this.state.user);
     axios.get(`http://localhost:3001/users/${this.state.user.email}`) //get request
       .then(res=>{
-        this.setState({bio: res.data.bio, courses: res.data.itinerary, exists: true}) //sets posts array to db array
+        this.setState({bio: res.data.bio, courses: res.data.itinerary, exists: true}) //sets bio and courses array to db
       })
       .catch(err => {
         console.log(err);
       })
+
     if (!this.state.exists) {
       axios.post(`http://localhost:3001/users/${this.state.user.email}`) //post request
         .then(res => console.log(res.data));
       axios.get(`http://localhost:3001/users/${this.state.user.email}`) //get request
-        .then(res=>{
-          this.setState({bio: res.data.bio, courses: res.data.itinerary, exists: true}) //sets posts array to db array
+        .then(res => {
+          this.setState({bio: res.data.bio, courses: res.data.itinerary, exists: true}) //sets bio and courses array to db
         })
         .catch(err => {
           console.log(err);
         })
     }
+
     axios.get(`http://localhost:3001/posts/${this.state.user.email}`) //get request
-      .then(res=>{
+      .then(res => {
         this.setState({posts: res.data}) //sets posts array to db array
       })
       .catch(err => {
         console.log(err);
       })
   }// end componentDidMount
+
+  handleChangeBio(e) {
+    this.setState({
+      bio: e.target.value
+    })
+    const formData = new FormData();
+    formData.append("bio", e.target.value); 
+    axios.post(`http://localhost:3001/users/${this.state.user.email}/update-bio`, formData) //post request
+      .then(res => console.log(res.data));
+  }
 
   itinerary(){
     if (this.state.courses) {
@@ -115,28 +130,16 @@ export default class Profile extends Component{
     }
   }
 
-  timeFormat(time) {
-    if (parseInt(time.substr(0,2)) > 12) {
-      var hh = (parseInt(time.substr(0,2)) - 12);
-    }
-    else if (parseInt(time.substr(0,2)) == 0) {
-      hh = 12;
-    }
-    else {
-      hh = time.substr(0,2);
-    }
-    var mm = time.substr(2,5);
-    var mid = (parseInt(time.substr(0,2)) >= 12) ? " pm" : " am" ;
-    return hh + mm + mid;
+  deleteCourse(e) {
+    const formData = new FormData();
+    formData.append("id", e.target.id);
+    axios.delete(`http://localhost:3001/users/${this.state.user.email}/delete-course`, formData)
+      .then(res => console.log(res.data))
   }
 
-  //deleteCourse() {
-  //  axios.delete(`http://localhost:3001/users/${this.state.user.email}/delete`);
-  //}
-
   addCourse() {
-    if (document.getElementById("course").value !== "" && document.getElementById("location").value !== ""
-        && document.getElementById("days") !== "" && (document.getElementById("start").value < document.getElementById("end").value)) {
+    if (document.getElementById("title").value !== "" && document.getElementById("location").value !== ""
+        && document.getElementById("days").value !== "" && (document.getElementById("start").value < document.getElementById("end").value)) {
       const formData = new FormData();
       formData.append("title", document.getElementById("title").value);
       formData.append("location", document.getElementById("location").value);
@@ -144,7 +147,7 @@ export default class Profile extends Component{
       formData.append("start", document.getElementById("start").value);
       formData.append("end", document.getElementById("end").value);
       
-      axios.post(`http://localhost:3001/users/${this.state.user.email}/add-course`,formData)
+      axios.post(`http://localhost:3001/users/${this.state.user.email}/add-course`, formData)
         .then(res => console.log(res.data))
 
       //clear all inputs
@@ -165,7 +168,7 @@ export default class Profile extends Component{
           <div>Email: {this.state.user.email}</div>
           <br />
           <div>
-            Bio: {this.state.bio}
+            <input type="text" name="bio" value={this.state.bio} placeholder="Tell us about yourself" onChange={this.handleChangeBio}/>
           </div>
           <br />
           <div>
@@ -199,7 +202,7 @@ export default class Profile extends Component{
                 }}
               />
               <br />
-              <Button onClick="addCourse">Add</Button>
+              <Button onClick={this.addCourse}>Add</Button>
             </form>
             <br />
             {this.itinerary()}

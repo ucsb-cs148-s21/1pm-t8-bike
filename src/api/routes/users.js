@@ -4,7 +4,7 @@ let Post = require('../models/post.model');
 
 // get specific user info from db
 router.route('/:email').get((req,res) => {
-    User.find({username: req.params.email})
+    User.findOne({username: req.params.email})
         .then(users => res.json(users))
         .catch(err => res.status(400).json('Error: ' + err));
 });
@@ -14,9 +14,21 @@ router.route('/:email').post((req,res) => {
     const username = req.params.email;
     const bio = "Hello World!";
     const itinerary = [];
-    const cache = [];
 
-    const newUser = new User({username, bio, itinerary, cache});
+    const newUser = new User({username, bio, itinerary});
+
+    newUser.save()
+        .then(() => res.json('User created!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// create new user
+router.route('/:email').post((req,res) => {
+    const username = req.params.email;
+    const bio = "Hello World!";
+    const itinerary = [];
+
+    const newUser = new User({username, bio, itinerary});
 
     newUser.save()
         .then(() => res.json('User created!'))
@@ -24,20 +36,10 @@ router.route('/:email').post((req,res) => {
 });
 
 // add a new course to db
-router.route('/:email/add-course').post((req,res) => {
+router.route('/:email/update-bio').post((req,res) => {
     User.find({username: req.params.email})
         .then(user => {
-            const course = {
-                title: req.body.title,
-                location: req.body.location,
-                days: req.body.days,
-                start: req.body.start,
-                end: req.body.end
-            }
-        
-            //push course to itinerary array
-            user.itinerary = [course].concat(user.itinerary);
-            user.numCourses = user.itinerary.length;
+            user.bio = req.body.bio
         
             user.save()
                 .then(() => res.json('Course added!'))
@@ -48,7 +50,7 @@ router.route('/:email/add-course').post((req,res) => {
 
 // delete a course from db
 router.route('/:email/delete-course').post((req,res) => {
-    User.find(req.params.email)
+    User.findByIdAndDelete(req.body.id)
         .then(post => {
             post.username = req.body.username;
             post.category = req.body.category;
