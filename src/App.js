@@ -12,6 +12,7 @@ import Private from "./pages/Private";
 import PageNotFound from "./pages/PageNotFound";
 import LFCreatePost from "./pages/LF_Create_Post";
 import ForumCreatePost from "./pages/Forum_Create_Post";
+import ForumEditPost from "./pages/Forum_Edit_Post";
 import Home_Page from "./pages/Home_Page"; 
 import AboutUs from "./pages/AboutUs"; 
 
@@ -63,6 +64,7 @@ export default function App() {
           from="/:url*(/+)"
           to={window.location.pathname.slice(0, -1)}
         />
+
         <Route exact path="/" component={Home_Page} />
         <Route exact path="/lostandfound" component={LostandFound} />
         <Route exact path="/aboutus" component={AboutUs} />
@@ -72,9 +74,12 @@ export default function App() {
         />
         <Route exact path="/forum" component={() => <Forum/>} />
         <PrivateRoute path="/forum/create-post" component={() => <ForumCreatePost/>} />
+        <PrivateRoute path="/forum/edit-post/:id" component={() => <ForumEditPost/>} />
         <Route path="/forum/:id" component={() => <ForumPost/>} />
         <PrivateRoute exact path="/profile" component={Profile} />
+        <Route path="/PageNotFound" component={PageNotFound} />
         <Route path="/" component={PageNotFound} />
+        
       </Switch>
     </BrowserRouter>
   );
