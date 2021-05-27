@@ -1,9 +1,7 @@
 # Bike Map
 
 # Target User Group
-* UCSB students
-  - Bikers
-  - Walkers
+* UCSB students who regularly commute on campus seeking the best time to depart for each class
 
 # Purpose
 * THe UCSB Bike Map focuses on sharing new information about the bike trial in order to alert UCSB users on the optimal time for leaving to and from classes and make commuting feel more of a community. This app will display recent bike crashes that occur on the bike path in order to inform the user of potential delays in the daily commute on campus. It will also provide an estimated commute time between buildings and alert the user on the most optimal time for departure based on their user inputted schedule. There will also be a way to report lost/found items that were dropped while commuting.
