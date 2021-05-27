@@ -47,7 +47,9 @@ const Post = props => (
   <div>
     <Card style={{width: "18 rem"}}>
       <Card.Body>
-        <Card.Title href={`/forum/${props.post._id}`}>{props.post.title}</Card.Title>
+        <Card.Link href={`/forum/${props.post._id}`}>
+          <Card.Title>{props.post.title}</Card.Title>
+        </Card.Link>
         <Card.Subtitle>{props.post.category}</Card.Subtitle>
         <Card.Text>{props.post.description}</Card.Text>
         <Button variant="primary" onClick="">Close Post</Button>
@@ -90,7 +92,7 @@ export default class Profile extends Component{
     }
     axios.get(`http://localhost:3001/posts/${this.state.user.email}`) //get request
       .then(res=>{
-        this.setState({posts: res.data.posts}) //sets posts array to db array
+        this.setState({posts: res.data}) //sets posts array to db array
       })
       .catch(err => {
         console.log(err);
@@ -146,7 +148,7 @@ export default class Profile extends Component{
         .then(res => console.log(res.data))
 
       //clear all inputs
-      document.getElementById("course").value = "";
+      document.getElementById("title").value = "";
       document.getElementById("location").value = "";
       document.getElementById("days").value = "";
     }
@@ -169,7 +171,7 @@ export default class Profile extends Component{
           <div>
             <h2>Schedule</h2>
             <form autoComplete="off">
-              <TextField required id="course" label="Course" /><br />
+              <TextField required id="title" label="Title" /><br />
               <TextField required id="location" label="Location" /><br />
               <TextField required id="days" label="Days" /><br />
               <TextField
