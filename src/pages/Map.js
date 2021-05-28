@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
-import Marker from './Marker';
+import Marker from './Marker'; 
 
 
 const Map = (props) => {
     const [center, setCenter] = useState({lat: 34.4134, lng: -119.8433});
-    const [zoom, setZoom] = useState(11);
+    const [zoom, setZoom] = useState(13);
     console.log(props.positions); //create positions array and pass that in here 
     return (
         <div style={{ height: '75vh', width: '75vh' }}>
@@ -26,7 +26,8 @@ const Map = (props) => {
             <Marker key={position.time.toISOString()}
                     lat= {position.lat} 
                     lng= {position.lng} 
-                    tooltip={"hi"}/>)}
+                    name= {"crash"} 
+                    />)}
           {/* <Marker key={"hello"}
                   lat={'34.4134'}
                   lng={'-119.8433'} />

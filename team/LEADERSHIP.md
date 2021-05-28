@@ -27,8 +27,8 @@
 | Th 05/20  | Yvonne Liu        | Led stand-up meeting                                               |
 | Fri 05/21 | Calvin Dougher    | Finished up lab06-pt1 and standup, got done with deployment doc    |
 | Mon 05/24 | Rukmini Bapat     | Led stand-up meeting                                               | 
-| Tues 05/25| Anika Arora       |                                                                    | 
-| Th 05/27  | Yvonne Liu        |                                                                    |
+| Tues 05/25| Anika Arora       | Led retro 03                                                       | 
+| Th 05/27  | Yvonne Liu        | Led stand-up meeting                                               |
 
 
 * Product Owner: Yvonne

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Marker.css';
+import './Marker.css';  
 
 const onHover = () => {
   // var element = document.getElementsByClassName('marker');
@@ -8,7 +8,6 @@ const onHover = () => {
 }
 
 const Marker = (props) => {
-    const { color, name, id } = props;
     return (
       <div  className="marker"
         // style={{ backgroundImage: `url("anika.png")`}} 
@@ -16,8 +15,7 @@ const Marker = (props) => {
         category={name}
         lat={props.lat}
         lng={props.lng}
-        time={props.key}
-        tooltip={props.tooltip}>
+        time={props.key}>
       </div>
       // make a new div and make it visible or hidden whether or not the user is hovering 
       //    use JS for that 

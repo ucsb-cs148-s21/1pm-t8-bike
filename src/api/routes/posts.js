@@ -1,8 +1,10 @@
 const router = require('express').Router();
+const path = require('path');
 let Post = require('../models/post.model');
 //let Comment = require('../models/comment.model');
 
 const multer = require('multer');
+const fs = require('fs');
 //let uuidv4 = require('uuid/v4');
 
 const storage = multer.diskStorage({
@@ -10,7 +12,9 @@ const storage = multer.diskStorage({
         callback(null, './public/uploads/')
     },
     filename: (req, file, callback) => {
-        callback(null, file.originalname)
+        let fn = file.originalname.replace(/ /g,"-").split(path.extname(file.originalname))[0] + '-' + Date.now() + path.extname(file.originalname);
+        file.originalname = fn;
+        callback(null, fn)
     }
 });
 
@@ -18,11 +22,68 @@ const upload = multer({ storage: storage,});
 
 // get all posts info from db
 router.route('/').get((req,res) => {
-    Post.find()
+    Post.find().sort({"date":-1})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 
 }); // end get all 
+
+// get all Announcement posts info from db
+router.route('/Announcements').get((req,res) => {
+    Post.find({ category: "Announcement" }).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Lost and Found posts info from db
+router.route('/Lost-And-Founds').get((req,res) => {
+    Post.find({ category: 
+        "Lost and Found" }).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Crash Report posts info from db
+router.route('/Crash-Reports').get((req,res) => {
+    Post.find({ category: "Crash Report" }).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Others posts info from db
+router.route('/Others').get((req,res) => {
+    Post.find({ category: "Other" }).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Open posts info from db
+router.route('/Open-Posts').get((req,res) => {
+    Post.find({ status: "OPEN" }).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Closed posts info from db
+router.route('/Closed-Posts').get((req,res) => {
+    Post.find({ status: "CLOSED" }).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Closed LF posts info from db
+router.route('/LF/Closed-Posts').get((req,res) => {
+    Post.find({ status: "CLOSED", category: "Lost and Found"}).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get all Open LF posts info from db
+router.route('/LF/Closed-Posts').get((req,res) => {
+    Post.find({ status: "OPEN", category: "Lost and Found"}).sort({"date":-1})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
 // add a new post to db
 router.route('/add').post(upload.single("img"),(req,res) => {
@@ -36,10 +97,11 @@ router.route('/add').post(upload.single("img"),(req,res) => {
     if(req.file){
         img = req.file.originalname;
     }
+    const status = req.body.status;
     const comments = [];
     const numComments = 0;
 
-    const newPost = new Post({username,category,title,description,date,img,comments,numComments});
+    const newPost = new Post({username,category,title,description,date,img,status,comments,numComments});
 
     newPost.save()
         .then(() => res.json('Post added!'))
@@ -49,21 +111,55 @@ router.route('/add').post(upload.single("img"),(req,res) => {
 
 // get info of a specific post
 router.route('/:id').get((req,res) => {
-    //get the post from id
-    Post.findById(req.params.id)
+    Post.countDocuments({_id : req.params.id}, function (err, count) {
+        if(count>0){
+            Post.findById(req.params.id)
         .then(post => res.json(post)) //if found, return info
-        .catch(err => res.status(400).json('Error: ' + err)); //if not, throw err
-
+        .catch(err => res.status(400).json('Error: ' + err));
+        }      
+        else{
+            const post = {
+                username: '',
+                category: '',
+                title: '',
+                description: '',
+                img: '', 
+                status: '',
+                numComments: 0,
+                comments: [],
+                date: new Date(),
+            }
+            res.json(post);
+        }                
+    });
 }); // end get specific post
 
 // delete a specific post
 router.route('/:id').delete((req,res) => {
-    Post.findByIdAndDelete(req.params.id)
-        .then(() => res.json('Post deleted!'))
+    // Post.findByIdAndDelete(req.params.id)
+    //     .then(() => res.json("Post Deleted!"));
+    Post.findById(req.params.id)
+        .then(post => {
+            //del pic from uploads
+            if(post.img !== ''){
+                try{
+                    fs.unlinkSync(`public/uploads/${post.img}`)
+                }
+                catch(err){
+                    console.log("fs.unlink had an error")
+                }
+            }
+
+            //then deletePost
+            Post.findByIdAndDelete(req.params.id)
+                .then(() => res.json("Post Deleted!"))
+            
+        })
         .catch(err => res.status(400).json('Error: ' + err));
 
 }); //end del specific post
 
+// update a specific post
 router.route('/update/:id').post(upload.single("img"),(req,res) => {
     Post.findById(req.params.id)
         .then(post => {
@@ -72,7 +168,35 @@ router.route('/update/:id').post(upload.single("img"),(req,res) => {
             post.title = req.body.title;
             post.description = req.body.description;
             post.date = Date.parse(req.body.date);
-            post.img = req.file.originalname;
+            //optional to update img
+            if(req.file){ // incase change img
+                //del prev
+                if(post.img !== ''){
+                    try{
+                        fs.unlinkSync(`public/uploads/${post.img}`)
+                    }
+                    catch(err){
+                        console.log("fs.unlink had an error")
+                    }
+                }
+                post.img = req.file.originalname; //equal new file upload name
+            } 
+            else if(req.body.img === ''){ //incase delete img
+                //del pic from uploads
+                if(post.img !== ''){
+                    try{
+                        fs.unlinkSync(`public/uploads/${post.img}`)
+                    }
+                    catch(err){
+                        console.log("fs.unlink had an error")
+                    }
+                }
+                post.img = ''; //equal ''
+            }     
+            else{ //incase no change
+                post.img = post.img; //equal to itself from db 
+            }    
+            post.status = req.body.status;
 
             // saving updated post
             post.save()
@@ -103,6 +227,34 @@ router.route('/update/:id/add-comment').post((req,res) => {
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
+})
+
+// updates a comment
+router.route('/update/:id/update-comment/:cId').post((req,res) => {
+    Post.updateOne(
+        { _id: req.params.id, "comments._id": req.params.cId },
+        { $set: { "comments.$.username" : req.body.username, "comments.$.description" : req.body.description, "comments.$.date": Date.parse(req.body.date)} },
+     )
+     .then(() => res.json('Comment Updated'))
+    .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
+})
+
+//del comment from array
+router.route('/:id/delete-comment/:cId').delete((req,res) => {
+    //get the post from id
+    Post.findById(req.params.id)
+        .then(post => {
+            var removeIndex = post.comments.map(comment => {return comment._id;}).indexOf(req.params.cId);
+            //remove the comment
+            post.comments.splice(removeIndex, 1);
+            post.numComments = post.comments.length;
+
+            //save the post
+            post.save()
+                .then(() => res.json('Comment Deleted'))
+                .catch(err => res.status(400).json('Error: ' + err)); //throws if not all params filled
+        }) //if found, return post.comments
+        .catch(err => res.status(400).json('Error: ' + err)); //if not, throw err
 })
 
 //get all the comments in post and returns it
