@@ -2,17 +2,25 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 180px;
-    height: 180px; 
+    width: 18px;
+    height: 18px;
     border: 2px solid #fff;
     border-radius: 100%;
-    background-size: 180px, 180px;
+    background-size: 18px 18px;
+    background-color: red;
     user-select: none;
+    cursor: 'pointer';
     transform: translate(-50%, -50%);
     /* &:hover {
       z-index: 1;
     } */
+
   }
+  .marker:hover {
+    background-color: black;
+    content: "hovering";
+  }
+
   /* .pin {
     width: 30px;
     height: 30px;

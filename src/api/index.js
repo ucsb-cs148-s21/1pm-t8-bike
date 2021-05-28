@@ -6,9 +6,11 @@ const path = require('path');
 // adding routes to schema
 const postsRouter = require('./routes/posts');
 const markersRouter = require('./routes/markers');
+const buildingsRouter = require('./routes/buildings');
 
 // connect db
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 
 //so it can read the .env from root dir
 require('dotenv').config({ path: '.env'});
@@ -29,6 +31,7 @@ app.use(express.json());
 //will load everything in postsRouter if on /posts directory
 app.use('/posts',postsRouter);
 app.use('/markers',markersRouter);
+app.use('/buildings',buildingsRouter);
 
 
 // connect uri db
