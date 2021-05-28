@@ -31,7 +31,7 @@ Design Process Documentation Section: This is where you can satisfy the point a)
 ## User Interface and User Experience Considerations 
 ### UI Design 
 * Home Page: User can interact with the map 
-![image](https://user-images.githubusercontent.com/60118889/119937824-4caab480-bf40-11eb-8125-0309d4bb4ffb.png)
+![image](https://user-images.githubusercontent.com/60118889/119941548-9b0e8200-bf45-11eb-84c3-4c0c70962e50.png)
 
 * Lost and Found Page: User can add items that they've lost 
 ![image](https://user-images.githubusercontent.com/60118889/119937969-7d8ae980-bf40-11eb-9691-25457b72a6a2.png)
