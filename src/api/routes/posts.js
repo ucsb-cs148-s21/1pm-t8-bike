@@ -18,15 +18,27 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage,});
+const upload = multer({ storage: storage });
 
 // get all posts info from db
 router.route('/').get((req,res) => {
     Post.find().sort({"date":-1})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
+}); // end get all
 
-}); // end get all 
+// get all L&F posts info from db
+router.route('/lf').get((req,res) => {
+    Post.find({category: "Lost and Found"})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+}); // end get all
+
+router.route('/:email').get((req,res) => {
+    Post.find({username: req.params.email})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+}); // end get all
 
 // get all Announcement posts info from db
 router.route('/Announcements').get((req,res) => {
