@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Map from "./Map"; 
 import axios from 'axios';
 import Marker from './Marker';
+import { set } from "mongoose";
 
 // function setPositions (current => [...current, {
 //     // lat: event.latlng.lat(),
@@ -28,8 +29,9 @@ import Marker from './Marker';
 //     }); 
 // }
 
-function addMarker(setPositions) {
+function addMarker(setPositions,setIsLoading) {
     // should add to db, before however should check for any exisiting markers, if markers exists, increment the numReports instead
+    setIsLoading(true);
     navigator.geolocation.getCurrentPosition(function(position){
         //new marker
         const tempMarker = {
@@ -47,6 +49,7 @@ function addMarker(setPositions) {
                 axios.get(`http://localhost:3001/markers`)
                     .then(res => {
                         setPositions(res.data)
+                        setIsLoading(false)
                         window.alert('Marker Added!');
                     })
                     .catch(err => console.log('Error: ' + err));
@@ -60,6 +63,7 @@ export default function Home_Page() {
     const user = getUser();
     const [positions, setPositions] = useState([]);
     const [data, setData] = useState("test");
+    const [isLoading, setIsLoading] = useState(false);
     //const map =  <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>;
     
     //positions is state variable array of markers
@@ -89,9 +93,13 @@ export default function Home_Page() {
             </div>
         </Container>
         <Container >
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
             <button style={{float: "right"}} href="tel:18058932000">CALL CSO</button>
-            <button style={{float: "right"}} 
-                onClick={() => addMarker(setPositions)}>Report</button>
+            <button style={{float: "right"}} onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
+                {!isLoading && "Report"}
+                {isLoading && <i className="fa fa-refresh fa-spin"></i>}
+                {isLoading && "Adding Marker"}
+            </button>
         </Container>
         </Layout>
     ); 
