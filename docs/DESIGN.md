@@ -23,6 +23,8 @@
 
 ## Software Architecture Design and Design Process
 
+Tech stack Decisions: For our tech stack, we used React, Node.js, and MongoDB. The reason we used React is because it is an extremely popular frontend framework with a strong online community and tutorials to aid in development. Many of our team members had some experience in Javascript/HTML/CSS which made it convenient to ramp up with as a new technology. Node.js is a javascript backend and again had many resources for a team of members with limited full stack development experience. We decided to use MongoDB after watching a MERN stack video and understanding that the MERN stack allows a smooth 3-tier connection between the web, server, and database (working particularly well with Node.js). 
+
 ### Stage I: Homepage/Maps
 For our webapp, we decided to start by brainstorming how the homepage should look to the user. We knew that since the bike map is the focus of our webapp, the map had to be included on our home page. We used Google Jamboard to draw out roughly how we want the front page to look like and which components we want on it.
 
@@ -34,9 +36,12 @@ After making the design decision that the map should be on the home page, we loo
 
 We then individually tried setting up the different maps on different branches. One of us set up an API key to use for Google Maps, and the other set up a Leaflet map. Both are shown below:
 
+Google Maps:
 <img width="650" alt="Screen Shot 2021-05-28 at 12 19 58 AM" src="https://user-images.githubusercontent.com/28207372/119945536-723cbb80-bf4a-11eb-9306-0d99234e6e34.png">
 
-[INSERT LEAFLET SCREENSHOT HERE]
+Leaflet:
+<img width="257" alt="Screen Shot 2021-05-28 at 1 02 34 PM" src="https://user-images.githubusercontent.com/28207372/120036430-faf04180-bfb4-11eb-90e2-9153f468cd18.png">
+
 
 Because of the amount of npm packages available to support Google Maps development in React and the overall strength of the developer community around this platform, we made the design decision to continue working with Google Maps.
 
@@ -85,43 +90,57 @@ As part of a user's profile, we decided to include their profile picture (linked
 
 <img width="931" alt="Screen Shot 2021-05-28 at 1 12 24 AM" src="https://user-images.githubusercontent.com/28207372/119952349-c4cda600-bf51-11eb-9ad2-1a759943202b.png">
 
-[add tech stack decisions]
 
 # User Interface and User Experience Considerations 
 ## UI Design 
 
-### Home Page: User can interact with the map 
+### Home Page: 
+* User can interact with the map and report crashes or call the CSO
 
 ![image](https://user-images.githubusercontent.com/60118889/119941548-9b0e8200-bf45-11eb-84c3-4c0c70962e50.png)
 
-### Lost and Found Page: User can add items that they've lost 
+### Lost and Found Page: 
+* This page contains a list of all lost items to date.
 
 ![image](https://user-images.githubusercontent.com/60118889/119937969-7d8ae980-bf40-11eb-9691-25457b72a6a2.png)
 
-### Forum Page: Users are able to interact with each other by adding posts to the forum 
-* Basic Layout: Overview of all the posts and button to create post 
+### Forum Page: 
+* Basic Layout: Overview of all the posts and button to create post. Can view comments on post as well. Need to be signed in to create a post. 
+* Users are able to see and filter existing posts in four different categories (Announcements, Crash Report, Lost and Found, Other)
 
 ![image](https://user-images.githubusercontent.com/60118889/119940510-2555e680-bf44-11eb-94ed-7d3c37ae0fd0.png)
 
-### About Us Page: information about the dev team (will be updated with our actual pics soon) 
+### About Us Page: 
+* Information about the dev team (will be updated with our actual pics soon) 
 
 ![image](https://user-images.githubusercontent.com/60118889/119940278-ce501180-bf43-11eb-9ed9-9443dd737a91.png)
 
-### Profile Page: contains user's information, such as name, email, etc, as well as their schedule and post history. 
+### Profile Page: 
+* Contains user's information, such as name, email, etc, as well as their schedule and past post history. 
 
 ![image](https://user-images.githubusercontent.com/60118889/119940638-58987580-bf44-11eb-979b-e217d076c912.png)
 
 ## User Experience 
 
+### Home Page: 
+* User can interact with the map and report crashes or call the CSO
+* When the report button is pressed, a marker appears in the location the user is at (consent to share location with the website is asked for before this marker is placed).
+
 ### Forum Page: 
-* Create Post: Form to create post 
+* Create Post: If the user is logged in, they can click on the "create post" button and see a form to create a post.
+* Once an item is found, the user can close the post and it will be cached in their profile page.
 
 ![image](https://user-images.githubusercontent.com/60118889/119940578-428ab500-bf44-11eb-8c86-e6b0ddaeae41.png)
 
  * View Post: How the post looks after it's been created as well as button to comment on post 
 ![image](https://user-images.githubusercontent.com/60118889/119940608-4ddde080-bf44-11eb-9546-5969339e0f73.png)
 
-### Lost and Found: 
-* Form Validation 
+### Lost and Found Page: 
+* User can publish a card with information about an item they lost
+* Form Validation (need to enter something in all fields to publish a lost and found card.
 
 ![image](https://user-images.githubusercontent.com/60118889/119938222-ec684280-bf40-11eb-8d02-1cd07df150e2.png)
+The user is not required to do any activities on our webapp in a particular order. They can independently publish a Forum post or a Lost and Found post without accessing the map to report a crash or see where crashes have happened in the day. 
+
+### Profile Page
+* User can add their schedule using a dropdown menu of UCSB buildings and the times of their classes
