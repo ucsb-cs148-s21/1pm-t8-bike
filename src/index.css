@@ -23,8 +23,8 @@ code {
   vertical-align: center;
   padding-right: 50px;
   padding-left: 10px;
-  padding-bottom: 100px;
-  padding-top: 50px;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 .member-text {
   vertical-align: top;
@@ -46,6 +46,8 @@ code {
 .box {
   display: flex;
   align-items:flex-start;
+  float: left;
+  
 }
 
 /* .imageBox {
