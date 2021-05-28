@@ -12,8 +12,8 @@
 * Install Node.js: https://nodejs.org/en/download/
 * Setup .env environment file: 
 
-1. REACT_APP_AUTH_CLIENT_ID = <Google OAuth ID>
-  * Follow these instructions: Go to the Google API Credentials website, sign in with your Google account, and create a new project. Within the Credentials tabs, select Create Credentials, then choose the OAuth client ID option. Once you have created the credential, update its list of URIs to include the webpage address hosting the app. Finally, you should be able to copy the client ID and paste it into the .env file.
+1. REACT_APP_AUTH_CLIENT_ID = '425045287491-hopbavpi7dkcan749qnkdr2avfn5gj6c.apps.googleusercontent.com'
+  * Follow these instructions: In your .env file, add this line: **REACT_APP_AUTH_CLIENT_ID = '425045287491-hopbavpi7dkcan749qnkdr2avfn5gj6c.apps.googleusercontent.com'**. Now, the map should be able to render properly on the page. This API key is enabled for users to be able to access the map and its features. 
 
 2. REACT_APP_GOOGLE_KEY = 'AIzaSyD6uJFBrWLVwIr8NuiOqgCOHZCvOOxb3MA'
   * Follow these instructions: In your .env file, add this line: **REACT_APP_GOOGLE_KEY = 'AIzaSyD6uJFBrWLVwIr8NuiOqgCOHZCvOOxb3MA'**. Now, the map should be able to render properly on the page. This API key is enabled for users to be able to access the map and its features. 
