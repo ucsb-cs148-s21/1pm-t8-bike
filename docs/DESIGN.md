@@ -23,6 +23,8 @@
 
 ## Software Architecture Design and Design Process
 
+Tech stack Decisions: For our tech stack, we used React, Node.js, and MongoDB. The reason we used React is because it is an extremely popular frontend framework with a strong online community and tutorials to aid in development. Many of our team members had some experience in Javascript/HTML/CSS which made it convenient to ramp up with as a new technology. Node.js is a javascript backend and again had many resources for a team of members with limited full stack development experience. We decided to use MongoDB after watching a MERN stack video and understanding that the MERN stack allows a smooth 3-tier connection between the web, server, and database (working particularly well with Node.js). 
+
 ### Stage I: Homepage/Maps
 For our webapp, we decided to start by brainstorming how the homepage should look to the user. We knew that since the bike map is the focus of our webapp, the map had to be included on our home page. We used Google Jamboard to draw out roughly how we want the front page to look like and which components we want on it.
 
@@ -88,7 +90,6 @@ As part of a user's profile, we decided to include their profile picture (linked
 
 <img width="931" alt="Screen Shot 2021-05-28 at 1 12 24 AM" src="https://user-images.githubusercontent.com/28207372/119952349-c4cda600-bf51-11eb-9ad2-1a759943202b.png">
 
-[add tech stack decisions]
 
 # User Interface and User Experience Considerations 
 ## UI Design 
