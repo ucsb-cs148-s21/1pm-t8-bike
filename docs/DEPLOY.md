@@ -18,8 +18,8 @@
 2. REACT_APP_GOOGLE_KEY = 'AIzaSyD6uJFBrWLVwIr8NuiOqgCOHZCvOOxb3MA'
   * Follow these instructions: In your .env file, add this line: **REACT_APP_GOOGLE_KEY = 'AIzaSyD6uJFBrWLVwIr8NuiOqgCOHZCvOOxb3MA'**. Now, the map should be able to render properly on the page. This API key is enabled for users to be able to access the map and its features. 
  
-3. ATLAS_URI = <MongoDB URI>
-  * Follow these instructions: Go to the MongoDB website, create a new account, and create a new project. Then proceed to create a new cluster, selecting the aws cloud provider and nearest region geographically. Finally, create it specifying the free tier so that no one has to pay. Proceed to whitelist your connection IP address and then create a MongoDB User. Now in order to connect to the cluster, simply select Connect your Application, and copy the given code into the .env file, replacing the username and password fields with their respective values based on your MongoDB User. Detailed instructions can be followed referencing the first 9 minutes of https://youtu.be/7CqJlxBYj-M.
+3. ATLAS_URI = 'mongodb+srv://demo:t8-bike@t8-bike.owqjk.mongodb.net/myFirstDatabase?retryWrites=true&w=m'
+  * Follow these instructions: In your .env file, add this line: **ATLAS_URI = 'mongodb+srv://demo:t8-bike@t8-bike.owqjk.mongodb.net/myFirstDatabase?retryWrites=true&w=m'**. Now, the map should be able to render properly on the page. This API key is enabled for users to be able to access the map and its features. 
 
  4. REACT_APP_SERVER_URI = http://localhost:3001
 * Run: npm run build
