@@ -117,8 +117,8 @@ As part of a user's profile, we decided to include their profile picture (linked
 ## User Experience 
 
 ### Forum Page: 
-* Create Post: Form to create post.
-* Can close a post 
+* Create Post: If the user is logged in, they can click on the "create post" button and see a form to create a post.
+* The user can close a post if the issue they posted about got resolved.
 
 
 ![image](https://user-images.githubusercontent.com/60118889/119940578-428ab500-bf44-11eb-8c86-e6b0ddaeae41.png)
@@ -130,3 +130,5 @@ As part of a user's profile, we decided to include their profile picture (linked
 * Form Validation (need to enter something in all fields to publish a lost and found card.
 
 ![image](https://user-images.githubusercontent.com/60118889/119938222-ec684280-bf40-11eb-8d02-1cd07df150e2.png)
+
+The user is not required to do any activities on our webapp in a particular order. They can independently publish a Forum post or a Lost and Found post without accessing the map to report a crash or see where crashes have happened in the day. 
