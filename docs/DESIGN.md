@@ -86,7 +86,7 @@ Stage IV: As part of a user's profile, we decided to include their profile pictu
 
 <img width="931" alt="Screen Shot 2021-05-28 at 1 12 24 AM" src="https://user-images.githubusercontent.com/28207372/119952349-c4cda600-bf51-11eb-9ad2-1a759943202b.png">
 
-
+[add tech stack decisions]
 
 ## User Interface and User Experience Considerations 
 ### UI Design 
