@@ -98,11 +98,11 @@ As part of a user's profile, we decided to include their profile picture (linked
 
 ![image](https://user-images.githubusercontent.com/60118889/119941548-9b0e8200-bf45-11eb-84c3-4c0c70962e50.png)
 
-### Lost and Found Page: User can publish a card with information about an item they lost
+### Lost and Found Page: This page contains a list of all lost items to date.
 
 ![image](https://user-images.githubusercontent.com/60118889/119937969-7d8ae980-bf40-11eb-9691-25457b72a6a2.png)
 
-### Forum Page: Users are able to create posts to discuss with each other in four different categories (Announcements, Crash Report, Lost and Found, Other)
+### Forum Page: Users are able to see and filter existing posts in four different categories (Announcements, Crash Report, Lost and Found, Other)
 * Basic Layout: Overview of all the posts and button to create post. Can view comments on post as well. Need to be signed in to create a post. 
 
 ![image](https://user-images.githubusercontent.com/60118889/119940510-2555e680-bf44-11eb-94ed-7d3c37ae0fd0.png)
@@ -111,24 +111,30 @@ As part of a user's profile, we decided to include their profile picture (linked
 
 ![image](https://user-images.githubusercontent.com/60118889/119940278-ce501180-bf43-11eb-9ed9-9443dd737a91.png)
 
-### Profile Page: contains user's information, such as name, email, etc, as well as their schedule and post history. 
+### Profile Page: contains user's information, such as name, email, etc, as well as their schedule and past post history. 
 
 ![image](https://user-images.githubusercontent.com/60118889/119940638-58987580-bf44-11eb-979b-e217d076c912.png)
 
 ## User Experience 
 
+### Home Page: User can interact with the map and report crashes or call the CSO
+* When the report button is pressed, a marker appears in the location the user is at (consent to share location with the website is asked for before this marker is placed).
+
 ### Forum Page: 
 * Create Post: If the user is logged in, they can click on the "create post" button and see a form to create a post.
-* The user can close a post if the issue they posted about got resolved.
-
+* Once an item is found, the user can close the post and it will be cached in their profile page.
 
 ![image](https://user-images.githubusercontent.com/60118889/119940578-428ab500-bf44-11eb-8c86-e6b0ddaeae41.png)
 
  * View Post: How the post looks after it's been created as well as button to comment on post 
 ![image](https://user-images.githubusercontent.com/60118889/119940608-4ddde080-bf44-11eb-9546-5969339e0f73.png)
 
-### Lost and Found: 
+### Lost and Found Page: 
+* User can publish a card with information about an item they lost
 * Form Validation (need to enter something in all fields to publish a lost and found card.
 
 ![image](https://user-images.githubusercontent.com/60118889/119938222-ec684280-bf40-11eb-8d02-1cd07df150e2.png)
 The user is not required to do any activities on our webapp in a particular order. They can independently publish a Forum post or a Lost and Found post without accessing the map to report a crash or see where crashes have happened in the day. 
+
+### Profile Page
+* User can add their schedule using a dropdown menu of UCSB buildings and the times of their classes
