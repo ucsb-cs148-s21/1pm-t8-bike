@@ -65,7 +65,7 @@ const Post = props => (
 export default class Profile extends Component{
   constructor(props){
     super(props);
-    this.state = {bio: "", courses: [], posts: [], user: getUser(), exists: false};
+    this.state = {bio: "", courses: [], posts: [], user: getUser()};
     this.handleChangeBio = this.handleChangeBio.bind(this)
     this.addCourse = this.addCourse.bind(this)
     this.deleteCourse = this.deleteCourse.bind(this)
@@ -75,25 +75,21 @@ export default class Profile extends Component{
   // this function grabs user info from db, if it exists
   componentDidMount(){
     console.log(this.state.user);
-    axios.get(`http://localhost:3001/users/${this.state.user.email}`) //get request
+    axios.get(`http://localhost:3001/users/${this.state.user.email}/exists`) //get request
       .then(res=>{
-        this.setState({bio: res.data.bio, courses: res.data.itinerary, exists: true}) //sets bio and courses array to db
+        this.setState({bio: res.data.bio, courses: res.data.itinerary}) //sets bio and courses array to db
       })
       .catch(err => {
         console.log(err);
       })
 
-    if (!this.state.exists) {
-      axios.post(`http://localhost:3001/users/${this.state.user.email}`) //post request
-        .then(res => console.log(res.data));
-      axios.get(`http://localhost:3001/users/${this.state.user.email}`) //get request
-        .then(res => {
-          this.setState({bio: res.data.bio, courses: res.data.itinerary, exists: true}) //sets bio and courses array to db
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
+    axios.get(`http://localhost:3001/users/${this.state.user.email}`) //get request
+      .then(res => {
+        this.setState({bio: res.data.bio, courses: res.data.itinerary}) //sets bio and courses array to db
+      })
+      .catch(err => {
+        console.log(err);
+      })
 
     axios.get(`http://localhost:3001/posts/${this.state.user.email}`) //get request
       .then(res => {
@@ -131,9 +127,7 @@ export default class Profile extends Component{
   }
 
   deleteCourse(e) {
-    const formData = new FormData();
-    formData.append("id", e.target.id);
-    axios.delete(`http://localhost:3001/users/${this.state.user.email}/delete-course`, formData)
+    axios.delete(`http://localhost:3001/users/${this.state.user.email}/delete-course/${e.target.id}`)
       .then(res => console.log(res.data))
   }
 
@@ -168,7 +162,7 @@ export default class Profile extends Component{
           <div>Email: {this.state.user.email}</div>
           <br />
           <div>
-            <input type="text" name="bio" value={this.state.bio} placeholder="Tell us about yourself" onChange={this.handleChangeBio}/>
+            Bio: <input type="text" name="bio" value={this.state.bio} placeholder="Tell us about yourself" onChange={this.handleChangeBio}/>
           </div>
           <br />
           <div>

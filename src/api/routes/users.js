@@ -1,43 +1,32 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
-let Post = require('../models/post.model');
 
 // get specific user info from db
 router.route('/:email').get((req,res) => {
     User.findOne({username: req.params.email})
-        .then(users => res.json(users))
+        .then(user => res.json(user))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// create new user
-router.route('/:email').post((req,res) => {
-    const username = req.params.email;
-    const bio = "Hello World!";
-    const itinerary = [];
+router.route('/:email/exists').get((req,res) => {
+    User.countDocuments({username: req.params.email}, function (err, count) {
+        if (count === 0) {
+            const username = req.params.email;
+            const bio = "Hello World!";
+            const itinerary = [];
 
-    const newUser = new User({username, bio, itinerary});
+            const newUser = new User({username, bio, itinerary});
 
-    newUser.save()
-        .then(() => res.json('User created!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-// create new user
-router.route('/:email').post((req,res) => {
-    const username = req.params.email;
-    const bio = "Hello World!";
-    const itinerary = [];
-
-    const newUser = new User({username, bio, itinerary});
-
-    newUser.save()
-        .then(() => res.json('User created!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+            newUser.save()
+                .then(() => res.json('User created!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        }
+    })
 });
 
 // add a new course to db
 router.route('/:email/update-bio').post((req,res) => {
-    User.find({username: req.params.email})
+    User.findOne({username: req.params.email})
         .then(user => {
             user.bio = req.body.bio
         
@@ -49,8 +38,8 @@ router.route('/:email/update-bio').post((req,res) => {
 }); // end add func
 
 // delete a course from db
-router.route('/:email/delete-course').post((req,res) => {
-    User.findByIdAndDelete(req.body.id)
+router.route('/:email/delete-course/:id').post((req,res) => {
+    User.findByIdAndDelete(req.params.id)
         .then(post => {
             post.username = req.body.username;
             post.category = req.body.category;
