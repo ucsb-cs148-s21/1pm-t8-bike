@@ -94,30 +94,36 @@ As part of a user's profile, we decided to include their profile picture (linked
 # User Interface and User Experience Considerations 
 ## UI Design 
 
-### Home Page: User can interact with the map and report crashes or call the CSO
+### Home Page: 
+* User can interact with the map and report crashes or call the CSO
 
 ![image](https://user-images.githubusercontent.com/60118889/119941548-9b0e8200-bf45-11eb-84c3-4c0c70962e50.png)
 
-### Lost and Found Page: This page contains a list of all lost items to date.
+### Lost and Found Page: 
+* This page contains a list of all lost items to date.
 
 ![image](https://user-images.githubusercontent.com/60118889/119937969-7d8ae980-bf40-11eb-9691-25457b72a6a2.png)
 
-### Forum Page: Users are able to see and filter existing posts in four different categories (Announcements, Crash Report, Lost and Found, Other)
+### Forum Page: 
 * Basic Layout: Overview of all the posts and button to create post. Can view comments on post as well. Need to be signed in to create a post. 
+* Users are able to see and filter existing posts in four different categories (Announcements, Crash Report, Lost and Found, Other)
 
 ![image](https://user-images.githubusercontent.com/60118889/119940510-2555e680-bf44-11eb-94ed-7d3c37ae0fd0.png)
 
-### About Us Page: Information about the dev team (will be updated with our actual pics soon) 
+### About Us Page: 
+* Information about the dev team (will be updated with our actual pics soon) 
 
 ![image](https://user-images.githubusercontent.com/60118889/119940278-ce501180-bf43-11eb-9ed9-9443dd737a91.png)
 
-### Profile Page: contains user's information, such as name, email, etc, as well as their schedule and past post history. 
+### Profile Page: 
+* Contains user's information, such as name, email, etc, as well as their schedule and past post history. 
 
 ![image](https://user-images.githubusercontent.com/60118889/119940638-58987580-bf44-11eb-979b-e217d076c912.png)
 
 ## User Experience 
 
-### Home Page: User can interact with the map and report crashes or call the CSO
+### Home Page: 
+* User can interact with the map and report crashes or call the CSO
 * When the report button is pressed, a marker appears in the location the user is at (consent to share location with the website is asked for before this marker is placed).
 
 ### Forum Page: 
