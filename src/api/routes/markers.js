@@ -28,7 +28,7 @@ router.route('/Hard-Coded-Markers').get((req,res) => {
 router.route('/add').post((req,res) => {
     const lat = req.body.lat;
     const lng = req.body.lng;
-    const category = req.body.lng;
+    const category = req.body.category;
     const date = req.body.date;
     const numReports = req.body.numReports;
 

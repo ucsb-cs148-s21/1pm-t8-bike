@@ -31,22 +31,25 @@ import Marker from './Marker';
 function addMarker(setPositions) {
     // should add to db, before however should check for any exisiting markers, if markers exists, increment the numReports instead
     navigator.geolocation.getCurrentPosition(function(position){
+        //new marker
         const tempMarker = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
             category: 'Crash Marker',
             numReports: 1,
             date: new Date(),
-            //expireAt is auto set to current date
-
         }
         
         //add to db, then setPositions
         axios.post(`http://localhost:3001/markers/add`,tempMarker)
             .then(res => {
                 console.log(res.data)
-                setPositions(current => [...current, {tempMarker}])
-                window.alert('Marker Added!');
+                axios.get(`http://localhost:3001/markers`)
+                    .then(res => {
+                        setPositions(res.data)
+                        window.alert('Marker Added!');
+                    })
+                    .catch(err => console.log('Error: ' + err));
             })
             .catch(err => console.log('Error: ' + err));
     })
@@ -57,22 +60,17 @@ export default function Home_Page() {
     const user = getUser();
     const [positions, setPositions] = useState([]);
     const [data, setData] = useState("test");
-    var positionsArr = [];
     //const map =  <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>;
     
     //positions is state variable array of markers
-    // set positions to array in db
-    axios.get(`http://localhost:3001/markers`)
+    // set positions to array in db   
+    //initial
+    useEffect(() => {
+        axios.get(`http://localhost:3001/markers`)
         .then(res => {
             setPositions(res.data); //create positions array from db
         })
         .catch(err => console.log('Error: ' + err));
-    
-    useEffect(() => {
-        //componentDidMount essentially
-        positionsArr = positions;
-        
-
     },[]); //everytime positions changes, run this usEffect
     
     console.log('homepage');
@@ -87,7 +85,7 @@ export default function Home_Page() {
             <br />
             <div style={{ width: "75vw", height: "75vh" }}>
                 
-                {/* <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positionsArr}></Map> */}
+                <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
             </div>
         </Container>
         <Container >
