@@ -130,5 +130,4 @@ As part of a user's profile, we decided to include their profile picture (linked
 * Form Validation (need to enter something in all fields to publish a lost and found card.
 
 ![image](https://user-images.githubusercontent.com/60118889/119938222-ec684280-bf40-11eb-8d02-1cd07df150e2.png)
-
 The user is not required to do any activities on our webapp in a particular order. They can independently publish a Forum post or a Lost and Found post without accessing the map to report a crash or see where crashes have happened in the day. 
