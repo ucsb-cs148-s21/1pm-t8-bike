@@ -35,6 +35,7 @@ Actions:
 * Make sure to revisit the retro notes if any of us needs to refer to any ideas we had during the retrospective
 
 ## Retro Assessment
-
-
-## Outcome
+* I used the quick retro outline. We went over what was good, what was bad, ideas, and actions. The retro went well for the team. Everyone shared their 
+    thoughts respectfully and we came up with some goals for the last few weeks. The retro helped my team become more organized and set deadlines for 
+    tasks that needed to be completed. We also agreed on how we will function as a team in the next few weeks (more communication, updating Kanban board 
+    more often, and no new components/features until everything else is done). 

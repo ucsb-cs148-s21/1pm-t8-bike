@@ -1,11 +1,13 @@
 import React from "react";
 import Layout from "../components/Layout"; 
 import "../index.css"
+import getUser from "../utils/get-user";
 
 
 export default function MemberPage() {
+  const user = getUser(); 
   return (
-    <Layout>
+    <Layout user={user}>
       <div>
         <div style={{ maxWidth: 10000, paddingTop: 10, paddingBottom: 20, paddingLeft: 145, paddingRight: 145}}>
           {/* remove className="aboutUs" to left-align "Team Members" */}
@@ -34,7 +36,7 @@ export default function MemberPage() {
             <div className="member-text">
               <body className="member-name">Anika Arora</body>
               <body className="member-role">Developer</body>
-              <body className="member-description">Vas Happenin</body>
+              <body className="member-description">Anika is a 2nd year Computer Science major.</body>
             </div>
           </div>
           <div className="box">
@@ -42,7 +44,7 @@ export default function MemberPage() {
             <div className="member-text">
               <p className="member-name">Rukmini Bapat</p>
               <p className="member-role">Developer</p>
-              <p className="member-description">Hyy</p>
+              <p className="member-description">Rukmini is a 2nd year Computer Science major.</p>
             </div>
           </div>
           <div className="box">
@@ -50,7 +52,7 @@ export default function MemberPage() {
             <div className="member-text">
               <p className="member-name">Calvin Dougher</p>
               <p className="member-role">Developer</p>
-              <p className="member-description">Hey</p>
+              <p className="member-description">Calvin is a 2nd year Computer Science major.</p>
             </div>
           </div>
           <div className="box">
@@ -58,7 +60,7 @@ export default function MemberPage() {
             <div className="member-text">
               <p className="member-name">Yvonne Liu</p>
               <p className="member-role">Developer</p>
-              <p className="member-description">Hi</p>
+              <p className="member-description">Yvonne is a 2nd year Computer Science major.</p>
             </div>
           </div>
         </div>

@@ -1,15 +1,24 @@
 import React from 'react';
 import './Marker.css';  
 
+const onHover = () => {
+  // var element = document.getElementsByClassName('marker');
+  // element.style.color = "red";
+  // console.log("hovering");
+}
+
 const Marker = (props) => {
     return (
-      <div className="marker"
-        style={{ cursor: 'pointer', backgroundImage: `url("crash_icon1.png")`}}
+      <div  className="marker"
+        // style={{ backgroundImage: `url("anika.png")`}} 
+        onMouseEnter={onHover}
         category={props.category}
         lat={props.lat}
         lng={props.lng}
-        time={props.key}     
-      />
+        time={props.key}>
+      </div>
+      // make a new div and make it visible or hidden whether or not the user is hovering 
+      //    use JS for that 
     );
   };
 
