@@ -4,15 +4,22 @@
     left: 50%;
     width: 18px;
     height: 18px;
-    background-color: #000;
     border: 2px solid #fff;
     border-radius: 100%;
+    background-size: 18px 18px;
+    background-color: red;
     user-select: none;
+    cursor: 'pointer';
     transform: translate(-50%, -50%);
-    &:hover {
+    /* &:hover {
       z-index: 1;
-    }
+    } */
   }
+  .marker:hover {
+    background-color: black;
+    content: "hovering";
+  }
+
   /* .pin {
     width: 30px;
     height: 30px;
