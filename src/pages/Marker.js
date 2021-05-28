@@ -12,7 +12,7 @@ const Marker = (props) => {
       <div  className="marker"
         // style={{ backgroundImage: `url("anika.png")`}} 
         onMouseEnter={onHover}
-        category={name}
+        category={props.category}
         lat={props.lat}
         lng={props.lng}
         time={props.key}>

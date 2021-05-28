@@ -3,7 +3,9 @@ import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
 import React, { useState, useEffect } from "react";
 import Map from "./Map"; 
+import axios from 'axios';
 import Marker from './Marker';
+import { set } from "mongoose";
 
 // function setPositions (current => [...current, {
 //     // lat: event.latlng.lat(),
@@ -27,29 +29,56 @@ import Marker from './Marker';
 //     }); 
 // }
 
-function addMarker(setPositions) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        var lat=position.coords.latitude;
-        var lng=position.coords.longitude;
-        console.log(lat); 
-        console.log(lng);
-        setPositions(current => [...current, {
-            lat: lat,
-            lng: lng,
-            time: new Date(),}]);
-    });
+function addMarker(setPositions,setIsLoading) {
+    // should add to db, before however should check for any exisiting markers, if markers exists, increment the numReports instead
+    setIsLoading(true);
+    navigator.geolocation.getCurrentPosition(function(position){
+        //new marker
+        const tempMarker = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+            category: 'Crash Marker',
+            numReports: 1,
+            date: new Date(),
+        }
+        
+        //add to db, then setPositions
+        axios.post(`http://localhost:3001/markers/add`,tempMarker)
+            .then(res => {
+                console.log(res.data)
+                axios.get(`http://localhost:3001/markers`)
+                    .then(res => {
+                        setPositions(res.data)
+                        setIsLoading(false)
+                        window.alert('Marker Added!');
+                    })
+                    .catch(err => console.log('Error: ' + err));
+            })
+            .catch(err => console.log('Error: ' + err));
+    })
 
 }
 
 export default function Home_Page() {
     const user = getUser();
+    const [positions, setPositions] = useState([]);
     const [data, setData] = useState("test");
-    const [positions, setPositions] = useState([]); //create positions array 
-    // useEffect(() => {
-    //     fetch(`${process.env.REACT_APP_SERVER_URL}/api`) 
-    //     .then((res) => res.json())
-    //     .then((data) => setData(data.message));
-    // }, []);
+    const [isLoading, setIsLoading] = useState(false);
+    //const map =  <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>;
+    
+    //positions is state variable array of markers
+    // set positions to array in db   
+    //initial
+    useEffect(() => {
+        axios.get(`http://localhost:3001/markers`)
+        .then(res => {
+            setPositions(res.data); //create positions array from db
+        })
+        .catch(err => console.log('Error: ' + err));
+    },[]); //everytime positions changes, run this usEffect
+    
+    console.log('homepage');
+
     return(
         <Layout user={user}>
         <Container float="left">
@@ -59,13 +88,18 @@ export default function Home_Page() {
             <br />
             <br />
             <div style={{ width: "75vw", height: "75vh" }}>
+                
                 <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
             </div>
         </Container>
         <Container >
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
             <button style={{float: "right"}} href="tel:18058932000">CALL CSO</button>
-            <button style={{float: "right"}} 
-                onClick={() => addMarker(setPositions)}>Report</button>
+            <button style={{float: "right"}} onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
+                {!isLoading && "Report"}
+                {isLoading && <i className="fa fa-refresh fa-spin"></i>}
+                {isLoading && "Adding Marker"}
+            </button>
         </Container>
         </Layout>
     ); 

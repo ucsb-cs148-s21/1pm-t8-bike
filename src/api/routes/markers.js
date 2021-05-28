@@ -19,25 +19,24 @@ router.route('/Crash-Markers').get((req,res) => {
 
 // get all hardcoded markers info from db
 router.route('/Hard-Coded-Markers').get((req,res) => {
-    Post.find({ category: "Hard Coded Marker" })
+    Marker.find({ category: "Hard Coded Marker" })
         .then(markers => res.json(markers))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
 // add a new marker to db
 router.route('/add').post((req,res) => {
-    const lat = req.body.lat;
-    const lng = req.body.lng;
-    const category = req.body.lng;
-    const date = req.body.date;
-    const numReports = req.body.numReports;
+        const lat = req.body.lat;
+        const lng = req.body.lng;
+        const category = req.body.category;
+        const date = req.body.date;
+        const numReports = req.body.numReports;
 
-    const newMarker = new Marker({lat, lng, category, date, numReports});
+        const newMarker = new Marker({lat, lng, category, date, numReports});
 
-    newMarker.save()
-        .then(() => res.json('Marker added!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-
+        newMarker.save()
+            .then(() => res.json('Marker added!'))
+            .catch(err => res.status(400).json('Error: ' + err));
 }); // end add func
 
 // get info of a specific marker
