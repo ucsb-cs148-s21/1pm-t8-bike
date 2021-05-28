@@ -12,7 +12,7 @@ function timeFormat(time) {
   if (parseInt(time.substr(0,2)) > 12) {
     var hh = (parseInt(time.substr(0,2)) - 12);
   }
-  else if (parseInt(time.substr(0,2)) == 0) {
+  else if (parseInt(time.substr(0,2)) === 0) {
     hh = 12;
   }
   else {

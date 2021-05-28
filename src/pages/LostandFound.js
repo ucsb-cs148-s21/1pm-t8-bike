@@ -5,7 +5,6 @@ import Container from "react-bootstrap/Container";
 import { Button } from "@material-ui/core";
 import Card from "react-bootstrap/Card";
 import getUser from "../utils/get-user";
-import { threads } from "./dataLF";
 
 const cardStyle = { maxWidth: "150px", maxHeight: "150px", width: "auto" };
 
