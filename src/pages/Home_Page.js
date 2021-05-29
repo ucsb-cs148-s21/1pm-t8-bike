@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import Map from "./Map"; 
 import axios from 'axios';
 import Marker from './Marker';
-import { set } from "mongoose";
+import { set } from "mongoose"; 
 
 // function setPositions (current => [...current, {
 //     // lat: event.latlng.lat(),
@@ -39,7 +39,7 @@ function addMarker(setPositions,setIsLoading) {
             lng: position.coords.longitude,
             category: 'Crash Marker',
             numReports: 1,
-            date: new Date(),
+            date: new Date().toLocaleString(),
         }
         
         //add to db, then setPositions

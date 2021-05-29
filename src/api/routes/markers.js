@@ -31,12 +31,27 @@ router.route('/add').post((req,res) => {
         const category = req.body.category;
         const date = req.body.date;
         const numReports = req.body.numReports;
-
-        const newMarker = new Marker({lat, lng, category, date, numReports});
+        const expireAt = Date.now() + ((20) * (60 * 1000));
+        const newMarker = new Marker({lat, lng, category, date, numReports,expireAt});
 
         newMarker.save()
             .then(() => res.json('Marker added!'))
             .catch(err => res.status(400).json('Error: ' + err));
+}); // end add func
+
+// add a new marker to db
+router.route('/addPerm').post((req,res) => {
+    const lat = req.body.lat;
+    const lng = req.body.lng;
+    const category = req.body.category;
+    const date = Date.now();
+    const numReports = req.body.numReports;
+
+    const newMarker = new Marker({lat, lng, category, date, numReports});
+
+    newMarker.save()
+        .then(() => res.json('Permanent Marker added!'))
+        .catch(err => res.status(400).json('Error: ' + err));
 }); // end add func
 
 // get info of a specific marker
