@@ -16,10 +16,44 @@
     } */
 
   }
-  .marker:hover {
-    background-color: black;
+  .marker:hover .tooltiptext{
     content: "hovering";
+    visibility: visible;
+    opacity: 1;
   }
+
+  .marker .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+
+  .bikeMarker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70px;
+    height: 70px;
+    border: 2px solid #fff;
+    border-radius: 100%;
+    background-size: 100px, 100px;
+    user-select: none;
+    cursor: 'pointer';
+    transform: translate(-50%, -50%);
+    /* &:hover {
+      z-index: 1;
+    } */
+
+  }
+  
 
   /* .pin {
     width: 30px;

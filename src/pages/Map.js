@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Marker from './Marker'; 
-
+import ReactTooltip from 'react-tooltip';
 
 const Map = (props) => {
     const [center, setCenter] = useState({lat: 34.4134, lng: -119.8433});
@@ -22,14 +22,17 @@ const Map = (props) => {
             name="My Marker"
             color="blue"
           /> */}
-
+       
           {props.positions.map(currPos => 
-            <Marker key = {currPos.date} 
+            <Marker key = {currPos._id} 
+                    date = {currPos.date} 
                     lat = {currPos.lat}      
                     lng = {currPos.lng}
-                    name = {currPos.category}    
-            />)}
-
+                    name = {currPos.category}  
+                    
+            />
+            
+           )}
           {/* <Marker key={"hello"}
                   lat={'34.4134'}
                   lng={'-119.8433'} />
