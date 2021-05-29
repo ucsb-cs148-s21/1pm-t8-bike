@@ -11,7 +11,7 @@ const cardStyle = { maxWidth: "150px", maxHeight: "150px", width: "auto" };
 const LFPost = props => (
   <div>
     <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" style={cardStyle} src={props.post.img} />
+      <Card.Img variant="top" style={cardStyle} src={`/uploads/${props.post.img}`} />
       <Card.Body>
         <Card.Title>
           <Card.Link href={`/forum/${props.post._id}`}>
@@ -20,7 +20,7 @@ const LFPost = props => (
         </Card.Title>
         <Card.Subtitle>{props.post.username}</Card.Subtitle>
         <Card.Text>{props.post.description}</Card.Text>
-        <Button variant="primary" onClick="">
+        <Button variant="primary">
           View Route
         </Button>
       </Card.Body>
@@ -41,7 +41,7 @@ export default class LostandFound extends Component{
   // this function grabs the list of LF posts from db
   componentDidMount(){
     console.log(this.state.user);
-    axios.get('http://localhost:3001/posts/lf') //get request
+    axios.get('http://localhost:3001/posts/Lost-And-Founds') //get request
          .then(res=>{
            this.setState({posts: res.data}) //sets posts array to db array
          }) 
@@ -53,7 +53,7 @@ export default class LostandFound extends Component{
   // returns each individual post component
   LFThread(){
     return this.state.posts.map(currPost => {
-      return <LFPost post = {currPost}/>
+      return <LFPost key={currPost._id} post = {currPost}/>
     })
   }// end LFThread
 
