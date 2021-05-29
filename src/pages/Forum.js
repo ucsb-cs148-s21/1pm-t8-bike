@@ -180,8 +180,8 @@ export default class ForumPost extends Component{
   // returns each individual post component
   postList(){
     return this.state.posts.map(currPost => {
-      return <Post post = {currPost}
-                   key = {currPost._id}
+      return <Post key = {currPost._id}
+                   post = {currPost}
                    deletePost={() => this.deletePost(currPost._id)}
                    editPost={() => this.editPost(currPost._id)}
                    changeStatus={() => this.changeStatus(currPost._id)}

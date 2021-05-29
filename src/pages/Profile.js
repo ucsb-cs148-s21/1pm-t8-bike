@@ -91,7 +91,7 @@ export default class Profile extends Component{
         console.log(err);
       })
 
-    axios.get(`http://localhost:3001/posts/${this.state.user.email}`) //get request
+    axios.get(`http://localhost:3001/posts/email/${this.state.user.email}`) //get request
       .then(res => {
         this.setState({posts: res.data}) //sets posts array to db array
       })
