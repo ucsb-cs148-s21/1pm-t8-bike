@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import { TextField, Button } from "@material-ui/core"
 import axios from "axios";
 import getUser from "../utils/get-user";
+import { Building } from "../api/models/building.model";
 
 const profileStyle = { maxWidth: "100%", width: "100px", height: "auto" };
 
@@ -118,9 +119,9 @@ export default class Profile extends Component{
             console.log(err);
           })
 
-        axios.get('/buildings')
+        axios.get('/buildings') //get request
           .then(res => {
-            this.setState({buildings: res.data})
+            this.setState({buildings: res.data}) //sets buildings array to db array
           })
           .catch(err => {
             console.log(err);
@@ -136,14 +137,13 @@ export default class Profile extends Component{
     this.setState({
       bio: e.target.value
     })
-    console.log(this.state.bio);
     axios.post(`/users/${this.state.user.email}/update-bio`, e.target.value) //post request
       .then(res => console.log(res.data));
   }
 
   closePost(e) {
     const formData = new FormData();
-    axios.get(`/posts/${e.target.value}`)
+    axios.get(`/posts/${e}`)
       .then(res => {
         formData.append("title", res.data.title);
         formData.append("category", res.data.category);
@@ -152,7 +152,7 @@ export default class Profile extends Component{
         formData.append("img", res.data.img);
         formData.append("status", "CLOSED");
         formData.append("date", res.data.date);
-        axios.post(`/posts/update/${e.target.value}`, formData)
+        axios.post(`/posts/update/${e}`, formData)
           .then(res => console.log(res.data))
           .catch(err => console.log(err))
       })
@@ -197,9 +197,23 @@ export default class Profile extends Component{
   onSubmit(e) {
     e.preventDefault();
 
+    const lat = 0;
+    const lng = 0;
+    const name = "";
+
+    axios.get(`/buildings/${this.state.location}`)
+      .then(res => {
+        lat = res.data.lat;
+        lng = res.data.lng;
+        name = res.data.name;
+      })
+      .catch(err => console.log(err));
+    
+    const newBuilding = new Building({lat, lng, name});
+    
     const formData = new FormData;
     formData.append("title", this.state.title)
-    formData.append("location", this.state.location);
+    formData.append("location", newBuilding);
     formData.append("days", this.state.days);
     formData.append("start", this.state.start);
     formData.append("end", this.state.end);
@@ -257,7 +271,7 @@ export default class Profile extends Component{
                       onChange={this.onChangeLocation}>
                 {
                   this.state.buildings.map(building => {
-                    return <option key = {building.name} value = {building.name}>{building.name.replace("-"," ")}</option>
+                    return <option key = {building.name} value = {building.name}>{building.name.replace(/-/g," ")}</option>
                   })
                 }
               </select>

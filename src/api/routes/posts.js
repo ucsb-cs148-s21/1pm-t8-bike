@@ -90,7 +90,7 @@ router.route('/').get((req,res) => {
 }); // end get all
 
 router.route('/email/:email').get((req,res) => {
-    Post.find({username: req.params.email})
+    Post.find({username: req.params.email, status: "OPEN"})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 }); // end get all
