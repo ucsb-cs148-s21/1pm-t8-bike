@@ -1,24 +1,86 @@
 const router = require('express').Router();
+const util = require('util');
+const express = require('express');
 const path = require('path');
 let Post = require('../models/post.model');
 //let Comment = require('../models/comment.model');
-
+const serviceKey = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 const multer = require('multer');
+const bodyParser = require('body-parser');
 const fs = require('fs');
+
+
 //let uuidv4 = require('uuid/v4');
 
-const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, './public/uploads/')
+// const storage = multer.diskStorage({
+//     destination: (req, file, callback) => {
+//         callback(null, './public/uploads/')
+//     },
+//     filename: (req, file, callback) => {
+//         let fn = file.originalname.replace(/ /g,"-").split(path.extname(file.originalname))[0] + '-' + Date.now() + path.extname(file.originalname);
+//         file.originalname = fn;
+//         callback(null, fn)
+//     }
+// });
+//
+// const upload = multer({ storage: storage,});
+
+const multerMid = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+        fileSize: 5 * 1024 * 1024,
     },
-    filename: (req, file, callback) => {
-        let fn = file.originalname.replace(/ /g,"-").split(path.extname(file.originalname))[0] + '-' + Date.now() + path.extname(file.originalname);
-        file.originalname = fn;
-        callback(null, fn)
-    }
 });
 
-const upload = multer({ storage: storage });
+const { Storage } = require('@google-cloud/storage');
+const storage = new Storage({
+    keyFilename: serviceKey,
+    projectId: 'bike-testing-1',
+});
+
+///storage.getBuckets().then(x => console.log(x));
+
+const storageBucket = storage.bucket('uploads_t8bike1');
+const uploadImage = (file) => {return new Promise((resolve, reject) => {
+    const {originalname, buffer } = file
+    const blob = storageBucket.file(originalname.replace(/ /g,"-").split(path.extname(originalname))[0] + '-' + Date.now() + path.extname(originalname))
+    //console.log('blob: ' + blob.name)
+
+
+    const blobStream = blob.createWriteStream({
+        resumable: false
+    })
+    
+    //console.log("after createWriteStream")
+    //console.log("blobStream: "+ JSON.stringify(blobStream))
+    //console.log(`publicUrl: https://storage.googleapis.com/${bucket.name}/${blob.name}`)
+    blobStream.on('finish',() => {
+       // console.log("inside blobstream.on finish")
+        
+        const publicUrl = `https://storage.googleapis.com/${storageBucket.name}/${blob.name}`
+        
+        //console.log("after making publicUrl: "+ publicUrl)
+        resolve(publicUrl)
+    })  
+    .on('error', () =>{
+        reject(`Unable to upload image, something went wrong`)
+    })
+    .end(buffer)
+})};
+
+const deleteImage = (imgUrl) => {return new Promise((resolve,reject) =>{
+    var fileName = imgUrl.split("/");
+    fileName = fileName.slice(4, fileName.length + 1).join("/");
+    storageBucket.file(fileName).delete()
+    .then(
+        resolve("Image Deleted")
+    )
+    .catch((e) => {
+        reject(e)
+    });
+  
+
+})};
 
 // get all posts info from db
 router.route('/').get((req,res) => {
@@ -90,27 +152,36 @@ router.route('/LF/Open-Posts').get((req,res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// add a new post to db
-router.route('/add').post(upload.single("img"),(req,res) => {
+// add a new post to db and returns id
+router.route('/add').post(multerMid.single("img"),(req,res) => {
     const username = req.body.username;
     const category = req.body.category;
     const title = req.body.title;
     const description = req.body.description;
     const date = req.body.date;
-    //optional to include img
-    var img = '';
-    if(req.file){
-        img = req.file.originalname;
-    }
     const status = req.body.status;
     const comments = [];
     const numComments = 0;
-
-    const newPost = new Post({username,category,title,description,date,img,status,comments,numComments});
-
-    newPost.save()
-        .then(() => res.json('Post added!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+    //optional to include img
+    var img = '';
+    
+    if(req.file){
+        uploadImage(req.file)
+        .then(imageUrl => {
+            img = imageUrl
+            const newPost = new Post({username,category,title,description,date,img,status,comments,numComments});
+            newPost.save()
+                .then(() => res.json(newPost._id))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => console.log("upload Image Err: " + err));
+    }
+    else{
+        const newPost = new Post({username,category,title,description,date,img,status,comments,numComments});
+                newPost.save()
+                    .then(() => res.json(newPost._id))
+                    .catch(err => res.status(400).json('Error: ' + err));
+    }
 
 }); // end add func
 
@@ -150,10 +221,10 @@ router.route('/:id').delete((req,res) => {
             //del pic from uploads
             if(post.img !== ''){
                 try{
-                    fs.unlinkSync(`public/uploads/${post.img}`)
+                    deleteImage(post.img).then(res).catch(err=>console.log('Error: ' + err));
                 }
                 catch(err){
-                    console.log("fs.unlink had an error")
+                    console.log("deleteImage had an error")
                 }
             }
 
@@ -167,7 +238,7 @@ router.route('/:id').delete((req,res) => {
 }); //end del specific post
 
 // update a specific post
-router.route('/update/:id').post(upload.single("img"),(req,res) => {
+router.route('/update/:id').post(multerMid.single("img"),(req,res) => {
     Post.findById(req.params.id)
         .then(post => {
             post.username = req.body.username;
@@ -175,40 +246,51 @@ router.route('/update/:id').post(upload.single("img"),(req,res) => {
             post.title = req.body.title;
             post.description = req.body.description;
             post.date = Date.parse(req.body.date);
+            post.status = req.body.status;
             //optional to update img
             if(req.file){ // incase change img
                 //del prev
                 if(post.img !== ''){
                     try{
-                        fs.unlinkSync(`public/uploads/${post.img}`)
+                        deleteImage(post.img).then(res).catch(err=>console.log('Error: ' + err));
                     }
                     catch(err){
-                        console.log("fs.unlink had an error")
+                        console.log("delete img had an error")
                     }
                 }
-                post.img = req.file.originalname; //equal new file upload name
+                uploadImage(req.file)
+                .then(imageUrl => {
+                    post.img = imageUrl
+                    //saving post
+                    post.save()
+                        .then(() => res.json('Post updated!'))
+                        .catch(err => res.status(400).json('Error: ' + err))
+                })
+                .catch(err => console.log("upload Image Err: " + err));
             } 
             else if(req.body.img === ''){ //incase delete img
                 //del pic from uploads
                 if(post.img !== ''){
                     try{
-                        fs.unlinkSync(`public/uploads/${post.img}`)
+                        deleteImage(post.img).then(res=>{res; post.img = ''}).catch(err=>console.log('Error: ' + err));
                     }
                     catch(err){
-                        console.log("fs.unlink had an error")
+                        console.log("deleteImage had an error")
                     }
                 }
                 post.img = ''; //equal ''
+                // saving updated post
+                post.save()
+                .then(() => res.json('Post updated'))
+                .catch(err => res.status(400).json('Error: ' + err)); //throws if not all params filled
             }     
             else{ //incase no change
                 post.img = post.img; //equal to itself from db 
-            }    
-            post.status = req.body.status;
-
-            // saving updated post
-            post.save()
+                // saving updated post
+                post.save()
                 .then(() => res.json('Post updated'))
                 .catch(err => res.status(400).json('Error: ' + err)); //throws if not all params filled
+            }              
         })
         .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
 

@@ -80,7 +80,7 @@ class ForumEditPost extends Component{
 
   componentDidMount(){
       //grabs the info from the post you want to edit
-      axios.get(`http://localhost:3001/posts/${this.postID}`)
+      axios.get(`/posts/${this.postID}`)
            .then(res => {
                this.setState({
                    username: res.data.username,
@@ -92,7 +92,7 @@ class ForumEditPost extends Component{
                    numComments: res.data.numComments,
                    comments: res.data.comments,
                    date: new Date(),
-                   currFile: `/uploads/${res.data.img}`,
+                   currFile: `${res.data.img}`,
                })
            }).catch(err => {
                console.log(err);
@@ -120,7 +120,7 @@ class ForumEditPost extends Component{
     //console.log(post);
 
     //edit from db
-    axios.post(`http://localhost:3001/posts/update/${this.props.match.params.id}`,formData)
+    axios.post(`/posts/update/${this.props.match.params.id}`,formData)
          .then(res => {console.log(res.data); window.location = `/forum/${this.props.match.params.id}`;});
 
     // redirect back to the specific post
@@ -131,7 +131,7 @@ class ForumEditPost extends Component{
     return(
       <Layout user={this.state.user}>
         <Container>
-          <h1><a href="/forum" style={{"text-decoration": "none", "color":"inherit"}}>Bike Forum</a></h1>
+          <h1><a href="/forum" style={{"textDecoration": "none", "color":"inherit"}}>Bike Forum</a></h1>
           <hr/>
           <br></br>
           

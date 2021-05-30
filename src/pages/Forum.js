@@ -88,7 +88,7 @@ export default class ForumPost extends Component{
   // this function grabs the list of posts from db
   componentDidMount(){
     console.log(this.state.user);
-    axios.get('http://localhost:3001/posts') //get request
+    axios.get('/posts') //get request
          .then(res=>{
            console.log(res.data)
            this.setState({posts: res.data}) //sets posts array to db array
@@ -104,13 +104,12 @@ export default class ForumPost extends Component{
     */
   deletePost(id){
     if (window.confirm("Are you sure you want to delete this post?")) {
-      axios.delete(`http://localhost:3001/posts/${id}`)
+      axios.delete(`/posts/${id}`)
           .then(res => {
               console.log(res.data)
               window.alert("Post Deleted!");
-              window.location = '/forum';
               //update post
-              axios.get('http://localhost:3001/posts') //get request
+              axios.get('/posts') //get request
                     .then(res=>{
                       this.setState({posts: res.data}) //sets posts array to db array
                     }) 
@@ -138,7 +137,7 @@ export default class ForumPost extends Component{
     //do an update in db and get post again
     
     //get info of specific post
-    axios.get(`http://localhost:3001/posts/${id}`)
+    axios.get(`/posts/${id}`)
          .then(res => {
             const updatedStatus = new FormData();
             updatedStatus.append("username", res.data.username);
@@ -161,11 +160,11 @@ export default class ForumPost extends Component{
             }
 
             // update post in db
-            axios.post(`http://localhost:3001/posts/update/${id}`,updatedStatus)
+            axios.post(`/posts/update/${id}`,updatedStatus)
             .then(res => {
                 console.log(res.data); 
                 //re get the forum db from mongo
-                axios.get(`http://localhost:3001/posts/`)
+                axios.get(`/posts/`)
                 .then(res=>{
                     console.log("compDidMount: get post from db");
                     this.setState({posts: res.data})
@@ -215,7 +214,7 @@ export default class ForumPost extends Component{
       filter : e.target.value,
     },() => {
       if(this.state.filter === "All"){
-        axios.get('http://localhost:3001/posts') //get request
+        axios.get('/posts') //get request
               .then(res=>{
                 this.setState({posts: res.data}) //sets posts array to db array
               }) 
@@ -224,7 +223,7 @@ export default class ForumPost extends Component{
               })
       }
       else if(this.state.filter === "Announcements"){
-        axios.get('http://localhost:3001/posts/Announcements') //get request
+        axios.get('/posts/Announcements') //get request
               .then(res=>{
                 this.setState({posts: res.data}) //sets posts array to db array
               }) 
@@ -233,7 +232,7 @@ export default class ForumPost extends Component{
               })
       }
       else if(this.state.filter === "Lost and Found"){
-        axios.get('http://localhost:3001/posts/Lost-And-Founds') //get request
+        axios.get('/posts/Lost-And-Founds') //get request
               .then(res=>{
                 this.setState({posts: res.data}) //sets posts array to db array
               }) 
@@ -242,7 +241,7 @@ export default class ForumPost extends Component{
               })
       }
       else if(this.state.filter === "Crash Reports"){
-        axios.get('http://localhost:3001/posts/Crash-Reports') //get request
+        axios.get('/posts/Crash-Reports') //get request
               .then(res=>{
                 this.setState({posts: res.data}) //sets posts array to db array
               }) 
@@ -251,7 +250,7 @@ export default class ForumPost extends Component{
               })
       }
       else if(this.state.filter === "Others"){
-        axios.get('http://localhost:3001/posts/Others') //get request
+        axios.get('/posts/Others') //get request
               .then(res=>{
                 this.setState({posts: res.data}) //sets posts array to db array
               }) 
@@ -260,7 +259,7 @@ export default class ForumPost extends Component{
               })
       }
       else if(this.state.filter === "Open Posts"){
-        axios.get('http://localhost:3001/posts/Open-Posts') //get request
+        axios.get('/posts/Open-Posts') //get request
               .then(res=>{
                 this.setState({posts: res.data}) //sets posts array to db array
               }) 
@@ -269,7 +268,7 @@ export default class ForumPost extends Component{
               })
       }
       else if(this.state.filter === "Closed Posts"){
-        axios.get('http://localhost:3001/posts/Closed-Posts') //get request
+        axios.get('/posts/Closed-Posts') //get request
               .then(res=>{
                 this.setState({posts: res.data}) //sets posts array to db array
               }) 

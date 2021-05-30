@@ -97,10 +97,9 @@ export default class ForumCreatePost extends Component{
     //console.log(post);
 
     //add to db
-    axios.post('http://localhost:3001/posts/add/',formData)
+    axios.post('/posts/add/',formData)
          .then(res => {
-           console.log(res.data);
-           window.location = '/forum';
+            window.location = `/forum/${res.data}`;
             window.alert("Post Added!");
          });
 
