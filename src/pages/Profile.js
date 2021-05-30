@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import { TextField, Button } from "@material-ui/core"
 import axios from "axios";
 import getUser from "../utils/get-user";
+import { post } from "../api/routes/buildings";
 
 const profileStyle = { maxWidth: "100%", width: "100px", height: "auto" };
 
@@ -27,7 +28,7 @@ const Course = props => (
   <div>
     <Card style={{width: "18 rem"}}>
         <Card.Header>
-          <Card.Button id={props.course._id} class="close" onClick={this.deleteCourse}>
+          <Card.Button class="close" onClick={this.deleteCourse}>
             <span aria-hidden="false">&times;</span>
           </Card.Button>
         </Card.Header>
@@ -65,8 +66,23 @@ const Post = props => (
 export default class Profile extends Component{
   constructor(props){
     super(props);
-    this.state = {bio: "", courses: [], posts: [], user: getUser()};
-    this.handleChangeBio = this.handleChangeBio.bind(this)
+    this.state = {bio: "",
+                  courses: [],
+                  posts: [],
+                  title: "",
+                  location: "Home",
+                  days: {
+                    M: false,
+                    T: false,
+                    W: false,
+                    R: false,
+                    F: false,
+                    Sa: false,
+                    Su: false,
+                  },
+                  buildings: [],
+                  user: getUser()};
+    this.updateBio = this.handleChangeBio.bind(this)
     this.addCourse = this.addCourse.bind(this)
     this.deleteCourse = this.deleteCourse.bind(this)
   }
@@ -92,36 +108,31 @@ export default class Profile extends Component{
       .catch(err => {
         console.log(err);
       })
+
+    axios.get('/buildings/')
+      .then(res => {
+        this.setState({buildings: res.data})
+      })
+      .catch(err => {
+        console.log(err);
+      })  
   }// end componentDidMount
 
-  handleChangeBio(e) {
+  updateBio(e) {
     this.setState({
       bio: e.target.value
     })
-    const formData = new FormData();
-    formData.append("bio", e.target.value); 
-    axios.post(`/users/${this.state.user.email}/update-bio`, formData) //post request
+    console.log(this.state.bio);
+    axios.post(`/users/${this.state.user.email}/update-bio`, e.target.value) //post request
       .then(res => console.log(res.data));
   }
 
-  itinerary(){
-    if (this.state.courses) {
-      return this.state.courses.map(currCourse => {
-        return <Course course = {currCourse}/>
-      })
-    }
-  }
-
-  cache(){
-    if (this.state.posts) {
-      return this.state.posts.map(currPost => {
-        return <Post post = {currPost}/>
-      })
-    }
+  closePost(e) {
+    axios.post(`/posts/update/${e}`)
   }
 
   deleteCourse(e) {
-    axios.delete(`/users/${this.state.user.email}/delete-course/${e.target.id}`)
+    axios.delete(`/users/${this.state.user.email}/delete-course/${e}`)
       .then(res => console.log(res.data))
   }
 
@@ -145,7 +156,28 @@ export default class Profile extends Component{
     }
   }
 
+  itinerary(){
+    if (this.state.courses) {
+      return this.state.courses.map(currCourse => {
+        return <Course key = {currCourse._id}
+                       post = {currCourse}
+                       deleteCourse={() => this.deleteCourse(currCourse._id)}/>
+      })
+    }
+  }
+
+  cache(){
+    if (this.state.posts) {
+      return this.state.posts.map(currPost => {
+        return <Post key = {currPost._id}
+                     post = {currPost}
+                     closePost={() => this.closePost(currPost._id)}/>
+      })
+    }
+  }
+
   render(){
+    console.log(this.state.buildings);
     return (
       <Layout user={this.state.user}>
         <Container>
@@ -156,14 +188,26 @@ export default class Profile extends Component{
           <div>Email: {this.state.user.email}</div>
           <br />
           <div>
-            Bio: <input type="text" name="bio" value={this.state.bio} placeholder="Tell us about yourself" onChange={this.handleChangeBio}/>
+            Bio: <input type="text" name="bio" value={this.state.bio} placeholder="Tell us about yourself" onChange={this.updateBio}/>
           </div>
           <br />
           <div>
             <h2>Schedule</h2>
             <form autoComplete="off">
               <TextField required id="title" label="Title" /><br />
-              <TextField required id="location" label="Location" /><br />
+              {/* <TextField required id="location" label="Location" /><br /> */}
+              <label>Location: </label>
+              <select required
+                      id="location" 
+                      className="form-control" 
+                      value={this.state.location}
+                      onChange={this.onChangeLocation}>
+                {
+                  this.state.buildings.map(building => {
+                    return <option key = {building.name} value = {building.name}>{building.name.replace("-"," ")}</option>
+                  })
+                }
+              </select>
               <TextField required id="days" label="Days" /><br />
               <TextField
                 id="start"

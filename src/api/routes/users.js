@@ -2,6 +2,13 @@ const router = require('express').Router();
 let User = require('../models/user.model');
 
 // get specific user info from db
+router.route('/').get((req,res) => {
+    User.find()
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get specific user info from db
 router.route('/:email').get((req,res) => {
     User.findOne({username: req.params.email})
         .then(user => res.json(user))
@@ -28,18 +35,18 @@ router.route('/:email/exists').get((req,res) => {
 router.route('/:email/update-bio').post((req,res) => {
     User.findOne({username: req.params.email})
         .then(user => {
-            user.bio = req.body.bio
+            user.bio = req.body
         
             user.save()
-                .then(() => res.json('Course added!'))
+                .then(() => res.json('Bio updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not foun
 }); // end add func
 
 // delete a course from db
-router.route('/:email/delete-course/:id').post((req,res) => {
-    User.findByIdAndDelete(req.params.id)
+router.route('/:email/add-course/:id').post((req,res) => {
+    User.find(req.params.id)
         .then(post => {
             post.username = req.body.username;
             post.category = req.body.category;

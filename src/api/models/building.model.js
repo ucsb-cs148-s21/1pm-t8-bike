@@ -11,4 +11,5 @@ const buildingSchema = new Schema(
 );
 
 const Building = mongoose.model('Building',buildingSchema);
-module.exports = Building;
+module.exports.Building = Building;
+module.exports.buildingSchema = buildingSchema;

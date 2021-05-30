@@ -53,7 +53,8 @@ export default class LostandFound extends Component{
   // returns each individual post component
   LFThread(){
     return this.state.posts.map(currPost => {
-      return <LFPost key={currPost._id} post = {currPost}/>
+      return <LFPost key={currPost._id} 
+                     post = {currPost}/>
     })
   }// end LFThread
 
