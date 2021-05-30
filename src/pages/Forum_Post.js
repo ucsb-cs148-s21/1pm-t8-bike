@@ -98,7 +98,7 @@ const ViewComment = props => (
                     <span className="user">{props.comment.username}</span> - {" "}
                     <small className="date">
                     {" "}
-                    {(props.comment.date).toString().substring(0,10)}
+                    {props.comment.date.substring(0,10)}
                     </small>
                 </p>
             </div>
@@ -157,7 +157,7 @@ const EditComment = props => {
                         <span className="user">{props.comment.username}</span> - {" "}
                         <small className="date">
                         {" "}
-                        {(props.comment.date).toString().substring(0,10)}
+                        {props.comment.date.substring(0,10)}
                         </small>
                     </p>        
 
@@ -219,7 +219,7 @@ class ForumPost extends Component{
         this.commentDate = new Date();
     
         this.state = { 
-            post: {username: '',category: '',title: '',description: '',img: '', status: '', numComments: 0,comments: [],date: new Date(),},
+            post: {username: '',category: '',title: '',description: '',img: '', status: '', numComments: 0,comments: [],date: 0},
             comments: [], 
             isEditComment: false,
             editCommentId: 0,
@@ -252,7 +252,7 @@ class ForumPost extends Component{
              .catch(err => {
                  console.log(err);
              })
-        console.log(`img: ${this.state.post.img}`);
+        //console.log(`img: ${this.state.post.img}`);
 
     }// end componentDidMount
 
@@ -302,7 +302,7 @@ class ForumPost extends Component{
     //return the post in format
     viewPost(){
             //console.log("viewPost(): " + JSON.stringify(this.state.post,null,2));
-            return <Post post = {this.state.post} deletePost={this.deletePost} editPost={this.editPost} changeStatus={this.changeStatus} />
+            return <Post key={this.state.post._id} post = {this.state.post} deletePost={this.deletePost} editPost={this.editPost} changeStatus={this.changeStatus} />
              
     }// end viewPost
 

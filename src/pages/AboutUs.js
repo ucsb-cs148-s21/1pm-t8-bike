@@ -1,11 +1,12 @@
 import React from "react";
 import Layout from "../components/Layout"; 
-import "../index.css"
 import getUser from "../utils/get-user";
+import "../index.css";
 
 
 export default function MemberPage() {
-  const user = getUser(); 
+  const user = getUser();
+
   return (
     <Layout user={user}>
       <div>
