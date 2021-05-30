@@ -43,10 +43,10 @@ function addMarker(setPositions,setIsLoading) {
         }
         
         //add to db, then setPositions
-        axios.post(`http://localhost:3001/markers/add`,tempMarker)
+        axios.post(`/markers/add`,tempMarker)
             .then(res => {
                 console.log(res.data)
-                axios.get(`http://localhost:3001/markers`)
+                axios.get(`/markers`)
                     .then(res => {
                         setPositions(res.data)
                         setIsLoading(false)
@@ -70,7 +70,7 @@ export default function Home_Page() {
     // set positions to array in db   
     //initial
     useEffect(() => {
-        axios.get(`http://localhost:3001/markers`)
+        axios.get(`/markers`)
         .then(res => {
             setPositions(res.data); //create positions array from db
         })
