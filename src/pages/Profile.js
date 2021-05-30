@@ -5,7 +5,6 @@ import Card from "react-bootstrap/Card";
 import { TextField, Button } from "@material-ui/core"
 import axios from "axios";
 import getUser from "../utils/get-user";
-import { post } from "../api/routes/buildings";
 
 const profileStyle = { maxWidth: "100%", width: "100px", height: "auto" };
 
@@ -28,7 +27,7 @@ const Course = props => (
   <div>
     <Card style={{width: "18 rem"}}>
         <Card.Header>
-          <Card.Button class="close" onClick={this.deleteCourse}>
+          <Card.Button class="close" onClick={() => {props.deleteCourse()}}>
             <span aria-hidden="false">&times;</span>
           </Card.Button>
         </Card.Header>
@@ -53,7 +52,7 @@ const Post = props => (
         </Card.Link>
         <Card.Subtitle>{props.post.category}</Card.Subtitle>
         <Card.Text>{props.post.description}</Card.Text>
-        <Button variant="primary" onClick="">Close Post</Button>
+        <Button variant="primary" onClick={() => {props.closePost()}}>Close Post</Button>
       </Card.Body >
       <Card.Footer>
         {props.post.date}
@@ -80,42 +79,57 @@ export default class Profile extends Component{
                     Sa: false,
                     Su: false,
                   },
+                  start: "",
+                  end: "",
                   buildings: [],
                   user: getUser()};
-    this.updateBio = this.handleChangeBio.bind(this)
-    this.addCourse = this.addCourse.bind(this)
-    this.deleteCourse = this.deleteCourse.bind(this)
+    
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.closePost = this.closePost.bind(this);
+    this.deleteCourse = this.deleteCourse.bind(this);
+    this.updateBio = this.updateBio.bind(this)
+    this.onChangeTitle = this.onChangeTitle.bind(this);
+    this.onChangeLocation = this.onChangeLocation.bind(this);
+    this.onChangeDays = this.onChangeDays.bind(this);
+    this.onChangeStart = this.onChangeStart.bind(this);
+    this.onChangeEnd = this.onChangeEnd.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
   
   // this function grabs user info from db, if it exists
   componentDidMount(){
     console.log(this.state.user);
     axios.get(`/users/${this.state.user.email}/exists`) //get request
-      .then(res => console.log(res.data))
-
-    axios.get(`/users/${this.state.user.email}`) //get request
       .then(res => {
-        this.setState({bio: res.data.bio, courses: res.data.itinerary}) //sets bio and courses array to db
-      })
+        console.log(res.data)
+        axios.get(`/users/${this.state.user.email}`) //get request
+          .then(res => {
+            this.setState({bio: res.data.bio, courses: res.data.itinerary}) //sets bio and courses array to db
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
+        axios.get(`/posts/email/${this.state.user.email}`) //get request
+          .then(res => {
+            this.setState({posts: res.data}) //sets posts array to db array
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
+        axios.get('/buildings')
+          .then(res => {
+            this.setState({buildings: res.data})
+          })
+          .catch(err => {
+            console.log(err);
+          })
+        })
       .catch(err => {
         console.log(err);
       })
-
-    axios.get(`/posts/email/${this.state.user.email}`) //get request
-      .then(res => {
-        this.setState({posts: res.data}) //sets posts array to db array
-      })
-      .catch(err => {
-        console.log(err);
-      })
-
-    axios.get('/buildings/')
-      .then(res => {
-        this.setState({buildings: res.data})
-      })
-      .catch(err => {
-        console.log(err);
-      })  
+     
   }// end componentDidMount
 
   updateBio(e) {
@@ -128,32 +142,71 @@ export default class Profile extends Component{
   }
 
   closePost(e) {
-    axios.post(`/posts/update/${e}`)
+    const formData = new FormData();
+    axios.get(`/posts/${e.target.value}`)
+      .then(res => {
+        formData.append("title", res.data.title);
+        formData.append("category", res.data.category);
+        formData.append("username", res.data.username);
+        formData.append("description", res.data.description);
+        formData.append("img", res.data.img);
+        formData.append("status", "CLOSED");
+        formData.append("date", res.data.date);
+        axios.post(`/posts/update/${e.target.value}`, formData)
+          .then(res => console.log(res.data))
+          .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err));
   }
 
   deleteCourse(e) {
-    axios.delete(`/users/${this.state.user.email}/delete-course/${e}`)
+    axios.delete(`/users/${this.state.user.email}/delete-course/${e.target.value}`)
       .then(res => console.log(res.data))
   }
 
-  addCourse() {
-    if (document.getElementById("title").value !== "" && document.getElementById("location").value !== ""
-        && document.getElementById("days").value !== "" && (document.getElementById("start").value < document.getElementById("end").value)) {
-      const formData = new FormData();
-      formData.append("title", document.getElementById("title").value);
-      formData.append("location", document.getElementById("location").value);
-      formData.append("days", document.getElementById("days").value);
-      formData.append("start", document.getElementById("start").value);
-      formData.append("end", document.getElementById("end").value);
-      
-      axios.post(`/users/${this.state.user.email}/add-course`, formData)
-        .then(res => console.log(res.data))
+  onChangeTitle(e) {
+    this.setState({
+      title: e.target.value
+    });
+  }
+  
+  onChangeLocation(e) {
+    this.setState({
+      location: e.target.value
+    });
+  }  
 
-      //clear all inputs
-      document.getElementById("title").value = "";
-      document.getElementById("location").value = "";
-      document.getElementById("days").value = "";
-    }
+  onChangeDays(e) {
+    this.setState({
+      days: e.target.value
+    });
+  }  
+
+  onChangeStart(e) {
+    this.setState({
+      start: e.target.value
+    });
+  }  
+
+  onChangeEnd(e) {
+    this.setState({
+      end: e.target.value
+    });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData;
+    formData.append("title", this.state.title)
+    formData.append("location", this.state.location);
+    formData.append("days", this.state.days);
+    formData.append("start", this.state.start);
+    formData.append("end", this.state.end);
+    
+    axios.post(`/users/${this.state.user.email}/add-course`, formData)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err));
   }
 
   itinerary(){
@@ -194,7 +247,7 @@ export default class Profile extends Component{
           <div>
             <h2>Schedule</h2>
             <form autoComplete="off">
-              <TextField required id="title" label="Title" /><br />
+              <TextField required id="title" label="Title" value={this.state.title} onChange={this.onChangeTitle}/><br />
               {/* <TextField required id="location" label="Location" /><br /> */}
               <label>Location: </label>
               <select required
@@ -208,12 +261,13 @@ export default class Profile extends Component{
                   })
                 }
               </select>
-              <TextField required id="days" label="Days" /><br />
+              <TextField required id="days" label="Days" onChange = {this.onChangeDays}/><br />
               <TextField
                 id="start"
                 label="Start"
                 type="time"
                 defaultValue="07:30"
+                onChange = {this.onChangeStart}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -226,6 +280,7 @@ export default class Profile extends Component{
                 label="End"
                 type="time"
                 defaultValue="07:30"
+                onChange = {this.onChangeEnd}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -234,7 +289,7 @@ export default class Profile extends Component{
                 }}
               />
               <br />
-              <Button onClick={this.addCourse}>Add</Button>
+              <Button onClick={this.onSubmit}>Add</Button>
             </form>
             <br />
             {this.itinerary()}

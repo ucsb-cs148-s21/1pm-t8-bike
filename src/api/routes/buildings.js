@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const path = require('path');
-let Building = require('../models/building.model');
+let { Building } = require('../models/building.model');
 
 // get all buildings info from db
 router.route('/').get((req,res) => {
