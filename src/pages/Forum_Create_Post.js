@@ -36,6 +36,7 @@ export default class ForumCreatePost extends Component{
       date: new Date(),
       user: getUser(),
       currFile: null,
+      isLoading: false,
 
     }// end this.state
 
@@ -80,32 +81,35 @@ export default class ForumCreatePost extends Component{
 
   // onSubmit button to create post
   onSubmit(e){
-    e.preventDefault(); // does not set post as default, instead set as below
+    this.setState({isLoading:true},() => {
+      e.preventDefault(); // does not set post as default, instead set as below
     
-    const formData = new FormData();
-    formData.append("username", this.state.username);
-    formData.append("category", this.state.category);
-    formData.append("title", this.state.title);
-    formData.append("description", this.state.description.trim());
-    formData.append("date", this.state.date);
-    formData.append("img", this.state.img);
-    formData.append("status", this.state.status);
-    formData.append("numComments", this.state.numComments);
-    formData.append("comments", this.state.comments);
-    
-    //prints out what is going to be posted
-    //console.log(post);
+      const formData = new FormData();
+      formData.append("username", this.state.username);
+      formData.append("category", this.state.category);
+      formData.append("title", this.state.title);
+      formData.append("description", this.state.description.trim());
+      formData.append("date", this.state.date);
+      formData.append("img", this.state.img);
+      formData.append("status", this.state.status);
+      formData.append("numComments", this.state.numComments);
+      formData.append("comments", this.state.comments);
+      
+      //prints out what is going to be posted
+      //console.log(post);
 
-    //add to db
-    axios.post('/posts/add/',formData)
-         .then(res => {
-            window.location = `/forum/${res.data}`;
-            window.alert("Post Added!");
-         });
+      //add to db
+      axios.post('/posts/add/',formData)
+          .then(res => {
+              // redirect back to the forums page
+              this.setState({isLoading: false});
+              window.location = `/forum/${res.data}`;
+              window.alert("Post Added!");
+          });
 
-    // redirect back to the forums page
-    
-    
+      
+    })
+      
   } // end onSubmit
 
   render(){
@@ -192,10 +196,8 @@ export default class ForumCreatePost extends Component{
 
               {/* Submit Button */}
               <div className="form-group">
-                <input type="submit"
-                      value="Create New Post"
-                      className="btn btn-primary"
-                />
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
+                {!this.state.isLoading && <input type="submit" value="Create New Post" className="btn btn-primary"/> } {this.state.isLoading && <i className="fa fa-refresh fa-spin"></i>} {this.state.isLoading && <input type="submit" value="Submitting Post" disabled className="btn btn-primary"/>} <input type="button" value="Cancel" className="btn btn-primary" onClick={()=>{ window.location = `/forum`;}}/>
               </div>
             </form>
           </div>
