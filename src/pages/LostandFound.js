@@ -41,7 +41,7 @@ export default class LostandFound extends Component{
   // this function grabs the list of LF posts from db
   componentDidMount(){
     console.log(this.state.user);
-    axios.get('http://localhost:3001/posts/Lost-And-Founds') //get request
+    axios.get('/posts/Lost-And-Founds') //get request
          .then(res=>{
            this.setState({posts: res.data}) //sets posts array to db array
          }) 
