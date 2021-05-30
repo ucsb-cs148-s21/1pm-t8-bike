@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import CheckingSignedIn from "./pages/CheckingSignedIn";
-
 import Map from "./pages/Map";
 import LostandFound from "./pages/LostandFound";
 import Forum from "./pages/Forum";
@@ -67,7 +66,7 @@ export default function App() {
         />
 
         <Route exact path="/" component={Home_Page} />
-        <Route exact path="/lostandfound" component={LostandFound} />
+        <Route exact path="/lostandfound" component={() => <LostandFound/>} />
         <Route exact path="/aboutus" component={AboutUs} />
         <PrivateRoute
           path="/lostandfound/create-post"

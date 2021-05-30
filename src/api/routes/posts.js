@@ -18,15 +18,20 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage,});
+const upload = multer({ storage: storage });
 
 // get all posts info from db
 router.route('/').get((req,res) => {
     Post.find().sort({"date":-1})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
+}); // end get all
 
-}); // end get all 
+router.route('/email/:email').get((req,res) => {
+    Post.find({username: req.params.email})
+        .then(posts => res.json(posts))
+        .catch(err => res.status(400).json('Error: ' + err));
+}); // end get all
 
 // get all Announcement posts info from db
 router.route('/Announcements').get((req,res) => {
@@ -79,7 +84,7 @@ router.route('/LF/Closed-Posts').get((req,res) => {
 });
 
 // get all Open LF posts info from db
-router.route('/LF/Closed-Posts').get((req,res) => {
+router.route('/LF/Open-Posts').get((req,res) => {
     Post.find({ status: "OPEN", category: "Lost and Found"}).sort({"date":-1})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
@@ -111,13 +116,15 @@ router.route('/add').post(upload.single("img"),(req,res) => {
 
 // get info of a specific post
 router.route('/:id').get((req,res) => {
+    console.log('get request for spec post');
     Post.countDocuments({_id : req.params.id}, function (err, count) {
-        if(count>0){
+        if(count!==0){
             Post.findById(req.params.id)
-        .then(post => res.json(post)) //if found, return info
-        .catch(err => res.status(400).json('Error: ' + err));
+                .then(post => { console.log("got existing post"); res.json(post)}) //if found, return info
+                .catch(err => res.status(400).json('Error: ' + err));
         }      
         else{
+            console.log("got nonexisiting post");
             const post = {
                 username: '',
                 category: '',

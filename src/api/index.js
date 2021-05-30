@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 
 // adding routes to schema
+const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 const markersRouter = require('./routes/markers');
 const buildingsRouter = require('./routes/buildings');
@@ -29,6 +30,7 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 //will load everything in postsRouter if on /posts directory
+app.use('/users',usersRouter)
 app.use('/posts',postsRouter);
 app.use('/markers',markersRouter);
 app.use('/buildings',buildingsRouter);

@@ -7,15 +7,15 @@ var itinerary = [
     course: "CS148 Lecture",
     location: "Zoom",
     days: ['T', 'R'],
-    start: "1530",
-    end: "1645"
+    start: "15:30",
+    end: "16:45"
   },
   {
     course: "CS130B Lecture",
     location: "UCSB Box",
     days: ['M', 'W'],
-    start: "1100",
-    end: "1315"
+    start: "11:00",
+    end: "13:15"
   }
 ];
 

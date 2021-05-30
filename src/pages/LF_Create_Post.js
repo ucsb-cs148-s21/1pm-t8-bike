@@ -1,43 +1,40 @@
 import Layout from "../components/Layout";
 import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
-import { threads } from "./dataLF";
-import { cache } from "./dataProfile";
+import axios from "axios";
 import { Button, TextField } from "@material-ui/core";
 
 const textStyle = { maxWidth: "100%", width: "700px" };
-
-function UploadButton() {
-  return (
-    <div>
-      <input accept="image/*" id="contained-button-file" type="file" />
-    </div>
-  );
-}
 
 export default function LFCreatePost() {
   const user = getUser();
 
   function createPost() {
-    if (document.getElementById("item").value !== "") {
-      var newPost = {
-        id: threads.length + 1,
-        item: document.getElementById("item").value,
-        author: user,
-        date: Date(),
-        desc: document.getElementById("desc").value,
-        img: document.getElementById("contained-button-file").accept,
-      };
-      cache.push(newPost);
-      threads.push(newPost);
-      console.log(threads);
+    if (document.getElementById("title").value !== "" && document.getElementById("description").value !== "") {
+      const formData = new FormData();
+      formData.append("username", user.email);
+      formData.append("category", "Lost and Found");
+      formData.append("title", document.getElementById("title").value);
+      formData.append("description", document.getElementById("description").value);
+      formData.append("date", new Date());
+      formData.append("img", document.getElementById("image").value);
+      formData.append("status", "OPEN"); 
+      formData.append("numComments", 0);
+      formData.append("comments", []);
+      
+
+      axios.post(`http://localhost:3001/posts/add`,formData)
+        .then(res => console.log(res.data))
+
+      axios.post(`http://localhost:3001/users/${user.email}/addPost`, formData)
+        .then(res => console.log(res.data))
 
       //clear all inputs
-      document.getElementById("item").value = "";
-      document.getElementById("desc").value = "";
+      document.getElementById("title").value = "";
+      document.getElementById("description").value = "";
 
       //go back to forum main page
-      window.location.href = "/lostandfound";
+      window.location = '/lostandfound';
       console.log("return lostandfound...");
     }
   }
@@ -49,24 +46,22 @@ export default function LFCreatePost() {
         <br></br>
         <body>
           <form autoComplete="off">
-            <TextField required id="item" label="Item" />
+            <TextField required id="title" label="Title" />
             <br />
             <TextField
               required
-              id="desc"
               multiline
               rowsMax={3}
+              id="description"
               label="Description"
             />
             <br />
             <br />
-            <input
-              accept="images/*"
-              id="contained-button-file"
-              multiple
-              type="file"
-            />
-            <br />
+              <input
+                accept="images/*"
+                id="image"
+                type="file"
+              />
             <br />
             <Button onClick={createPost}>Create</Button>
           </form>
