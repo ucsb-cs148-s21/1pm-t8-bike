@@ -28,10 +28,16 @@ const port = process.env.PORT || 3001;
 // middleware, allow parse json
 app.use(cors());
 app.use(express.json());
+
 //will load everything in postsRouter if on /posts directory
 app.use('/posts',postsRouter);
 app.use('/markers',markersRouter);
 app.use('/buildings',buildingsRouter);
+
+// for google cloud storage
+app.disable('x-powered-by');
+//app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 
 // connect uri db

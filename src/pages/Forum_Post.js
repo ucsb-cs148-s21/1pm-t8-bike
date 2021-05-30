@@ -82,7 +82,7 @@ const Post = props => (
             </div>
             <div className="pic">
                 {props.post.img!=='' && <br/>}         
-                {props.post.img!=='' && <img src={`/uploads/${props.post.img}`} alt={`${props.post.img}`} style={{width: "25%", height: "auto"}}/>}         
+                {props.post.img!=='' && <img src={`${props.post.img}`} alt={`${props.post.img}`} style={{width: "25%", height: "auto"}}/>}         
             </div>
             
         </div> 
@@ -137,7 +137,7 @@ const EditComment = props => {
         //console.log(comment);
 
         //update to db
-        axios.post(`http://localhost:3001/posts/update/${props.postID}/update-comment/${props.commentID}`,comment)
+        axios.post(`/posts/update/${props.postID}/update-comment/${props.commentID}`,comment)
             .then(res => {               
                  props.afterOnSubmitEditComment();
             })
@@ -231,7 +231,7 @@ class ForumPost extends Component{
     componentDidMount(){
         console.log("componentDidMount");
         console.log(this.postID);
-        axios.get(`http://localhost:3001/posts/${this.postID}`)
+        axios.get(`/posts/${this.postID}`)
              .then(res=>{
                  console.log("compDidMount: get post from db");
                  this.setState({post: res.data},()=>{
@@ -243,7 +243,7 @@ class ForumPost extends Component{
              .catch(err => {
                  console.log(err);
              })
-        axios.get(`http://localhost:3001/posts/${this.postID}/get-comments`)
+        axios.get(`/posts/${this.postID}/get-comments`)
              .then(res=>{
                  console.log("compDidMount: get comments from db");
                  this.setState({comments: res.data})
@@ -312,7 +312,7 @@ class ForumPost extends Component{
     */
     deletePost(){
         if (window.confirm("Are you sure you want to delete this post?")) {
-            axios.delete(`http://localhost:3001/posts/${this.postID}`)
+            axios.delete(`/posts/${this.postID}`)
                 .then(res => {
                     console.log(res.data)
                     console.log("delPost");
@@ -341,11 +341,11 @@ class ForumPost extends Component{
     deleteComment(id,cId){
         if (this.state.isEditComment === false ) {
             if(window.confirm("Are you sure you want to delete this comment?")){
-                axios.delete(`http://localhost:3001/posts/${id}/delete-comment/${cId}`)
+                axios.delete(`/posts/${id}/delete-comment/${cId}`)
                     .then(res => {
                         console.log(res.data)
                         //refresh comments
-                        axios.get(`http://localhost:3001/posts/${id}/get-comments`)
+                        axios.get(`/posts/${id}/get-comments`)
                             .then(res=>{
                                 //console.log("compDidMount: get comments from db");
                                 this.setState({comments: res.data})
@@ -355,7 +355,7 @@ class ForumPost extends Component{
                                 console.log(err);
                             })
                         //refresh post
-                        axios.get(`http://localhost:3001/posts/${id}`)
+                        axios.get(`/posts/${id}`)
                         .then(res=>{
                             //console.log("compDidMount: get comments from db");
                             this.setState({post: res.data})
@@ -397,7 +397,7 @@ class ForumPost extends Component{
 
     afterOnSubmitEditComment(){
         //update this.state.comments with new comments
-        axios.get(`http://localhost:3001/posts/${this.postID}/get-comments`)
+        axios.get(`/posts/${this.postID}/get-comments`)
             .then(res=>{
                 console.log("onSubmit: get comments from db")
                 this.setState({comments: res.data, isEditComment: false, editCommentId:0})
@@ -408,7 +408,7 @@ class ForumPost extends Component{
             })
         
         //update post
-        axios.get(`http://localhost:3001/posts/${this.postID}`)
+        axios.get(`/posts/${this.postID}`)
             .then(res=>{
                 console.log("compDidMount: get post from db");
                 this.setState({post: res.data})
@@ -445,11 +445,11 @@ class ForumPost extends Component{
         }
 
         // update post in db
-        axios.post(`http://localhost:3001/posts/update/${this.postID}`,updatedStatus)
+        axios.post(`/posts/update/${this.postID}`,updatedStatus)
             .then(res => {
                 console.log(res.data); 
                 //re get the post info and update, no need to update comments as its the same
-                axios.get(`http://localhost:3001/posts/${this.postID}`)
+                axios.get(`/posts/${this.postID}`)
                 .then(res=>{
                     console.log("compDidMount: get post from db");
                     this.setState({post: res.data})
@@ -475,13 +475,13 @@ class ForumPost extends Component{
         //console.log(comment);
 
         //add to db
-        axios.post(`http://localhost:3001/posts/update/${this.postID}/add-comment`,comment)
+        axios.post(`/posts/update/${this.postID}/add-comment`,comment)
             .then(res => {
                  console.log("onSubmit: " + res.data)
                  console.log("after adding new comment to db");
 
                  //update this.state.comments with new comments
-                 axios.get(`http://localhost:3001/posts/${this.postID}/get-comments`)
+                 axios.get(`/posts/${this.postID}/get-comments`)
                     .then(res=>{
                         console.log("onSubmit: get comments from db")
                         this.setState({comments: res.data})
@@ -492,7 +492,7 @@ class ForumPost extends Component{
                 })
                 
                 //update post
-                axios.get(`http://localhost:3001/posts/${this.postID}`)
+                axios.get(`/posts/${this.postID}`)
                     .then(res=>{
                         console.log("compDidMount: get post from db");
                         this.setState({post: res.data})
