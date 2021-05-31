@@ -59,7 +59,8 @@ function addMarker(setPositions,setIsLoading) {
 
 }
 const google = window.google;
-function setTransportMode(decision) {
+function setTransportMode(decision, setIsCalculating) {
+    setIsCalculating(true);
     navigator.geolocation.getCurrentPosition(function(position){
     
     var distance = require('google-distance-matrix');
@@ -75,7 +76,7 @@ function setTransportMode(decision) {
     var dest_lng = -121.919059;
 
     axios.get(`/distMatrix/${decision}/${origins_lat}/${origins_lng}/${dest_lat}/${dest_lng}`)
-        .then(res => console.log(res.data))
+        .then(res => {console.log(res.data); window.alert('Time calculated!'); setIsCalculating(false);})
         .catch(err => console.log('Error: ' + err));
     
 }); 
@@ -86,6 +87,8 @@ export default function Home_Page() {
     const [positions, setPositions] = useState([]);
     const [data, setData] = useState("test");
     const [isLoading, setIsLoading] = useState(false);
+    const [isBikeCalculating, setIsCalculatingBike] = useState(false);
+    const [isWalkCalculating, setIsCalculatingWalk] = useState(false);
     //const map =  <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>;
     
     //positions is state variable array of markers
@@ -116,8 +119,16 @@ export default function Home_Page() {
         </Container>
         <Container >
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
-            <button style ={{float: "top"}} onClick={() => setTransportMode('bicycling')}>I'm Biking</button>
-            <button style ={{float: "top"}} onClick={() => setTransportMode('walking')}>I'm Walking</button>
+            <button style ={{float: "top"}} onClick={() => setTransportMode('bicycling', setIsCalculatingBike)} disabled={isBikeCalculating}>
+                {!isBikeCalculating && "I'm biking!"}
+                {isBikeCalculating && <i className="fa fa-refresh fa-spin"></i>}
+                {isBikeCalculating && "Calculating!"}
+            </button>
+            <button style ={{float: "top"}} onClick={() => setTransportMode('walking', setIsCalculatingWalk)}  disabled={isWalkCalculating}>
+                {!isWalkCalculating && "I'm walking!"}
+                {isWalkCalculating && <i className="fa fa-refresh fa-spin"></i>}
+                {isWalkCalculating && "Calculating!"}
+            </button>
             <button style={{float: "right"}} href="tel:18058932000">CALL CSO</button>
             <button style={{float: "right"}} onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
                 {!isLoading && "Report"}
