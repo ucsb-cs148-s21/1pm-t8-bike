@@ -82,7 +82,7 @@ export default function Home_Page() {
     // set positions to array in db
     //initial
     useEffect(() => {
-        axios.get(`http://localhost:3001/markers`)
+        axios.get(`/markers`)
         .then(res => {
             setPositions(res.data); //create positions array from db
         })
