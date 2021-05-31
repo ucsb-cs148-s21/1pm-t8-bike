@@ -13,21 +13,21 @@ import { set } from "mongoose";
 //     time: new Date(),
 // }]);
 
-// function getcurrentLat(){
-//     //get current time and add that to the marker 
-//     return navigator.geolocation.getCurrentPosition(function(position) {
-//         console.log(position.coords.latitude)
-//         return position.coords.latitude;
-//     }); 
+function getcurrentLat(){
+    //get current time and add that to the marker 
+    return navigator.geolocation.getCurrentPosition(function(position) {
+        console.log(position.coords.latitude + " IN FUNCTION ")
+        return position.coords.latitude;
+    }); 
 
-// }
+}
 
-// function getcurrentLng(){
-//     //get current time and add that to the marker 
-//     return navigator.geolocation.getCurrentPosition(function(position) {
-//         return position.coords.longitude;
-//     }); 
-// }
+function getcurrentLng(){
+    //get current time and add that to the marker 
+    return navigator.geolocation.getCurrentPosition(function(position) {
+        return position.coords.longitude;
+    }); 
+}
 
 function addMarker(setPositions,setIsLoading) {
     // should add to db, before however should check for any exisiting markers, if markers exists, increment the numReports instead
@@ -43,10 +43,10 @@ function addMarker(setPositions,setIsLoading) {
         }
         
         //add to db, then setPositions
-        axios.post(`http://localhost:3001/markers/add`,tempMarker)
+        axios.post(`/markers/add`,tempMarker)
             .then(res => {
                 console.log(res.data)
-                axios.get(`http://localhost:3001/markers`)
+                axios.get(`/markers`)
                     .then(res => {
                         setPositions(res.data)
                         setIsLoading(false)
@@ -57,6 +57,28 @@ function addMarker(setPositions,setIsLoading) {
             .catch(err => console.log('Error: ' + err));
     })
 
+}
+const google = window.google;
+function setTransportMode(decision) {
+    navigator.geolocation.getCurrentPosition(function(position){
+    
+    var distance = require('google-distance-matrix');
+    
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+    //`${lat},${lng}` put this in origins
+    // var origins = ['San Francisco CA'];
+    // var destinations = ['37.230679, -121.919059'];
+    var origins_lat = lat;
+    var origins_lng = lng;
+    var dest_lat = 37.230679;
+    var dest_lng = -121.919059;
+
+    axios.get(`/distMatrix/${decision}/${origins_lat}/${origins_lng}/${dest_lat}/${dest_lng}`)
+        .then(res => console.log(res.data))
+        .catch(err => console.log('Error: ' + err));
+    
+}); 
 }
 
 export default function Home_Page() {
@@ -94,6 +116,8 @@ export default function Home_Page() {
         </Container>
         <Container >
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
+            <button style ={{float: "top"}} onClick={() => setTransportMode('bicycling')}>I'm Biking</button>
+            <button style ={{float: "top"}} onClick={() => setTransportMode('walking')}>I'm Walking</button>
             <button style={{float: "right"}} href="tel:18058932000">CALL CSO</button>
             <button style={{float: "right"}} onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
                 {!isLoading && "Report"}

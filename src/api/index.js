@@ -7,6 +7,7 @@ const path = require('path');
 const postsRouter = require('./routes/posts');
 const markersRouter = require('./routes/markers');
 const buildingsRouter = require('./routes/buildings');
+const distanceRouter = require('./routes/distance');
 
 // connect db
 const mongoose = require('mongoose');
@@ -22,6 +23,7 @@ var corsOptions = {
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
+
 // gets port
 const port = process.env.PORT || 3001;
 
@@ -32,6 +34,7 @@ app.use(express.json());
 app.use('/posts',postsRouter);
 app.use('/markers',markersRouter);
 app.use('/buildings',buildingsRouter);
+app.use('/distMatrix',distanceRouter);
 
 
 // connect uri db
