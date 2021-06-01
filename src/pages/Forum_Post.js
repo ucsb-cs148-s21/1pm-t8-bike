@@ -73,7 +73,7 @@ const Post = props => (
             </h6>
             <div className="info-line" >
                 <p className="info-line">
-                    <span className="author">{props.post.username}</span> - <span className="date">{(props.post.date).toString().substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span> {props.user && <span style={{float: 'right'}}><input type="button" value="Change Status" onClick={() => {props.changeStatus()}}/>  <input type="button" value="Edit" onClick={() => {props.editPost()}}/>  <input type="button" value="Delete" onClick={() => {props.deletePost()}}/></span>}
+                    <span className="author">{props.post.username}</span> - <span className="date">{(props.post.date).toString().substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span> {props.user && <span style={{float: 'right'}}><input type="button" value="Change Status" disabled={props.isChangingStatus} onClick={() => {props.changeStatus()}}/>  <input type="button" value="Edit" onClick={() => {props.editPost()}}/>  <input type="button" value="Delete" onClick={() => {props.deletePost()}}/></span>}
                 </p>
             </div>
             <hr></hr>
@@ -224,6 +224,7 @@ class ForumPost extends Component{
             isEditComment: false,
             editCommentId: 0,
             user: getUser(), 
+            isChangingStatus: false,
         }
     }// end constructor
 
@@ -304,6 +305,7 @@ class ForumPost extends Component{
             //console.log("viewPost(): " + JSON.stringify(this.state.post,null,2));
             return <Post key={this.state.post._id} 
                         post = {this.state.post} 
+                        isChangingStatus = {this.state.isChangingStatus}
                         user = {this.state.user}
                         deletePost={this.deletePost} 
                         editPost={this.editPost} 
@@ -430,6 +432,7 @@ class ForumPost extends Component{
     changeStatus(){
         //when clicked will check state status, if closed=>open, open=>closed
         //do an update in db and get post again
+        this.setState({isChangingStatus: true});
         const updatedStatus = new FormData();
         updatedStatus.append("username", this.state.post.username);
         updatedStatus.append("category", this.state.post.category);
@@ -458,7 +461,7 @@ class ForumPost extends Component{
                 axios.get(`/posts/${this.postID}`)
                 .then(res=>{
                     console.log("compDidMount: get post from db");
-                    this.setState({post: res.data})
+                    this.setState({post: res.data, isChangingStatus: false})
                 })
                 .catch(err => {
                     console.log(err);

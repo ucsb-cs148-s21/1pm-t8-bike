@@ -66,9 +66,11 @@ const Post = props => (
           </p>
         </div>
       </a>
+      {props.user && 
       <p className="buttons" style={styles.delEditButtons}>
-        { props.user && <input type="button" value="Change Status" onClick={() => {props.changeStatus()}}/>} { props.user && <input type="button" value="Edit" onClick={() => {props.editPost()}}/>} { props.user && <input type="button" value="Delete" onClick={() => {props.deletePost()}}/>}
+        <input type="button" value="Change Status" disabled={props.isChangingStatus} onClick={() => {props.changeStatus()}}/>  <input type="button" value="Edit" onClick={() => {props.editPost()}}/>  <input type="button" value="Delete" onClick={() => {props.deletePost()}}/>
       </p>
+      }
     </body>
   </li>
 )
@@ -81,7 +83,7 @@ export default class ForumPost extends Component{
     this.deletePost = this.deletePost.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
     this.onChangeFilter = this.onChangeFilter.bind(this);
-    this.state = {posts: [],user: getUser(),filter: "All"};
+    this.state = {posts: [],user: getUser(),filter: "All",isChangingStatus:false};
     //this.isLoggedIn = getUser();
   }
   
@@ -135,7 +137,7 @@ export default class ForumPost extends Component{
   changeStatus(id){
     //when clicked will check state status, if closed=>open, open=>closed
     //do an update in db and get post again
-    
+    this.setState({isChangingStatus:true});
     //get info of specific post
     axios.get(`/posts/${id}`)
          .then(res => {
@@ -167,7 +169,7 @@ export default class ForumPost extends Component{
                 axios.get(`/posts/`)
                 .then(res=>{
                     console.log("compDidMount: get post from db");
-                    this.setState({posts: res.data})
+                    this.setState({posts: res.data, isChangingStatus:false})
                 })
                 .catch(err => {
                     console.log(err);
@@ -182,6 +184,7 @@ export default class ForumPost extends Component{
       return <Post key = {currPost._id}
                    post = {currPost}
                    user = {this.state.user}
+                   isChangingStatus = {this.state.isChangingStatus}
                    deletePost={() => this.deletePost(currPost._id)}
                    editPost={() => this.editPost(currPost._id)}
                    changeStatus={() => this.changeStatus(currPost._id)}
