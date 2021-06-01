@@ -38,7 +38,7 @@ router.route('/:email/exists').get((req,res) => {
 router.route('/:email/update-bio').post((req,res) => {
     User.findOne({username: req.params.email})
         .then(user => {
-            user.bio = req.body
+            user.bio = req.body.bio
         
             user.save()
                 .then(() => res.json('Bio updated!'))
@@ -72,7 +72,7 @@ router.route('/:email/add-course').post((req,res) => {
 }); // end add func
 
 // add a course from db
-router.route('/:email/delete-course/:id').post((req,res) => {
+router.route('/:email/delete-course/:id').delete((req,res) => {
     User.findOne({username: req.params.email})
         .then(user => {
             var removeIndex = user.itinerary.map(course => {return course._id;}).indexOf(req.params.id);

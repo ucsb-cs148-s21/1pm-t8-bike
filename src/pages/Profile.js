@@ -5,9 +5,34 @@ import Card from "react-bootstrap/Card";
 import { TextField, Button } from "@material-ui/core"
 import axios from "axios";
 import getUser from "../utils/get-user";
-import { Building } from "../api/models/building.model";
 
 const profileStyle = { maxWidth: "100%", width: "100px", height: "auto" };
+
+function dayFormat(days) {
+  var week = "";
+  if (days.M) {
+    week += "M";
+  }
+  if (days.T) {
+    week += "T";
+  }
+  if (days.W) {
+    week += "W";
+  }
+  if (days.R) {
+    week += "R";
+  }
+  if (days.F) {
+    week += "F";
+  }
+  if (days.Sa) {
+    week += "Sa";
+  }
+  if (days.Su) {
+    week += "Su";
+  }
+  return week;
+}
 
 function timeFormat(time) {
   if (parseInt(time.substr(0,2)) > 12) {
@@ -36,7 +61,7 @@ const Course = props => (
           <Card.Title>{props.course.title}</Card.Title>
           <Card.Subtitle>{props.course.location}</Card.Subtitle>
           <Card.Text >
-            {props.course.days} {timeFormat(props.course.start)} - {timeFormat(props.course.end)} 
+            {dayFormat(props.course.days)} {timeFormat(props.course.start)} - {timeFormat(props.course.end)} 
           </Card.Text>
         </Card.Body >
       </Card >
@@ -70,16 +95,14 @@ export default class Profile extends Component{
                   courses: [],
                   posts: [],
                   title: "",
-                  location: "Home",
-                  days: {
-                    M: false,
-                    T: false,
-                    W: false,
-                    R: false,
-                    F: false,
-                    Sa: false,
-                    Su: false,
-                  },
+                  location: "",
+                  M: false,
+                  T: false,
+                  W: false,
+                  R: false,
+                  F: false,
+                  Sa: false,
+                  Su: false,
                   start: "",
                   end: "",
                   buildings: [],
@@ -91,7 +114,13 @@ export default class Profile extends Component{
     this.updateBio = this.updateBio.bind(this)
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
-    this.onChangeDays = this.onChangeDays.bind(this);
+    this.onChangeMon = this.onChangeMon.bind(this);
+    this.onChangeTue = this.onChangeTue.bind(this);
+    this.onChangeWed = this.onChangeWed.bind(this);
+    this.onChangeThu = this.onChangeThu.bind(this);
+    this.onChangeFri = this.onChangeFri.bind(this);
+    this.onChangeSat = this.onChangeSat.bind(this);
+    this.onChangeSun = this.onChangeSun.bind(this);
     this.onChangeStart = this.onChangeStart.bind(this);
     this.onChangeEnd = this.onChangeEnd.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -137,7 +166,9 @@ export default class Profile extends Component{
     this.setState({
       bio: e.target.value
     })
-    axios.post(`/users/${this.state.user.email}/update-bio`, e.target.value) //post request
+    const formData = new FormData();
+    formData.append("bio", e.target.value);
+    axios.post(`/users/${this.state.user.email}/update-bio`, formData) //post request
       .then(res => console.log(res.data));
   }
 
@@ -167,7 +198,7 @@ export default class Profile extends Component{
   }
 
   deleteCourse(e) {
-    axios.delete(`/users/${this.state.user.email}/delete-course/${e.target.value}`)
+    axios.delete(`/users/${this.state.user.email}/delete-course/${e}`)
       .then(res => console.log(res.data))
   }
 
@@ -183,9 +214,45 @@ export default class Profile extends Component{
     });
   }  
 
-  onChangeDays(e) {
+  onChangeMon(e) {
     this.setState({
-      days: e.target.value
+      M: e.target.checked
+    });
+  }
+
+  onChangeTue(e) {
+    this.setState({
+      T: e.target.checked
+    });
+  }  
+  
+  onChangeWed(e) {
+    this.setState({
+      W: e.target.checked
+    });
+  }  
+  
+  onChangeThu(e) {
+    this.setState({
+      R: e.target.checked
+    });
+  }  
+
+  onChangeFri(e) {
+    this.setState({
+      F: e.target.checked
+    });
+  }  
+
+  onChangeSat(e) {
+    this.setState({
+      Sa: e.target.checked
+    });
+  }  
+
+  onChangeSun(e) {
+    this.setState({
+      Su: e.target.checked
     });
   }  
 
@@ -202,32 +269,37 @@ export default class Profile extends Component{
   }
 
   onSubmit(e) {
-    e.preventDefault();
+    this.setState({isLoading:true},() => {
+      e.preventDefault();
 
-    const lat = 0;
-    const lng = 0;
-    const name = "";
-
-    axios.get(`/buildings/${this.state.location}`)
-      .then(res => {
-        lat = res.data.lat;
-        lng = res.data.lng;
-        name = res.data.name;
-      })
-      .catch(err => console.log(err));
+      axios.get(`/buildings/${this.state.location}`)
+        .then(res => {
+          const days = {
+            M: this.state.M,
+            T: this.state.T,
+            W: this.state.W,
+            R: this.state.R,
+            F: this.state.F,
+            Sa: this.state.Sa,
+            Su: this.state.Su
+          }
+          const formData = new FormData;
+          formData.append("title", this.state.title)
+          formData.append("location", res.data);
+          formData.append("days", days);
+          formData.append("start", this.state.start);
+          formData.append("end", this.state.end);
     
-    const newBuilding = new Building({lat, lng, name});
-    
-    const formData = new FormData;
-    formData.append("title", this.state.title)
-    formData.append("location", newBuilding);
-    formData.append("days", this.state.days);
-    formData.append("start", this.state.start);
-    formData.append("end", this.state.end);
-    
-    axios.post(`/users/${this.state.user.email}/add-course`, formData)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err));
+          axios.post(`/users/${this.state.user.email}/add-course`, formData)
+            .then(res => {
+              console.log(res.data);
+              this.setState({isLoading: false});
+              window.alert("Course Added!");
+            })
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+    })
   }
 
   itinerary(){
@@ -251,7 +323,6 @@ export default class Profile extends Component{
   }
 
   render(){
-    console.log(this.state.buildings);
     return (
       <Layout user={this.state.user}>
         <Container>
@@ -259,7 +330,9 @@ export default class Profile extends Component{
           <img src={this.state.user.imageUrl} style={profileStyle} alt="profilePic" />
           <br />
           <br />
-          <div>Email: {this.state.user.email}</div>
+          <div>
+            Email: {this.state.user.email}
+          </div>
           <br />
           <div>
             Bio: <input type="text" name="bio" value={this.state.bio} placeholder="Tell us about yourself" onChange={this.updateBio}/>
@@ -268,7 +341,8 @@ export default class Profile extends Component{
           <div>
             <h2>Schedule</h2>
             <form autoComplete="off">
-              <TextField required id="title" label="Title" value={this.state.title} onChange={this.onChangeTitle}/><br />
+              <label>Title:</label><br />
+              <input id="title" value={this.state.title} onChange={this.onChangeTitle}/><br />
               {/* <TextField required id="location" label="Location" /><br /> */}
               <label>Location: </label>
               <select required
@@ -282,7 +356,39 @@ export default class Profile extends Component{
                   })
                 }
               </select>
-              <TextField required id="days" label="Days" onChange = {this.onChangeDays}/><br />
+              {/* <TextField required id="days" label="Days" onChange = {this.onChangeDays}/><br /> */}
+              <label>Days: </label>
+              <div class="form-control" onChange={this.onChangeDays}>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="mon" value="" onChange={this.onChangeMon}/>
+                  <label class="form-check-label" for="mon">M</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="tue" value="" onChange={this.onChangeTue}/>
+                  <label class="form-check-label" for="tue">T</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="wed" value="" onChange={this.onChangeWed}/>
+                  <label class="form-check-label" for="wed">W</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="thu" value="" onChange={this.onChangeThu}/>
+                  <label class="form-check-label" for="thu">R</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="fri" value="" onChange={this.onChangeFri}/>
+                  <label class="form-check-label" for="fri">F</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="sat" value="" onChange={this.onChangeSat}/>
+                  <label class="form-check-label" for="sat">Sa</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="sun" value="" onChange={this.onChangeSun}/>
+                  <label class="form-check-label" for="sun">Su</label>
+                </div>
+              </div>
+              <br />
               <TextField
                 id="start"
                 label="Start"
@@ -295,7 +401,7 @@ export default class Profile extends Component{
                 inputProps={{
                   step: 300, // 5 min
                 }}
-              />
+              />&nbsp;&nbsp;&nbsp;
               <TextField
                 id="end"
                 label="End"
