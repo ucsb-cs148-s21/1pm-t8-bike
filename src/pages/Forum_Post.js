@@ -108,9 +108,11 @@ const ViewComment = props => (
                 </p>
             </div>
             <div className="buttons">
+                {props.user &&
                 <p className="buttons" style={styles.delEditButtons}>
                     <input type="button" value="Edit" onClick={() => {props.editComment()}}/> <input type="button" value="Delete" onClick={() => {props.deleteComment()}}/>
                 </p>
+                }
             </div>
         </div>
     </li>
@@ -264,6 +266,7 @@ class ForumPost extends Component{
             return this.state.comments.map(currComment => {
                 return <ViewComment 
                             comment = {currComment}
+                            user = {this.state.user}
                             key = {currComment._id}
                             deleteComment = {() => this.deleteComment(this.postID,currComment._id)}
                             editComment = {() => this.editComment(currComment._id)}
