@@ -17,7 +17,7 @@ export default function LFCreatePost() {
       formData.append("title", document.getElementById("title").value);
       formData.append("description", document.getElementById("description").value);
       formData.append("date", new Date());
-      formData.append("img", document.getElementById("image").value);
+      formData.append("img", document.getElementById("img").files[0]);
       formData.append("status", "OPEN"); 
       formData.append("numComments", 0);
       formData.append("comments", []);
@@ -57,11 +57,12 @@ export default function LFCreatePost() {
             />
             <br />
             <br />
-              <input
-                accept="images/*"
-                id="image"
-                type="file"
-              />
+              <input id = "img"
+                     type="file"  
+                     filename="img"
+                     className="form-control-file"
+                     accept="image/jpg, image/jpeg, image/png"
+                />
             <br />
             <Button onClick={createPost}>Create</Button>
           </form>
