@@ -73,7 +73,7 @@ const Post = props => (
             </h6>
             <div className="info-line" >
                 <p className="info-line">
-                    <span className="author">{props.post.username}</span> - <span className="date">{(props.post.date).toString().substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span> <span style={{float: 'right'}}><input type="button" value="Change Status" onClick={() => {props.changeStatus()}}/>  <input type="button" value="Edit" onClick={() => {props.editPost()}}/>  <input type="button" value="Delete" onClick={() => {props.deletePost()}}/></span>
+                    <span className="author">{props.post.username}</span> - <span className="date">{(props.post.date).toString().substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span> {props.user && <span style={{float: 'right'}}><input type="button" value="Change Status" onClick={() => {props.changeStatus()}}/>  <input type="button" value="Edit" onClick={() => {props.editPost()}}/>  <input type="button" value="Delete" onClick={() => {props.deletePost()}}/></span>}
                 </p>
             </div>
             <hr></hr>
@@ -302,7 +302,13 @@ class ForumPost extends Component{
     //return the post in format
     viewPost(){
             //console.log("viewPost(): " + JSON.stringify(this.state.post,null,2));
-            return <Post key={this.state.post._id} post = {this.state.post} deletePost={this.deletePost} editPost={this.editPost} changeStatus={this.changeStatus} />
+            return <Post key={this.state.post._id} 
+                        post = {this.state.post} 
+                        user = {this.state.user}
+                        deletePost={this.deletePost} 
+                        editPost={this.editPost} 
+                        changeStatus={this.changeStatus} 
+                    />
              
     }// end viewPost
 
@@ -467,7 +473,7 @@ class ForumPost extends Component{
 
         //template comment to be submitted
         const comment = {
-            username: this.commentUser,
+            username: this.state.user.email,
             description: this.commentDesc,
             date: this.commentDate,
         }
@@ -525,17 +531,6 @@ class ForumPost extends Component{
             return(
                 <div className="createCommentBtn">
                     <form name="createCom" onSubmit={this.onSubmit}>
-                        {/*write a username (TEMP) */}
-                        <div className="form-group">
-                            <input type="text"
-                                   required 
-                                   className="form-control"
-                                   placeholder="Enter Username"
-                                   name="commentUser"
-                                   //value=""
-                                   onChange={this.onChangeU}
-                            />
-                        </div>
 
                         {/* Write your comment */}
                         <div className="form-group">

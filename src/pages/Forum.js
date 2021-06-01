@@ -67,7 +67,7 @@ const Post = props => (
         </div>
       </a>
       <p className="buttons" style={styles.delEditButtons}>
-        <input type="button" value="Change Status" onClick={() => {props.changeStatus()}}/> <input type="button" value="Edit" onClick={() => {props.editPost()}}/> <input type="button" value="Delete" onClick={() => {props.deletePost()}}/>
+        { props.user && <input type="button" value="Change Status" onClick={() => {props.changeStatus()}}/>} { props.user && <input type="button" value="Edit" onClick={() => {props.editPost()}}/>} { props.user && <input type="button" value="Delete" onClick={() => {props.deletePost()}}/>}
       </p>
     </body>
   </li>
@@ -181,6 +181,7 @@ export default class ForumPost extends Component{
     return this.state.posts.map(currPost => {
       return <Post key = {currPost._id}
                    post = {currPost}
+                   user = {this.state.user}
                    deletePost={() => this.deletePost(currPost._id)}
                    editPost={() => this.editPost(currPost._id)}
                    changeStatus={() => this.changeStatus(currPost._id)}
