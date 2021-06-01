@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default function getUser() {
   if (window.gapi === undefined || window.gapi.auth2 === undefined) {
     return null;
@@ -20,6 +22,10 @@ export default function getUser() {
     email: profile.getEmail(),
     signOut: authInstance.signOut,
   };
+
+  //add user to database if they dne
+  axios.get(`/users/${user.email}/exists`) //get request
+  .then(res => {return user;})
 
   return user;
 }

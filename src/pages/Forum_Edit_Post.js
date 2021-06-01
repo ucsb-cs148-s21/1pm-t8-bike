@@ -145,17 +145,6 @@ class ForumEditPost extends Component{
           <div>
             <form onSubmit={this.onSubmit} encType="multipart/form-data" method="post">
 
-              {/*write a username */}
-              <div className="form-group">
-                <label>Username: </label>
-                <input type="text"
-                      required  
-                      className="form-control"
-                      value={this.state.username}
-                      onChange={this.onChangeUsername}
-                />
-              </div>
-
               {/* write title */}
               <div className="form-group">
                 <label>Title: </label>
