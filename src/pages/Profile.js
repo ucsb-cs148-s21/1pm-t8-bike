@@ -157,6 +157,13 @@ export default class Profile extends Component{
           .catch(err => console.log(err))
       })
       .catch(err => console.log(err));
+    axios.get(`/posts/email/${this.state.user.email}`) //get request
+      .then(res => {
+        this.setState({posts: res.data}) //sets posts array to db array
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   deleteCourse(e) {
