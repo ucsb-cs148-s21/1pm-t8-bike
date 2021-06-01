@@ -31,8 +31,8 @@ router.route('/add').post((req,res) => {
         const category = req.body.category;
         const date = req.body.date;
         const numReports = req.body.numReports;
-        const expireAt = Date.now() + ((20) * (60 * 1000));
-        const newMarker = new Marker({lat, lng, category, date, numReports,expireAt});
+        const expiresAt = Date.now() + ((20) * (60 * 1000));
+        const newMarker = new Marker({lat, lng, category, date, numReports,expiresAt});
 
         newMarker.save()
             .then(() => res.json('Marker added!'))

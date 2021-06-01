@@ -37,6 +37,7 @@ class ForumEditPost extends Component{
       date: new Date(),
       user: getUser(),
       currFile: null,
+      isLoading : false,
 
     }// end this.state
 
@@ -103,28 +104,34 @@ class ForumEditPost extends Component{
 
   // onSubmit button to create post
   onSubmit(e){
-    e.preventDefault(); // does not set post as default, instead set as below
+    this.setState({isLoading:true},() => {
+      e.preventDefault(); // does not set post as default, instead set as below
     
-    const formData = new FormData();
-    formData.append("username", this.state.username);
-    formData.append("category", this.state.category);
-    formData.append("title", this.state.title);
-    formData.append("description", this.state.description.trim());
-    formData.append("date", this.state.date);
-    formData.append("img", this.state.img);
-    formData.append("status", this.state.status);
-    formData.append("numComments", this.state.numComments);
-    formData.append("comments", this.state.comments);
+      const formData = new FormData();
+      formData.append("username", this.state.username);
+      formData.append("category", this.state.category);
+      formData.append("title", this.state.title);
+      formData.append("description", this.state.description.trim());
+      formData.append("date", this.state.date);
+      formData.append("img", this.state.img);
+      formData.append("status", this.state.status);
+      formData.append("numComments", this.state.numComments);
+      formData.append("comments", this.state.comments);
+      
+      //prints out what is going to be posted
+      //console.log(post);
+
+      //edit from db
+      axios.post(`/posts/update/${this.props.match.params.id}`,formData)
+          .then(res => {
+              console.log(res.data); 
+              this.setState({isLoading:false});
+              window.location = `/forum/${this.props.match.params.id}`;// redirect back to the specific post
+              window.alert("Post Updated!");
+            });
+    })
     
-    //prints out what is going to be posted
-    //console.log(post);
 
-    //edit from db
-    axios.post(`/posts/update/${this.props.match.params.id}`,formData)
-         .then(res => {console.log(res.data); window.location = `/forum/${this.props.match.params.id}`;});
-
-    // redirect back to the specific post
-    window.alert("Post Updated!");
   } // end onSubmit
 
   render(){
@@ -211,8 +218,9 @@ class ForumEditPost extends Component{
 
               {/* Submit Button */}
               <div className="form-group">
+              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
                 <p>
-                <input type="submit" value="Edit Post" className="btn btn-primary"/>     <input type="button" value="Cancel" className="btn btn-primary" onClick={()=>{ window.location = `/forum/${this.props.match.params.id}`;}}/>
+                {!this.state.isLoading && <input type="submit" value="Edit Post" className="btn btn-primary"/> } {this.state.isLoading && <i className="fa fa-refresh fa-spin"></i>} {this.state.isLoading && <input type="submit" value="Updating Post" disabled className="btn btn-primary"/>} <input type="button" value="Cancel" className="btn btn-primary" onClick={()=>{ window.location = `/forum/${this.props.match.params.id}`;}}/>
                 </p>
               </div>
             </form>
