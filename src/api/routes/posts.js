@@ -89,8 +89,9 @@ router.route('/').get((req,res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 }); // end get all
 
+// get posts from email
 router.route('/email/:email').get((req,res) => {
-    Post.find({username: req.params.email})
+    Post.find({username: req.params.email}).sort({"date":-1})
         .then(posts => res.json(posts))
         .catch(err => res.status(400).json('Error: ' + err));
 }); // end get all
