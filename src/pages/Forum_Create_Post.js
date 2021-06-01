@@ -85,7 +85,7 @@ export default class ForumCreatePost extends Component{
       e.preventDefault(); // does not set post as default, instead set as below
     
       const formData = new FormData();
-      formData.append("username", this.state.username);
+      formData.append("username", this.state.user.email);
       formData.append("category", this.state.category);
       formData.append("title", this.state.title);
       formData.append("description", this.state.description.trim());
@@ -99,15 +99,13 @@ export default class ForumCreatePost extends Component{
       //console.log(post);
 
       //add to db
-      axios.post('/posts/add/',formData)
+      axios.post('/posts/add',formData)
           .then(res => {
               // redirect back to the forums page
               this.setState({isLoading: false});
               window.location = `/forum/${res.data}`;
               window.alert("Post Added!");
           });
-
-      
     })
       
   } // end onSubmit
@@ -122,17 +120,6 @@ export default class ForumCreatePost extends Component{
           
           <div>
             <form onSubmit={this.onSubmit} encType="multipart/form-data">
-
-              {/*write a username */}
-              <div className="form-group">
-                <label>Username: </label>
-                <input type="text"
-                      required  
-                      className="form-control"
-                      value={this.state.username}
-                      onChange={this.onChangeUsername}
-                />
-              </div>
 
               {/* write title */}
               <div className="form-group">
