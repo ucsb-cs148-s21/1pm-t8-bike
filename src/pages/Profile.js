@@ -1,7 +1,7 @@
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import Container from "react-bootstrap/Container";
 import Layout from "../components/Layout";
-import Card from "react-bootstrap/Card";
+import {Card} from "react-bootstrap";
 import { TextField, Button } from "@material-ui/core"
 import axios from "axios";
 import getUser from "../utils/get-user";
@@ -53,13 +53,13 @@ const Course = props => (
   <div>
     <Card style={{width: "18 rem"}}>
         <Card.Header>
-          <Card.Button class="close" onClick={() => {props.deleteCourse()}}>
+          <Button class="close" onClick={() => {props.deleteCourse()}}>
             <span aria-hidden="false">&times;</span>
-          </Card.Button>
+          </Button>
         </Card.Header>
         <Card.Body>
           <Card.Title>{props.course.title}</Card.Title>
-          <Card.Subtitle>{props.course.location}</Card.Subtitle>
+          <Card.Subtitle>{props.course.location.name.replace(/-/g," ")}</Card.Subtitle>
           <Card.Text >
             {dayFormat(props.course.days)} {timeFormat(props.course.start)} - {timeFormat(props.course.end)} 
           </Card.Text>
@@ -67,6 +67,7 @@ const Course = props => (
       </Card >
     <br />
   </div>
+  //also change props.course.days cuz that also throws an error
 )
 
 const Post = props => (
@@ -88,6 +89,46 @@ const Post = props => (
   </div>
 )
 
+//comment component that will list out
+const ViewBio = props => (
+  <div>
+    {props.bio}
+    <button onClick={() => {props.editBio()}}>Update</button>
+  </div>
+)
+
+//comment component that will create edit comp
+const EditBio = props => {
+  //setting state var
+  const [bio, setBio] = useState(props.bio);
+  
+  //setting on change
+  function onChangeBio(e){
+      setBio(e.target.value);
+  }
+
+  function onSubmitEditBio(e){   
+      e.preventDefault();
+
+      //update to db
+      axios.post(`/users/${props.email}/update-bio`, {bio: bio})
+          .then(res => {               
+               props.afterOnSubmitEditBio();
+          })
+
+      //should go back to normal submissions
+  }
+
+  //setting onSubmit
+  return (
+    <div>
+      <input id="bio" value={bio} placeholder="Tell us about yourself" onChange={onChangeBio}/>
+      <button onClick={onSubmitEditBio}>Save</button>
+      <button onClick={props.cancelBio}>Cancel</button>
+    </div>
+  );
+}
+
 export default class Profile extends Component{
   constructor(props){
     super(props);
@@ -103,15 +144,17 @@ export default class Profile extends Component{
                   F: false,
                   Sa: false,
                   Su: false,
-                  start: "",
-                  end: "",
+                  start: "07:30",
+                  end: "07:30",
                   buildings: [],
+                  isLoading:false,
+                  isEditing:false,
                   user: getUser()};
     
     this.componentDidMount = this.componentDidMount.bind(this);
     this.closePost = this.closePost.bind(this);
     this.deleteCourse = this.deleteCourse.bind(this);
-    this.updateBio = this.updateBio.bind(this)
+    this.afterOnSubmitEditBio = this.afterOnSubmitEditBio.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onChangeMon = this.onChangeMon.bind(this);
@@ -124,6 +167,7 @@ export default class Profile extends Component{
     this.onChangeStart = this.onChangeStart.bind(this);
     this.onChangeEnd = this.onChangeEnd.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.itinerary = this.itinerary.bind(this);
   }
   
   // this function grabs user info from db, if it exists
@@ -134,7 +178,24 @@ export default class Profile extends Component{
         console.log(res.data)
         axios.get(`/users/${this.state.user.email}`) //get request
           .then(res => {
-            this.setState({bio: res.data.bio, courses: res.data.itinerary}) //sets bio and courses array to db
+            this.setState({bio: res.data.bio}) //sets bio and courses array to db
+            axios.get(`/users/${this.state.user.email}/courses`) //get request
+              .then(res => {
+                console.log(res.data)
+                this.setState({courses: res.data}) //sets bio and courses array to db
+                
+              })
+              .catch(err => {
+                console.log(err);
+              })
+          })
+          .catch(err => {
+            console.log(err);
+          })
+        
+        axios.get('/buildings') //get request
+          .then(res => {
+            this.setState({buildings: res.data}) //sets buildings array to db array
           })
           .catch(err => {
             console.log(err);
@@ -147,29 +208,33 @@ export default class Profile extends Component{
           .catch(err => {
             console.log(err);
           })
-
-        axios.get('/buildings') //get request
-          .then(res => {
-            this.setState({buildings: res.data}) //sets buildings array to db array
-          })
-          .catch(err => {
-            console.log(err);
-          })
         })
       .catch(err => {
         console.log(err);
       })
-     
+      console.log("Courses:" + this.state.courses);
   }// end componentDidMount
 
-  updateBio(e) {
-    this.setState({
-      bio: e.target.value
-    })
-    const formData = new FormData();
-    formData.append("bio", e.target.value);
-    axios.post(`/users/${this.state.user.email}/update-bio`, formData) //post request
-      .then(res => console.log(res.data));
+  displayBio(){
+    if(this.state.isEditing){
+      return <EditBio key={this.state.user.email}
+                      email = {this.state.user.email}
+                      bio={this.state.bio}
+                      afterOnSubmitEditBio={this.afterOnSubmitEditBio}
+                      cancelBio={() => this.setState({isEditing: false})}
+                      ></EditBio>
+    } else {
+      return <ViewBio key={this.state.user.email}
+                      bio={this.state.bio}
+                      editBio={() => this.setState({isEditing:true})}></ViewBio>
+    }
+  }
+
+  afterOnSubmitEditBio(){
+    axios.get(`/users/${this.state.user.email}`) //get request
+      .then(res => {
+        this.setState({bio: res.data.bio, isEditing: false})
+      })
   }
 
   closePost(e) {
@@ -197,9 +262,14 @@ export default class Profile extends Component{
       })
   }
 
-  deleteCourse(e) {
-    axios.delete(`/users/${this.state.user.email}/delete-course/${e}`)
-      .then(res => console.log(res.data))
+  deleteCourse(id) {
+    axios.delete(`/users/${this.state.user.email}/delete-course/${id}`)
+      .then(res => {
+        axios.get(`/users/${this.state.user.email}/courses`)
+          .then(res => {
+            this.setState({courses: res.data})
+          })
+      })
   }
 
   onChangeTitle(e) {
@@ -283,18 +353,30 @@ export default class Profile extends Component{
             Sa: this.state.Sa,
             Su: this.state.Su
           }
-          const formData = new FormData;
-          formData.append("title", this.state.title)
-          formData.append("location", res.data);
-          formData.append("days", days);
-          formData.append("start", this.state.start);
-          formData.append("end", this.state.end);
+          // const formData = new FormData();
+          // formData.append("title", this.state.title)
+          // formData.append("location", res.data);
+          // formData.append("days", days);
+          // formData.append("start", this.state.start);
+          // formData.append("end", this.state.end);
+
+          const course = {
+            title: this.state.title,
+            location: res.data,
+            days: days,
+            start: this.state.start,
+            end: this.state.end
+          }
     
-          axios.post(`/users/${this.state.user.email}/add-course`, formData)
+          axios.post(`/users/${this.state.user.email}/add-course`, course)
             .then(res => {
               console.log(res.data);
               this.setState({isLoading: false});
               window.alert("Course Added!");
+              axios.get(`/users/${this.state.user.email}/courses`)
+                .then(res => {
+                  this.setState({courses: res.data})
+                })
             })
             .catch(err => console.log(err));
         })
@@ -303,13 +385,11 @@ export default class Profile extends Component{
   }
 
   itinerary(){
-    if (this.state.courses) {
-      return this.state.courses.map(currCourse => {
-        return <Course key = {currCourse._id}
-                       post = {currCourse}
-                       deleteCourse={() => this.deleteCourse(currCourse._id)}/>
-      })
-    }
+    return this.state.courses.map(currCourse => {
+      return <Course key = {currCourse._id}
+                     course = {currCourse}
+                     deleteCourse={() => this.deleteCourse(currCourse._id)}/>
+    })
   }
 
   cache(){
@@ -335,7 +415,7 @@ export default class Profile extends Component{
           </div>
           <br />
           <div>
-            Bio: <input type="text" name="bio" value={this.state.bio} placeholder="Tell us about yourself" onChange={this.updateBio}/>
+            Bio: {this.displayBio()}
           </div>
           <br />
           <div>
@@ -350,6 +430,7 @@ export default class Profile extends Component{
                       className="form-control" 
                       value={this.state.location}
                       onChange={this.onChangeLocation}>
+                <option value="">-- Choose One --</option>
                 {
                   this.state.buildings.map(building => {
                     return <option key = {building.name} value = {building.name}>{building.name.replace(/-/g," ")}</option>
