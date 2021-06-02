@@ -92,7 +92,7 @@ export default class LostandFound extends Component{
             .then(res => {
                 console.log(res.data); 
                 //re get the forum db from mongo
-                axios.get(`/posts/`)
+                axios.get(`/posts/Lost-And-Founds`)
                 .then(res=>{
                     console.log("compDidMount: get post from db");
                     this.setState({posts: res.data})
