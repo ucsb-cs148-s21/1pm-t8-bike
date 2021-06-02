@@ -93,9 +93,6 @@ export default function Home_Page() {
         <Layout user={user}>
         <Container float="left">
             <h1>Welcome to Gaucho Bike Map!</h1>
-            {data}
-            <button onClick={() => setData("hello")}>click</button>
-            <br />
             <br />
             <div style={{ width: "75vw", height: "75vh" }}>
                 <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>

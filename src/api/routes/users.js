@@ -2,9 +2,23 @@ const router = require('express').Router();
 let User = require('../models/user.model');
 
 // get specific user info from db
+router.route('/').get((req,res) => {
+    User.find()
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get specific user info from db
 router.route('/:email').get((req,res) => {
     User.findOne({username: req.params.email})
         .then(user => res.json(user))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// get specific user info from db
+router.route('/:email/courses').get((req,res) => {
+    User.findOne({username: req.params.email})
+        .then(user => res.json(user.itinerary))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -21,6 +35,9 @@ router.route('/:email/exists').get((req,res) => {
                 .then(() => res.json('User created!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         }
+        else {
+            res.json('User exists')
+        }
     })
 });
 
@@ -31,26 +48,48 @@ router.route('/:email/update-bio').post((req,res) => {
             user.bio = req.body.bio
         
             user.save()
-                .then(() => res.json('Course added!'))
+                .then(() => res.json('Bio updated!'))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not foun
 }); // end add func
 
-// delete a course from db
-router.route('/:email/delete-course/:id').post((req,res) => {
-    User.findByIdAndDelete(req.params.id)
-        .then(post => {
-            post.username = req.body.username;
-            post.category = req.body.category;
-            post.title = req.body.title;
-            post.description = req.body.description;
-            post.date = Date.parse(req.body.date);
-            post.img = req.file.originalname;
+// add a course from db
+router.route('/:email/add-course').post((req,res) => {
+    User.findOne({username: req.params.email})
+        .then(user => {
+            const course = {
+                title: req.body.title,
+                location: req.body.location,
+                days: req.body.days,
+                start: req.body.start,
+                end: req.body.end,
+            }
+            
+            user.itinerary.push(course);
+            user.numCourses = user.itinerary.length;
 
             // saving updated post
-            post.save()
-                .then(() => res.json('Post updated'))
+            user.save()
+                .then(() => res.json('Course added'))
+                .catch(err => res.status(400).json('Error: ' + err)); //throws if not all params filled
+        })
+        .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found
+
+}); // end add func
+
+// add a course from db
+router.route('/:email/delete-course/:id').delete((req,res) => {
+    User.findOne({username: req.params.email})
+        .then(user => {
+            var removeIndex = user.itinerary.map(course => {return course._id;}).indexOf(req.params.id);
+            //remove the comment
+            user.itinerary.splice(removeIndex, 1);
+            user.numCourses = user.itinerary.length;
+
+            // saving updated post
+            user.save()
+                .then(() => res.json('Course deleted'))
                 .catch(err => res.status(400).json('Error: ' + err)); //throws if not all params filled
         })
         .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found

@@ -1,11 +1,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const { buildingSchema } = require('./building.model');
+
+const daysSchema = new Schema(
+    {
+        M: {type: Boolean, required: true, default: false},
+        T: {type: Boolean, required: true, default: false},
+        W: {type: Boolean, required: true, default: false},
+        R: {type: Boolean, required: true, default: false},
+        F: {type: Boolean, required: true, default: false},
+        Sa: {type: Boolean, required: true, default: false},
+        Su: {type: Boolean, required: true, default: false},
+    }
+)
 
 const courseSchema = new Schema(
     {
         title: {type: String, required: true},
-        location: {type: String, required: true},
-        days: {type: String, required: true},
+        location: {type: buildingSchema, required: true},
+        days: {type: daysSchema, required: true},
         start: {type: String, required: true},
         end: {type: String, required: true},
     }
