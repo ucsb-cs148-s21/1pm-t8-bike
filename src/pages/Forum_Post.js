@@ -73,7 +73,7 @@ const Post = props => (
             </h6>
             <div className="info-line" >
                 <p className="info-line">
-                    <span className="author">{props.post.username}</span> - <span className="date">{(props.post.date).toString().substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span> {props.user && <span style={{float: 'right'}}><input type="button" value="Change Status" disabled={props.isChangingStatus} onClick={() => {props.changeStatus()}}/>  <input type="button" value="Edit" onClick={() => {props.editPost()}}/>  <input type="button" value="Delete" onClick={() => {props.deletePost()}}/></span>}
+                    <span className="author">{props.post.displayname}</span> - <span className="date">{(props.post.date).toString().substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span> {props.user && props.user.email === props.post.username && <span style={{float: 'right'}}><input type="button" value="Change Status" disabled={props.isChangingStatus} onClick={() => {props.changeStatus()}}/>  <input type="button" value="Edit" onClick={() => {props.editPost()}}/>  <input type="button" value="Delete" onClick={() => {props.deletePost()}}/></span>}
                 </p>
             </div>
             <hr></hr>
@@ -95,7 +95,7 @@ const ViewComment = props => (
             <div className="comment-header">
                 <p className="comment-header" style={styles.commentHeader}>
                     {console.log("making a Comment obj")}
-                    <span className="user">{props.comment.username}</span> - {" "}
+                    <span className="user">{props.comment.displayname}</span> - {" "}
                     <small className="date">
                     {" "}
                     {props.comment.date.substring(0,10)}
@@ -108,7 +108,7 @@ const ViewComment = props => (
                 </p>
             </div>
             <div className="buttons">
-                {props.user &&
+                {props.user && props.user.email === props.comment.username &&
                 <p className="buttons" style={styles.delEditButtons}>
                     <input type="button" value="Edit" onClick={() => {props.editComment()}}/> <input type="button" value="Delete" onClick={() => {props.deleteComment()}}/>
                 </p>
@@ -132,7 +132,7 @@ const EditComment = props => {
 
         //template comment to be submitted
         const comment = {
-            username: props.comment.username,
+            username: props.comment.displayname,
             description: description.trim(),
             date: new Date(),
         }
@@ -156,7 +156,7 @@ const EditComment = props => {
             <div className="createCommentBtn">
                 <form name="editCom" onSubmit={onSubmitEditComment}>      
                     <p className="comment-header" style={styles.commentHeader}>
-                        <span className="user">{props.comment.username}</span> - {" "}
+                        <span className="user">{props.comment.displayname}</span> - {" "}
                         <small className="date">
                         {" "}
                         {props.comment.date.substring(0,10)}
@@ -221,7 +221,7 @@ class ForumPost extends Component{
         this.commentDate = new Date();
     
         this.state = { 
-            post: {username: '',category: '',title: '',description: '',img: '', status: '', numComments: 0,comments: [],date: 0},
+            post: {username: '',displayname: '',category: '',title: '',description: '',img: '', status: '', numComments: 0,comments: [],date: 0},
             comments: [], 
             isEditComment: false,
             editCommentId: 0,
@@ -438,6 +438,7 @@ class ForumPost extends Component{
         this.setState({isChangingStatus: true});
         const updatedStatus = new FormData();
         updatedStatus.append("username", this.state.post.username);
+        updatedStatus.append("displayname",this.state.post.displayname);
         updatedStatus.append("category", this.state.post.category);
         updatedStatus.append("title", this.state.post.title);
         updatedStatus.append("description", this.state.post.description);
@@ -479,6 +480,7 @@ class ForumPost extends Component{
 
         //template comment to be submitted
         const comment = {
+            displayname: this.state.user.fullName,
             username: this.state.user.email,
             description: this.commentDesc,
             date: this.commentDate,

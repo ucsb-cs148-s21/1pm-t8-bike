@@ -62,11 +62,11 @@ const Post = props => (
         </h4>
         <div className="bottom">
           <p className="info-line">
-              <span className="author">{props.post.username}</span> - <span className="date">{props.post.date.substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span>
+              <span className="author">{props.post.displayname}</span> - <span className="date">{props.post.date.substring(0,10)}</span> - <span className="comment-count">{props.post.numComments} comments</span>
           </p>
         </div>
       </a>
-      {props.user && 
+      {props.user && props.user.email === props.post.username &&
       <p className="buttons" style={styles.delEditButtons}>
         <input type="button" value="Change Status" disabled={props.isChangingStatus} onClick={() => {props.changeStatus()}}/>  <input type="button" value="Edit" onClick={() => {props.editPost()}}/>  <input type="button" value="Delete" onClick={() => {props.deletePost()}}/>
       </p>
@@ -143,6 +143,7 @@ export default class ForumPost extends Component{
          .then(res => {
             const updatedStatus = new FormData();
             updatedStatus.append("username", res.data.username);
+            updatedStatus.append("displayname",res.data.displayname);
             updatedStatus.append("category", res.data.category);
             updatedStatus.append("title", res.data.title);
             updatedStatus.append("description", res.data.description);

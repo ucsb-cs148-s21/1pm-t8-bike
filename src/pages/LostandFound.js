@@ -18,7 +18,7 @@ const LFPost = props => (
             {props.post.title}
           </Card.Link>
         </Card.Title>
-        <Card.Subtitle>{props.post.username}</Card.Subtitle>
+        <Card.Subtitle>{props.post.displayname}</Card.Subtitle>
         <Card.Text>{props.post.description}</Card.Text>
         <Button variant="primary">
           View Route
