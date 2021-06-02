@@ -79,7 +79,7 @@ const Post = props => (
         </Card.Link>
         <Card.Subtitle>{props.post.category} {props.post.status === "CLOSED" && ` - ${props.post.status}`}</Card.Subtitle> 
         <Card.Text>{props.post.description}</Card.Text>
-        <Button variant="primary" onClick={() => {props.closePost()}}>Close Post</Button>
+        <Button variant="contained" onClick={() => {props.closePost()}}>Close Post</Button>
       </Card.Body >
       <Card.Footer>
         {props.post.date}
@@ -511,7 +511,7 @@ export default class Profile extends Component{
                 }}
               />
               <br />
-              <Button onClick={this.onSubmit}>Add</Button>
+              <Button variant="contained" onClick={this.onSubmit}>Add</Button>
             </form>
             <br />
             {this.itinerary()}

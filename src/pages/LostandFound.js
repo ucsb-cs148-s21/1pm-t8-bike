@@ -24,7 +24,7 @@ const LFPost = props => (
         {/* <Button variant="primary">
           View Route
         </Button> */}
-        {props.user && props.post.username === props.user.email && <Button variant="outlined" onClick={props.changeStatus}>Change Status</Button>}
+        {props.user && props.post.username === props.user.email && <Button variant="contained" onClick={props.changeStatus}>Change Status</Button>}
       </Card.Body>
       <Card.Footer>{props.post.date}</Card.Footer>
     </Card>
@@ -42,7 +42,7 @@ export default class LostandFound extends Component{
 
   // this function grabs the list of LF posts from db
   componentDidMount(){
-    console.log("LF: " + JSON.stringify(this.state.user));
+    //console.log("LF: " + JSON.stringify(this.state.user));
     axios.get('/posts/Lost-And-Founds') //get request
          .then(res=>{
            this.setState({posts: res.data}) //sets posts array to db array
@@ -54,7 +54,7 @@ export default class LostandFound extends Component{
 
   // returns each individual post component
   LFThread(){
-    console.log("LF Thread: " + JSON.stringify(this.state.user));
+    //console.log("LF Thread: " + JSON.stringify(this.state.user));
     return this.state.posts.map(currPost => {
       return <LFPost key={currPost._id} 
                      user={this.state.user}
