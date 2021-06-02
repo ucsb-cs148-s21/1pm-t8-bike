@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const commentSchema = new Schema(
     {
         username: {type:String, required: true, trim: true},
+        displayname: {type:String, required: true},
         description: {type: String, required: true},
         date: {type: Date, required: true},
     }
@@ -12,6 +13,7 @@ const postSchema = new Schema(
 {   
     //_id: Schema.Types.ObjectId,
     username: {type: String, required: true, trim: true}, //will be changed to fit google oauth
+    displayname: {type: String, required: true},
     category: {type: String, required: true},
     title: {type: String, required: true},
     description: {type: String, required: true},

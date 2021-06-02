@@ -156,6 +156,7 @@ router.route('/LF/Open-Posts').get((req,res) => {
 // add a new post to db and returns id
 router.route('/add').post(multerMid.single("img"),(req,res) => {
     const username = req.body.username;
+    const displayname = req.body.displayname;
     const category = req.body.category;
     const title = req.body.title;
     const description = req.body.description;
@@ -170,7 +171,7 @@ router.route('/add').post(multerMid.single("img"),(req,res) => {
         uploadImage(req.file)
         .then(imageUrl => {
             img = imageUrl
-            const newPost = new Post({username,category,title,description,date,img,status,comments,numComments});
+            const newPost = new Post({username,displayname,category,title,description,date,img,status,comments,numComments});
             newPost.save()
                 .then(() => res.json(newPost._id))
                 .catch(err => res.status(400).json('Error: ' + err));
@@ -178,7 +179,7 @@ router.route('/add').post(multerMid.single("img"),(req,res) => {
         .catch(err => console.log("upload Image Err: " + err));
     }
     else{
-        const newPost = new Post({username,category,title,description,date,img,status,comments,numComments});
+        const newPost = new Post({username,displayname,category,title,description,date,img,status,comments,numComments});
                 newPost.save()
                     .then(() => res.json(newPost._id))
                     .catch(err => res.status(400).json('Error: ' + err));
@@ -199,6 +200,7 @@ router.route('/:id').get((req,res) => {
             console.log("got nonexisiting post");
             const post = {
                 username: '',
+                displayname: '',
                 category: '',
                 title: '',
                 description: '',
@@ -243,6 +245,7 @@ router.route('/update/:id').post(multerMid.single("img"),(req,res) => {
     Post.findById(req.params.id)
         .then(post => {
             post.username = req.body.username;
+            post.displayname = req.body.displayname;
             post.category = req.body.category;
             post.title = req.body.title;
             post.description = req.body.description;
@@ -304,6 +307,7 @@ router.route('/update/:id/add-comment').post((req,res) => {
         .then(post => {
             const comment = {
                 username: req.body.username,
+                displayname: req.body.displayname,
                 description: req.body.description,
                 date: Date.parse(req.body.date),
             }
@@ -323,7 +327,7 @@ router.route('/update/:id/add-comment').post((req,res) => {
 router.route('/update/:id/update-comment/:cId').post((req,res) => {
     Post.updateOne(
         { _id: req.params.id, "comments._id": req.params.cId },
-        { $set: { "comments.$.username" : req.body.username, "comments.$.description" : req.body.description, "comments.$.date": Date.parse(req.body.date)} },
+        { $set: { "comments.$.username" : req.body.username, "comments.$.displayname" : req.body.displayname, "comments.$.description" : req.body.description, "comments.$.date": Date.parse(req.body.date)} },
      )
      .then(() => res.json('Comment Updated'))
     .catch(err => res.status(400).json('Error: ' + err)); // throws if post was not found

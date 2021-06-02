@@ -18,11 +18,13 @@ const LFPost = props => (
             {props.post.title}
           </Card.Link>
         </Card.Title>
-        <Card.Subtitle>{props.post.username}</Card.Subtitle>
+        <Card.Subtitle>{props.post.displayname}</Card.Subtitle>
+        {props.post.status === "CLOSED" && <Card.Text style={{"color": "red"}}>{props.post.status}</Card.Text>}
         <Card.Text>{props.post.description}</Card.Text>
-        <Button variant="primary">
+        {/* <Button variant="primary">
           View Route
-        </Button>
+        </Button> */}
+        {props.user && props.post.username === props.user.email && <Button variant="contained" onClick={props.changeStatus}>Change Status</Button>}
       </Card.Body>
       <Card.Footer>{props.post.date}</Card.Footer>
     </Card>
@@ -40,7 +42,7 @@ export default class LostandFound extends Component{
 
   // this function grabs the list of LF posts from db
   componentDidMount(){
-    console.log(this.state.user);
+    //console.log("LF: " + JSON.stringify(this.state.user));
     axios.get('/posts/Lost-And-Founds') //get request
          .then(res=>{
            this.setState({posts: res.data}) //sets posts array to db array
@@ -52,11 +54,55 @@ export default class LostandFound extends Component{
 
   // returns each individual post component
   LFThread(){
+    //console.log("LF Thread: " + JSON.stringify(this.state.user));
     return this.state.posts.map(currPost => {
       return <LFPost key={currPost._id} 
+                     user={this.state.user}
+                     changeStatus={() => this.changeStatus(currPost._id)}
                      post = {currPost}/>
     })
   }// end LFThread
+
+  changeStatus(id){
+    axios.get(`/posts/${id}`)
+         .then(res => {
+            const updatedStatus = new FormData();
+            updatedStatus.append("username", res.data.username);
+            updatedStatus.append("displayname",res.data.displayname);
+            updatedStatus.append("category", res.data.category);
+            updatedStatus.append("title", res.data.title);
+            updatedStatus.append("description", res.data.description);
+            updatedStatus.append("date", res.data.date);
+            updatedStatus.append("img", res.data.img);
+            updatedStatus.append("numComments", res.data.numComments);
+            updatedStatus.append("comments", res.data.comments);
+
+            if(res.data.status === "CLOSED"){          
+              updatedStatus.append("status", "OPEN");        
+            }
+            else if(res.data.status === "OPEN"){          
+                updatedStatus.append("status", "CLOSED");        
+            }
+            else{
+                updatedStatus.append("status","");
+            }
+
+            // update post in db
+            axios.post(`/posts/update/${id}`,updatedStatus)
+            .then(res => {
+                console.log(res.data); 
+                //re get the forum db from mongo
+                axios.get(`/posts/Lost-And-Founds`)
+                .then(res=>{
+                    console.log("compDidMount: get post from db");
+                    this.setState({posts: res.data})
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+            })
+         })
+  }
 
   //checks to see if logged in
   createPost(){

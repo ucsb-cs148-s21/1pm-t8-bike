@@ -27,6 +27,7 @@ class ForumEditPost extends Component{
     this.state = {
       //all the properties in db post, default values
       username: '',
+      displayname: '',
       category: '',
       title: '',
       description: '',
@@ -85,6 +86,7 @@ class ForumEditPost extends Component{
            .then(res => {
                this.setState({
                    username: res.data.username,
+                   displayname: res.data.displayname,
                    category: res.data.category,
                    title: res.data.title,
                    description: res.data.description,
@@ -95,6 +97,10 @@ class ForumEditPost extends Component{
                    date: new Date(),
                    currFile: `${res.data.img}`,
                })
+               // check if allowed user 
+               if(this.state.username !== this.state.user.email){
+                 window.location = '/PageNotFound';
+               }
            }).catch(err => {
                console.log(err);
            })
@@ -109,6 +115,7 @@ class ForumEditPost extends Component{
     
       const formData = new FormData();
       formData.append("username", this.state.username);
+      formData.append("displayname",this.state.displayname);
       formData.append("category", this.state.category);
       formData.append("title", this.state.title);
       formData.append("description", this.state.description.trim());

@@ -77,9 +77,9 @@ const Post = props => (
         <Card.Link href={`/forum/${props.post._id}`}>
           <Card.Title>{props.post.title}</Card.Title>
         </Card.Link>
-        <Card.Subtitle>{props.post.category}</Card.Subtitle>
+        <Card.Subtitle>{props.post.category} {props.post.status === "CLOSED" && ` - ${props.post.status}`}</Card.Subtitle> 
         <Card.Text>{props.post.description}</Card.Text>
-        <Button variant="primary" onClick={() => {props.closePost()}}>Close Post</Button>
+        <Button variant="contained" onClick={() => {props.closePost()}}>Close Post</Button>
       </Card.Body >
       <Card.Footer>
         {props.post.date}
@@ -93,6 +93,7 @@ const Post = props => (
 const ViewBio = props => (
   <div>
     {props.bio}
+    <br></br>
     <button onClick={() => {props.editBio()}}>Update</button>
   </div>
 )
@@ -123,6 +124,7 @@ const EditBio = props => {
   return (
     <div>
       <input id="bio" value={bio} placeholder="Tell us about yourself" onChange={onChangeBio}/>
+      <br></br>
       <button onClick={onSubmitEditBio}>Save</button>
       <button onClick={props.cancelBio}>Cancel</button>
     </div>
@@ -243,23 +245,35 @@ export default class Profile extends Component{
       .then(res => {
         formData.append("title", res.data.title);
         formData.append("category", res.data.category);
+        formData.append("displayname",res.data.displayname);
         formData.append("username", res.data.username);
         formData.append("description", res.data.description);
         formData.append("img", res.data.img);
-        formData.append("status", "CLOSED");
+        if(res.data.status === "CLOSED"){          
+          formData.append("status", "OPEN");        
+        }
+        else if(res.data.status === "OPEN"){          
+            formData.append("status", "CLOSED");        
+        }
+        else{
+            formData.append("status","");
+        }
         formData.append("date", res.data.date);
+
         axios.post(`/posts/update/${e}`, formData)
-          .then(res => console.log(res.data))
+          .then(res => { 
+              axios.get(`/posts/email/${this.state.user.email}`) //get request
+                  .then(res => {
+                    this.setState({posts: res.data}) //sets posts array to db array
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  })
+          })
           .catch(err => console.log(err))
       })
       .catch(err => console.log(err));
-    axios.get(`/posts/email/${this.state.user.email}`) //get request
-      .then(res => {
-        this.setState({posts: res.data}) //sets posts array to db array
-      })
-      .catch(err => {
-        console.log(err);
-      })
+   
   }
 
   deleteCourse(id) {
@@ -497,7 +511,7 @@ export default class Profile extends Component{
                 }}
               />
               <br />
-              <Button onClick={this.onSubmit}>Add</Button>
+              <Button variant="contained" onClick={this.onSubmit}>Add</Button>
             </form>
             <br />
             {this.itinerary()}

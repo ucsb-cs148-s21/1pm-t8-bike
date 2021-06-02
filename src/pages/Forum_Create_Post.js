@@ -26,6 +26,7 @@ export default class ForumCreatePost extends Component{
     this.state = {
       //all the properties in db post, default values
       username: '',
+      displayname: '',
       category: '',
       title: '',
       description: '',
@@ -86,6 +87,7 @@ export default class ForumCreatePost extends Component{
     
       const formData = new FormData();
       formData.append("username", this.state.user.email);
+      formData.append("displayname",this.state.user.fullName);
       formData.append("category", this.state.category);
       formData.append("title", this.state.title);
       formData.append("description", this.state.description.trim());
