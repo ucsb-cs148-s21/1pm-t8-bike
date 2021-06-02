@@ -79,7 +79,7 @@ const Post = props => (
         </Card.Link>
         <Card.Subtitle>{props.post.category} {props.post.status === "CLOSED" && ` - ${props.post.status}`}</Card.Subtitle> 
         <Card.Text>{props.post.description}</Card.Text>
-        <Button variant="contained" onClick={() => {props.closePost()}}>Close Post</Button>
+        <Button variant="contained" onClick={() => {props.changeStatus()}}>Change Status</Button>
       </Card.Body >
       <Card.Footer>
         {props.post.date}
@@ -154,7 +154,7 @@ export default class Profile extends Component{
                   user: getUser()};
     
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.closePost = this.closePost.bind(this);
+    this.changeStatus = this.changeStatus.bind(this);
     this.deleteCourse = this.deleteCourse.bind(this);
     this.afterOnSubmitEditBio = this.afterOnSubmitEditBio.bind(this);
     this.onChangeTitle = this.onChangeTitle.bind(this);
@@ -239,7 +239,7 @@ export default class Profile extends Component{
       })
   }
 
-  closePost(e) {
+  changeStatus(e) {
     const formData = new FormData();
     axios.get(`/posts/${e}`)
       .then(res => {
@@ -411,7 +411,7 @@ export default class Profile extends Component{
       return this.state.posts.map(currPost => {
         return <Post key = {currPost._id}
                      post = {currPost}
-                     closePost={() => this.closePost(currPost._id)}/>
+                     changeStatus={() => this.changeStatus(currPost._id)}/>
       })
     }
   }
