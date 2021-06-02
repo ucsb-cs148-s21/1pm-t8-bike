@@ -29,6 +29,7 @@
 | Mon 05/24 | Rukmini Bapat     | Led stand-up meeting                                               | 
 | Tues 05/25| Anika Arora       | Led retro 03                                                       | 
 | Th 05/27  | Yvonne Liu        | Led stand-up meeting                                               |
+| Tues 06/01| Calvin Dougher    | Led stand-up meeting                                               |
 
 
 * Product Owner: Yvonne
@@ -36,7 +37,7 @@
 * Testing/QA Coordinator: Yvonne
 * Retro 3 Leader: Anika
 * UX Coordinator: Rukmini
-* Design Document Coordinator: Anika This person is responsible for the design process documentation started in this lab, chiefly the document pointed to by ./docs/DESIGN.md. By next week (lab07), they should ensure that there is a first version, and will be responsible for updating it throughout the rest of the quarter.
-* Deployment Document Coordinator: Calvin This person is responsible for the deployment documentation refactored in this lab, chiefly the document pointed to by ./docs/DEPLOY.md. By next week (lab07), they should ensure that there is a first version, and will be responsible for updating it throughout the rest of the quarter.
+* Design Document Coordinator: Anika
+* Deployment Document Coordinator: Calvin
 * User Manual Coordinator: Calvin
 * Final presentation leader (week 9/10): Anika
