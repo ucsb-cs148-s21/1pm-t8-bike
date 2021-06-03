@@ -22,6 +22,20 @@ router.route('/:email/courses').get((req,res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// get specific user info from db
+router.route('/:email/courses/M').get((req,res) => {
+    User.findOne({username: req.params.email})
+        .then(user => {
+            user.itinerary.filter(function(course) {
+                if (course.days.M === true) {
+                    return course;
+                }
+            })
+            res.json(user.itinerary)
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.route('/:email/exists').get((req,res) => {
     User.countDocuments({username: req.params.email}, function (err, count) {
         if (count === 0) {
