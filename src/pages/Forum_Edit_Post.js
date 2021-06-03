@@ -3,11 +3,11 @@ import Container from "react-bootstrap/Container";
 import getUser from "../utils/get-user";
 import axios from 'axios';
 import React, {Component} from 'react';
+import {  withRouter } from "react-router";
 
+// //const textStyle = {maxWidth: "100%", width: "700px"}
 
-//const textStyle = {maxWidth: "100%", width: "700px"}
-
-export default class ForumCreatePost extends Component{
+class ForumEditPost extends Component{
   
   constructor(props){
     super(props);
@@ -20,8 +20,9 @@ export default class ForumCreatePost extends Component{
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeImg = this.onChangeImg.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
     
-    
+    this.postID = this.props.match.params.id;
     // set 'this' with default values
     this.state = {
       //all the properties in db post, default values
@@ -37,7 +38,7 @@ export default class ForumCreatePost extends Component{
       date: new Date(),
       user: getUser(),
       currFile: null,
-      isLoading: false,
+      isLoading : false,
 
     }// end this.state
 
@@ -65,11 +66,10 @@ export default class ForumCreatePost extends Component{
     });
   }
   onChangeImg(e){
-    console.log("createpost: " + e.target.files);
     this.setState({
-      img: e.target.files[0], //e.target.value == textbox 
-      currFile:  URL.createObjectURL( e.target.files[0]),     
-    });
+        img:  e.target.files[0], //e.target.value == textbox 
+        currFile: URL.createObjectURL( e.target.files[0]),       
+    },() => {console.log("onChangeImgEdit img: " + e.target.files[0]);})
   }
   
   //new posts will always have zero comments and items in array
@@ -80,14 +80,42 @@ export default class ForumCreatePost extends Component{
     });
   }
 
+  componentDidMount(){
+      //grabs the info from the post you want to edit
+      axios.get(`/posts/${this.postID}`)
+           .then(res => {
+               this.setState({
+                   username: res.data.username,
+                   displayname: res.data.displayname,
+                   category: res.data.category,
+                   title: res.data.title,
+                   description: res.data.description,
+                   img: res.data.img,
+                   status: res.data.status,
+                   numComments: res.data.numComments,
+                   comments: res.data.comments,
+                   date: new Date(),
+                   currFile: `${res.data.img}`,
+               })
+               // check if allowed user 
+               if(this.state.username !== this.state.user.email){
+                 window.location = '/PageNotFound';
+               }
+           }).catch(err => {
+               console.log(err);
+           })
+           console.log("compdidmount edit img: " + JSON.stringify(this.state.img));
+
+  }
+
   // onSubmit button to create post
   onSubmit(e){
     this.setState({isLoading:true},() => {
       e.preventDefault(); // does not set post as default, instead set as below
     
       const formData = new FormData();
-      formData.append("username", this.state.user.email);
-      formData.append("displayname",this.state.user.fullName);
+      formData.append("username", this.state.username);
+      formData.append("displayname",this.state.displayname);
       formData.append("category", this.state.category);
       formData.append("title", this.state.title);
       formData.append("description", this.state.description.trim());
@@ -100,16 +128,17 @@ export default class ForumCreatePost extends Component{
       //prints out what is going to be posted
       //console.log(post);
 
-      //add to db
-      axios.post('/posts/add',formData)
+      //edit from db
+      axios.post(`/posts/update/${this.props.match.params.id}`,formData)
           .then(res => {
-              // redirect back to the forums page
-              this.setState({isLoading: false});
-              window.location = `/forum/${res.data}`;
-              window.alert("Post Added!");
-          });
+              console.log(res.data); 
+              this.setState({isLoading:false});
+              window.location = `/forum/${this.props.match.params.id}`;// redirect back to the specific post
+              window.alert("Post Updated!");
+            });
     })
-      
+    
+
   } // end onSubmit
 
   render(){
@@ -121,7 +150,7 @@ export default class ForumCreatePost extends Component{
           <br></br>
           
           <div>
-            <form onSubmit={this.onSubmit} encType="multipart/form-data">
+            <form onSubmit={this.onSubmit} encType="multipart/form-data" method="post">
 
               {/* write title */}
               <div className="form-group">
@@ -164,7 +193,7 @@ export default class ForumCreatePost extends Component{
                 />
               </div>
 
-              {/* upload image */}
+              {/* update image */}
               <div className="form-group">
                 {/* checks if img = updated, if not update */}
                 <p>Current Image: <img src={this.state.currFile} alt={`${this.state.img}`} style={{width: "10%", height: "auto"}}/></p>              
@@ -185,8 +214,10 @@ export default class ForumCreatePost extends Component{
 
               {/* Submit Button */}
               <div className="form-group">
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
-                {!this.state.isLoading && <input type="submit" value="Create New Post" className="btn btn-primary"/> } {this.state.isLoading && <i className="fa fa-refresh fa-spin"></i>} {this.state.isLoading && <input type="submit" value="Submitting Post" disabled className="btn btn-primary"/>} <input type="button" value="Cancel" className="btn btn-primary" onClick={()=>{ window.location = `/forum`;}}/>
+              <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
+                <p>
+                {!this.state.isLoading && <input type="submit" value="Edit Post" className="btn btn-primary"/> } {this.state.isLoading && <i className="fa fa-refresh fa-spin"></i>} {this.state.isLoading && <input type="submit" value="Updating Post" disabled className="btn btn-primary"/>} <input type="button" value="Cancel" className="btn btn-primary" onClick={()=>{ window.location = `/forum/${this.props.match.params.id}`;}}/>
+                </p>
               </div>
             </form>
           </div>
@@ -195,3 +226,6 @@ export default class ForumCreatePost extends Component{
     );
   }
 };
+
+export default withRouter(ForumEditPost);
+

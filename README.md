@@ -33,18 +33,12 @@ A map of UCSB's bike path that has features such as lost and found, traffic, and
 * Google OAuth
 * Google Maps
 
-# Installation Steps
-* Update/Install git
-* Clone repo: git clone git@github.com:ucsb-cs148-s21/1pm-t8-bike.git
-* Enter repo: cd 1pm-t8-bike/
-* Install npm: npm install
-* Run: npm run start
-* Done!
+# [Deployment Instructions](./docs/DEPLOY.md)
 
 # Functionality
 * First, login to your ucsb gmail account. There are four tabs to the website: Map, Lost & Found (L&F), Forum, Profile
-* In Map tab: Can see bike route, look up traffic, crash reports, and navigation. Can call CSO from this page.
-* In Lost and Found Tab： Can create a new L&F card (if ucsb user), view L&F card, respond to L&F cards (if ucsb user).
+* In Map tab: Can track bike route for L&F purposes, report crashes, and get alerts on when to leave for class. Can call CSO from this page.
+* In Lost and Found Tab： Can create a new L&F card (if ucsb user), view L&F card, respond to L&F cards (if ucsb user). Report lost items including bikes.
 * In Forums: Posts can be crash reports, L&F, or other bike related post. User can create a new post (if ucsb user), view posts, respond to posts (if ucsb user).
 * Profile: Can view profile info, such as name, email, and picture.
 
