@@ -26,12 +26,13 @@ router.route('/:email/courses').get((req,res) => {
 router.route('/:email/courses/M').get((req,res) => {
     User.findOne({username: req.params.email})
         .then(user => {
+            res.json(
             user.itinerary.filter(function(course) {
                 if (course.days.M === true) {
                     return course;
                 }
             })
-            res.json(user.itinerary)
+            );
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
