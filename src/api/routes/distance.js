@@ -21,7 +21,7 @@ router.route('/bicycling/:originLat/:originLng/:destLat/:destLng').get((req,res)
                         var distance = distances.rows[i].elements[j].distance.text;
                         var time_needed = distances.rows[i].elements[j].duration.text;
                         //res.json('Distance from ' + origin + ' to ' + destination + ' is ' + distance);
-                        res.json('Time needed from ' + origin + ' to ' + destination + ' is ' + time_needed);
+                        res.json(distances.rows[i].elements[j].duration);
                     } else {
                         res.json(destination + ' is not reachable by land from ' + origin);
                     }
@@ -51,7 +51,7 @@ router.route('/walking/:originLat/:originLng/:destLat/:destLng').get((req,res) =
                         var distance = distances.rows[i].elements[j].distance.text;
                         var time_needed = distances.rows[i].elements[j].duration.text;
                         //res.json('Distance from ' + origin + ' to ' + destination + ' is ' + distance);
-                        res.json('Time needed from ' + origin + ' to ' + destination + ' is ' + time_needed);
+                        res.json(distances.rows[i].elements[j].duration);
                     } else {
                         res.json(destination + ' is not reachable by land from ' + origin);
                     }
