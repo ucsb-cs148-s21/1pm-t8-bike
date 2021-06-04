@@ -91,12 +91,13 @@ export default function Home_Page() {
     console.log('homepage');
     return(
         <Layout user={user}>
-        <Container float="left">
+        <Container >
             <h1>Welcome to Gaucho Bike Map!</h1>
-            <br />
-            <div style={{ width: "75vw", height: "75vh" }}>
-                <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
-            </div>
+            {/* <br /> */}
+            <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
+            <button href="tel:18058932000">CALL CSO</button>
+            
+
         </Container>
         <Container >
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
@@ -110,7 +111,7 @@ export default function Home_Page() {
                 {isWalkCalculating && <i className="fa fa-refresh fa-spin"></i>}
                 {isWalkCalculating && "Calculating!"}
             </button>
-            <button style={{float: "right"}} href="tel:18058932000">CALL CSO</button>
+            
             <button style={{float: "right"}} onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
                 {!isLoading && "Report"}
                 {isLoading && <i className="fa fa-refresh fa-spin"></i>}
