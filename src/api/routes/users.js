@@ -82,6 +82,8 @@ router.route('/:email/add-course').post((req,res) => {
             }
             
             user.itinerary.push(course);
+            user.itinerary.sort((a,b) => {return parseInt(a.start.substring(0,2), 10)-parseInt(b.start.substring(0,2), 10) +
+                                                (parseInt(a.start.substring(3,5), 10)-parseInt(b.start.substring(3,5), 10))/60});
             user.numCourses = user.itinerary.length;
 
             // saving updated post
