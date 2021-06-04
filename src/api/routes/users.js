@@ -22,103 +22,13 @@ router.route('/:email/courses').get((req,res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// get specifically Monday courses info from user
-router.route('/:email/courses/M').get((req,res) => {
+// get courses on a specific day
+router.route('/:email/courses/:day').get((req,res) => {
     User.findOne({username: req.params.email})
         .then(user => {
             res.json(
                 user.itinerary.filter(function(course) {
-                    if (course.days.M === true) {
-                        return course;
-                    }
-                })
-            );
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-// get specifically Tuesday courses info from user
-router.route('/:email/courses/T').get((req,res) => {
-    User.findOne({username: req.params.email})
-        .then(user => {
-            res.json(
-                user.itinerary.filter(function(course) {
-                    if (course.days.T === true) {
-                        return course;
-                    }
-                })
-            );
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-// get specifically Wednesday courses info from user
-router.route('/:email/courses/W').get((req,res) => {
-    User.findOne({username: req.params.email})
-        .then(user => {
-            res.json(
-                user.itinerary.filter(function(course) {
-                    if (course.days.W === true) {
-                        return course;
-                    }
-                })
-            );
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-// get specifically Thursday courses info from user
-router.route('/:email/courses/R').get((req,res) => {
-    User.findOne({username: req.params.email})
-        .then(user => {
-            res.json(
-                user.itinerary.filter(function(course) {
-                    if (course.days.R === true) {
-                        return course;
-                    }
-                })
-            );
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-// get specifically Friday courses info from user
-router.route('/:email/courses/F').get((req,res) => {
-    User.findOne({username: req.params.email})
-        .then(user => {
-            res.json(
-                user.itinerary.filter(function(course) {
-                    if (course.days.F === true) {
-                        return course;
-                    }
-                })
-            );
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-// get specifically Saturday courses info from user
-router.route('/:email/courses/Sa').get((req,res) => {
-    User.findOne({username: req.params.email})
-        .then(user => {
-            res.json(
-                user.itinerary.filter(function(course) {
-                    if (course.days.Sa === true) {
-                        return course;
-                    }
-                })
-            );
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-// get specifically Sunday courses info from user
-router.route('/:email/courses/Su').get((req,res) => {
-    User.findOne({username: req.params.email})
-        .then(user => {
-            res.json(
-                user.itinerary.filter(function(course) {
-                    if (course.days.Su === true) {
+                    if (course.days[req.params.day] === true) {
                         return course;
                     }
                 })
