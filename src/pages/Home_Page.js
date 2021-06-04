@@ -381,15 +381,15 @@ export default function Home_Page() {
         <Container >
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
             <button style={{float: "right"}} href="tel:18058932000">CALL CSO</button>
-            <button style={{float: "right"}} onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
+            {user && <button style={{float: "right"}} onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
                 {!isLoading && "Report"}
                 {isLoading && <i className="fa fa-refresh fa-spin"></i>}
                 {isLoading && "Adding Marker"}
-            </button>
+            </button> }
         </Container>
         <Container>
             {/* right side */}
-            <div>
+            {user && <div>
                 <button style ={{float: "top"}} onClick={() => {setCommute('bicycling'); travelTime(classIndex,todayClasses, 'bicycling',setIsCalculatingBike,currClassDisp)}} disabled={isBikeCalculating}>
                     {!isBikeCalculating && "I'm biking!"}
                     {isBikeCalculating && <i className="fa fa-refresh fa-spin"></i>}
@@ -405,20 +405,20 @@ export default function Home_Page() {
                     {isRefreshing && <i className="fa fa-refresh fa-spin"></i>}
                     {isRefreshing && "Refreshing..."}
                 </button>
-            </div>
-            <div>
+            </div>}
+            {user && <div>
                 {/* initial open and template */}
                 <h2>Upcoming Class:</h2>
                 {travelTime(classIndex,todayClasses,commute,null,currClassDisp)}
-            </div>
-            <div className="NextClasses">
+            </div> }
+            {user &&<div className="NextClasses">
                 <h3>Future Classes: </h3>
                 {nextClassesDisp(classIndex,todayClasses)} 
-            </div>
-            <div className="PastClasses">
+            </div> }
+            {user &&<div className="PastClasses">
                 <h3>Past Classes: </h3>
                 {pastClassesDisp(classIndex,todayClasses)}
-            </div>
+            </div>}
         </Container>
         </Layout>
     );
