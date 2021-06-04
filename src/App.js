@@ -12,7 +12,7 @@ import PageNotFound from "./pages/PageNotFound";
 import LFCreatePost from "./pages/LF_Create_Post";
 import ForumCreatePost from "./pages/Forum_Create_Post";
 import ForumEditPost from "./pages/Forum_Edit_Post";
-import Home_Page from "./pages/Home_Page"; 
+import Home_Page from "./pages/Home_Page";
 import AboutUs from "./pages/AboutUs"; 
 
 export default function App() {
@@ -65,6 +65,7 @@ export default function App() {
           to={window.location.pathname.slice(0, -1)}
         />
 
+        {/* <Route exact path="/" component={Home_Page} /> */}
         <Route exact path="/" component={Home_Page} />
         <Route exact path="/lostandfound" component={() => <LostandFound/>} />
         <Route exact path="/aboutus" component={AboutUs} />
