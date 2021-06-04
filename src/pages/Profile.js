@@ -82,7 +82,7 @@ const Post = props => (
         <Button variant="contained" onClick={() => {props.changeStatus()}}>Change Status</Button>
       </Card.Body >
       <Card.Footer>
-        {props.post.date}
+        {props.post.date.substring(0,10)}
       </Card.Footer>
     </Card >
     <br />

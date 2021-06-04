@@ -26,7 +26,7 @@ const LFPost = props => (
         </Button> */}
         {props.user && props.post.username === props.user.email && <Button variant="contained" onClick={props.changeStatus}>Change Status</Button>}
       </Card.Body>
-      <Card.Footer>{props.post.date}</Card.Footer>
+      <Card.Footer>{props.post.date.substring(0,10)}</Card.Footer>
     </Card>
     <br />
   </div>
