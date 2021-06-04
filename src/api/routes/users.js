@@ -37,7 +37,6 @@ router.route('/:email/courses/:day').get((req,res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-
 router.route('/:email/exists').get((req,res) => {
     User.countDocuments({username: req.params.email}, function (err, count) {
         if (count === 0) {
@@ -83,8 +82,8 @@ router.route('/:email/add-course').post((req,res) => {
             }
             
             user.itinerary.push(course);
-            user.itinerary.sort((a,b) => {return parseInt(a.start.substring(0,2), 10)-parseInt(b.start.substring(0,2), 10) + (parseInt(a.start.substring(3,5), 10)-parseInt(b.start.substring(3,5), 10))/60});
-
+            user.itinerary.sort((a,b) => {return parseInt(a.start.substring(0,2), 10)-parseInt(b.start.substring(0,2), 10) +
+                                                (parseInt(a.start.substring(3,5), 10)-parseInt(b.start.substring(3,5), 10))/60});
             user.numCourses = user.itinerary.length;
 
             // saving updated post
