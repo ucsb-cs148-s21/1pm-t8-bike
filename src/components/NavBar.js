@@ -10,6 +10,7 @@ export default function NavBar(props) {
   return (
     <Navbar className="navbar-custom">
       <Container>
+       <p><img className="brand" src={'/favicon-removebg-preview.png'} alt = "Gaucho Bike Map Logo" /></p>
         <Navbar.Brand href="/">Gaucho Bike Map</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

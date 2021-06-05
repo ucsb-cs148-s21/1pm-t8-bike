@@ -223,8 +223,8 @@ function travelTime(classIndex, todayClasses, decision, setL,callback) {
             <div>
                 <h3>{todayClasses[classIndex].title} - {todayClasses[classIndex].location.name.replace(/-/g," ")}</h3>
                 <h5>{dayFormat(todayClasses[classIndex].days)} {timeFormat(todayClasses[classIndex].start)} - {timeFormat(todayClasses[classIndex].end)} </h5>
-                <p>Total Time: <span id="time"></span></p>
-                <p>Recommended Time to Leave: <span id="recTime"></span></p>
+                <p>Estimated Travel Time: <span id="time"></span></p>
+                <p>To Get There on Time, Leave At: <span id="recTime"></span></p>
                 <hr></hr>
             </div>
         )
@@ -234,7 +234,10 @@ function travelTime(classIndex, todayClasses, decision, setL,callback) {
             setL(false);
         }
         return(
-            <p>No More Classes for Today..</p>
+            <div>
+                <p>No More Classes for Today..</p>
+                <hr></hr>
+            </div>
         );
     }
 }
@@ -376,8 +379,22 @@ export default function Home_Page() {
             <br></br>
             {/* <div style={{display:'flex',flex: '1', flexDirection:"row", alignItems:'stretch', padding: '10px'}}> */}
             <div className='rowC'>
-                <div style={{paddingLeft: '50px'}}>
-                <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
+                <div className='colC'>
+                    <div style={{paddingLeft: '12vh'}}>
+                    <span style={{ padding: '5px'}}>
+                    <button className="button2 button" href="tel:18058932000">CALL CSO</button>
+                    </span>
+                    
+                    {user && <span style={{ padding: '5px'}}><button className="button2 button" onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
+                        {!isLoading && "Report"}
+                        {isLoading && <i className="fa fa-refresh fa-spin"></i>}
+                        {isLoading && "Adding Marker"}
+                    </button></span> }
+                    </div>
+                    <div style={{paddingLeft: '50px'}}>
+                    <hr></hr>
+                    <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
+                    </div>
                 </div>
             <div style={{ padding: '25px'}}></div>
             <div className='colC'>
@@ -422,17 +439,6 @@ export default function Home_Page() {
             </div>}
             </div>
             </div>
-            </div>
-            <div style={{paddingLeft: '11vh'}}>
-            <span style={{ padding: '5px'}}>
-            <button className="button2 button" href="tel:18058932000">CALL CSO</button>
-            </span>
-            
-            {user && <span style={{ padding: '5px'}}><button className="button2 button" onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
-                {!isLoading && "Report"}
-                {isLoading && <i className="fa fa-refresh fa-spin"></i>}
-                {isLoading && "Adding Marker"}
-            </button></span> }
             </div>
             <br></br>
         </Layout>

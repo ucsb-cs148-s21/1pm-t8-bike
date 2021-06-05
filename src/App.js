@@ -59,6 +59,11 @@ export default function App() {
   console.log('app.js');
   return (
     <BrowserRouter>
+    {/* <div style={{ backgroundImage: `url("bike_backgroundclip1.jpg")`,
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundSize: 'cover', 
+    }}> */}
       <Switch>
         <Redirect
           from="/:url*(/+)"
@@ -80,8 +85,8 @@ export default function App() {
         <PrivateRoute exact path="/profile" component={Profile} />
         <Route path="/PageNotFound" component={PageNotFound} />
         <Route path="/" component={PageNotFound} />
-        
       </Switch>
+      {/* </div> */}
     </BrowserRouter>
   );
 }

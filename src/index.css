@@ -62,7 +62,7 @@ code {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 18px;
   margin: 4px 2px;
   cursor: pointer;
   -webkit-transition-duration: 0.4s; /* Safari */
@@ -78,8 +78,8 @@ code {
 .createNewPostButton {
   padding: 5px;
   float: left;
-  font-size: 15px;
-  background-color: #75b459; /* Green */
+  font-size: 16px;
+  background-color: #7cc5fd; 
    
 }
 
@@ -113,12 +113,15 @@ code {
   max-height: 50%;
 }
 
+img.brand {
+  width: 60px;
+  height: 60px;
+}
 
-/* .imageBox {
-  position: relative;
-  width: 100%;
-  opacity: 1;
-} */
+html *
+{
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+}
 
 
 
