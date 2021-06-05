@@ -223,8 +223,8 @@ function travelTime(classIndex, todayClasses, decision, setL,callback) {
             <div>
                 <h3>{todayClasses[classIndex].title} - {todayClasses[classIndex].location.name.replace(/-/g," ")}</h3>
                 <h5>{dayFormat(todayClasses[classIndex].days)} {timeFormat(todayClasses[classIndex].start)} - {timeFormat(todayClasses[classIndex].end)} </h5>
-                <p>Total Time: <span id="time"></span></p>
-                <p>Recommended Time to Leave: <span id="recTime"></span></p>
+                <p>Estimated Travel Time: <span id="time"></span></p>
+                <p>To Get There on Time, Leave At: <span id="recTime"></span></p>
                 <hr></hr>
             </div>
         )
@@ -234,7 +234,10 @@ function travelTime(classIndex, todayClasses, decision, setL,callback) {
             setL(false);
         }
         return(
-            <p>No More Classes for Today..</p>
+            <div>
+                <p>No More Classes for Today..</p>
+                <hr></hr>
+            </div>
         );
     }
 }
@@ -371,39 +374,56 @@ export default function Home_Page() {
     console.log('homepage');
     return(
         <Layout user={user}>
-        <Container >
-            <h1>Welcome to Gaucho Bike Map!</h1>
+            {/* <h1>Welcome to Gaucho Bike Map!</h1> */}
             {/* <br /> */}
-            <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
-        </Container>
-        <Container >
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
-            <button style={{float: "right"}} href="tel:18058932000">CALL CSO</button>
-            {user && <button style={{float: "right"}} onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
-                {!isLoading && "Report"}
-                {isLoading && <i className="fa fa-refresh fa-spin"></i>}
-                {isLoading && "Adding Marker"}
-            </button> }
-        </Container>
-        <Container>
-            {/* right side */}
+            <br></br>
+            {/* <div style={{display:'flex',flex: '1', flexDirection:"row", alignItems:'stretch', padding: '10px'}}> */}
+            <div className='rowC'>
+                <div className='colC'>
+                    <div style={{paddingLeft: '12vh'}}>
+                    <span style={{ padding: '5px'}}>
+                    <button className="button2 button" href="tel:18058932000">CALL CSO</button>
+                    </span>
+                    
+                    {user && <span style={{ padding: '5px'}}><button className="button2 button" onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
+                        {!isLoading && "Report"}
+                        {isLoading && <i className="fa fa-refresh fa-spin"></i>}
+                        {isLoading && "Adding Marker"}
+                    </button></span> }
+                    </div>
+                    <div style={{paddingLeft: '50px'}}>
+                    <hr></hr>
+                    <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
+                    </div>
+                </div>
+            <div style={{ padding: '25px'}}></div>
+            <div className='colC'>
             {user && <div>
-                <button style ={{float: "top"}} onClick={() => {setCommute('bicycling'); travelTime(classIndex,todayClasses, 'bicycling',setIsCalculatingBike,currClassDisp)}} disabled={isBikeCalculating}>
-                    {!isBikeCalculating && "I'm biking!"}
-                    {isBikeCalculating && <i className="fa fa-refresh fa-spin"></i>}
-                    {isBikeCalculating && "Calculating!"}
-                </button>
-                <button style ={{float: "top"}} onClick={() => {setCommute("walking"); travelTime(classIndex,todayClasses,'walking',setIsCalculatingWalk,currClassDisp)}}  disabled={isWalkCalculating}>
-                    {!isWalkCalculating && "I'm walking!"}
-                    {isWalkCalculating && <i className="fa fa-refresh fa-spin"></i>}
-                    {isWalkCalculating && "Calculating!"}
-                </button>
-                <button style ={{float: "top"}} onClick={() => {updateIndex(classIndex,todayClasses,setClassIndex,setIsRefreshing)}}  disabled={isRefreshing}>
-                    {!isRefreshing && "Refresh"}
-                    {isRefreshing && <i className="fa fa-refresh fa-spin"></i>}
-                    {isRefreshing && "Refreshing..."}
-                </button>
-            </div>}
+                <span style={{ padding: '5px'}}>
+                    <button className ="button" onClick={() => {setCommute('bicycling'); travelTime(classIndex,todayClasses, 'bicycling',setIsCalculatingBike,currClassDisp)}} disabled={isBikeCalculating}>
+                        {!isBikeCalculating && "I'm biking!"}
+                        {isBikeCalculating && <i className="fa fa-refresh fa-spin"></i>}
+                        {isBikeCalculating && "Calculating!"}
+                    </button>
+                </span>
+                <span style={{ padding: '5px'}}>
+                    <button className ="button" onClick={() => {setCommute("walking"); travelTime(classIndex,todayClasses,'walking',setIsCalculatingWalk,currClassDisp)}}  disabled={isWalkCalculating}>
+                        {!isWalkCalculating && "I'm walking!"}
+                        {isWalkCalculating && <i className="fa fa-refresh fa-spin"></i>}
+                        {isWalkCalculating && "Calculating!"}
+                    </button>
+                </span>
+                <span style={{ padding: '5px'}}>
+                    <button className ="button" onClick={() => {updateIndex(classIndex,todayClasses,setClassIndex,setIsRefreshing)}}  disabled={isRefreshing}>
+                        {!isRefreshing && "Refresh"}
+                        {isRefreshing && <i className="fa fa-refresh fa-spin"></i>}
+                        {isRefreshing && "Refreshing..."}
+                    </button>
+                </span>
+                <hr></hr>
+            </div>} 
+            
+            <div style={{textAlign: 'center'}}>
             {user && <div>
                 {/* initial open and template */}
                 <h2>Upcoming Class:</h2>
@@ -417,7 +437,10 @@ export default function Home_Page() {
                 <h3>Past Classes: </h3>
                 {pastClassesDisp(classIndex,todayClasses)}
             </div>}
-        </Container>
+            </div>
+            </div>
+            </div>
+            <br></br>
         </Layout>
     );
 };

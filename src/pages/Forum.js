@@ -32,8 +32,8 @@ const styles = {
     paddingRight: '10px',
     fontSize: '12px',
     textDecoration: 'none',
-    background: 'blue',
-    color: "white",
+    background: '#7cc5fd',
+    color: "navy",
   },
   statusStyle: {
     borderRadius: '20px',
@@ -42,8 +42,8 @@ const styles = {
     paddingRight: '10px',
     fontSize: '12px',
     textDecoration: 'none',
-    background: 'red',
-    color: "white",
+    background: '#F6CF65',
+    color: "black",
   },
   delEditButtons:{
     fontSize: '13px',
@@ -296,7 +296,7 @@ export default class ForumPost extends Component{
             {/* Create new post (should only be for users) */}
             
             { <div className="createPostBtn">
-              { this.state.user && <input type="button" value="Create New Post" onClick={() => {window.location = "forum/create-post"}}/>}  
+              { this.state.user && <input type="button" className="button createNewPostButton" value="Create New Post" onClick={() => {window.location = "forum/create-post"}}/>}  
               { this.state.user && <br></br>}       
             </div> } 
             <br/>

@@ -4,11 +4,11 @@ import Marker from './Marker';
 import ReactTooltip from 'react-tooltip';
 
 const Map = (props) => {
-    const [center, setCenter] = useState({lat: 34.4134, lng: -119.8433});
-    const [zoom, setZoom] = useState(13);
+    const [center, setCenter] = useState({lat: 34.413777, lng: -119.854344}); 
+    const [zoom, setZoom] = useState(15);
     console.log(props.positions); //create positions array and pass that in here 
     return (
-        <div style={{ height: '75vh', width: '75vh' }}>
+        <div style={{ height: '80vh', width: '115vh' }}>
         <GoogleMapReact
           bootstrapURLKeys={props.bootstrapURLKeys} //props.bootstrapURLKeys or {bootstrapURLKeys}
           defaultCenter={center}

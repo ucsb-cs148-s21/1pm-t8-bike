@@ -1,6 +1,6 @@
 const router = require('express').Router();
-var distance = require('google-distance-matrix');
-distance.key('AIzaSyBagPLQYd_ild9r_JDJ6DHcGNyWJ2J17to');
+var distance = require('google-distance-matrix'); 
+distance.key('AIzaSyBagPLQYd_ild9r_JDJ6DHcGNyWJ2J17to'); 
 router.route('/bicycling/:originLat/:originLng/:destLat/:destLng').get((req,res) => {
     distance.mode('bicycling');
     var origins = [`${req.params.originLat},${req.params.originLng}`];

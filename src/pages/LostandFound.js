@@ -1,16 +1,19 @@
 import React, {Component} from "react";
 import axios from "axios";
 import Layout from "../components/Layout";
-import Container from "react-bootstrap/Container";
+import {Container, Card, CardDeck} from "react-bootstrap";
+//import Container from "react-bootstrap/Container";
 import { Button } from "@material-ui/core";
-import Card from "react-bootstrap/Card";
+//import Card from "react-bootstrap/Card";
 import getUser from "../utils/get-user";
 
 const cardStyle = { maxWidth: "150px", maxHeight: "150px", width: "auto" };
 
 const LFPost = props => (
   <div>
-    <Card style={{ width: "18rem" }}>
+    
+    {/* <Grid xs={12} sm={6} md={3}> */}
+    <Card style={{ width: "18rem", flex: 1 }}>
       <Card.Img variant="top" style={cardStyle} src={`${props.post.img}`} alt={`${props.post.img}`} />
       <Card.Body>
         <Card.Title>
@@ -141,7 +144,9 @@ export default class LostandFound extends Component{
           {this.createPost()}
           <br />
           <br />
-          {this.LFThread()}
+          <CardDeck style={{display: 'flex', flexDirection: 'row'}}>
+            {this.LFThread()}
+          </CardDeck>
         </Container>
       </Layout>
     );

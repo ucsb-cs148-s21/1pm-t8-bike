@@ -23,7 +23,7 @@ const Marker = (props) => {
         lat={props.lat}
         lng={props.lng}
         time={props.date}> 
-      <div>{props.name === "Crash Marker" && <span className="tooltiptext">{(props.date).toString().substring(0,10)} {(props.date).toString().substring(11,16)}</span>}</div>
+      <div>{props.name === "Crash Marker" && <span className="tooltiptext">{"Crash reported at: "} {(props.date).toString().substring(0,10)} {(props.date).toString().substring(11,16)}</span>}</div>
       </div>} 
        </div>
        
