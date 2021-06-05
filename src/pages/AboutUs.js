@@ -51,7 +51,7 @@ export default function MemberPage() {
             </div>
           </div>
           <div className="box">
-            <img src="calvin.png" className="image"/>
+            <img src="calvin2.png" className="image"/>
             <div className="member-text">
               <p className="member-name">Calvin Dougher</p>
               <p className="member-role">Developer</p>
