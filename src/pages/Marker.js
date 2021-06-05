@@ -17,7 +17,7 @@ const Marker = (props) => {
       
       <div>{props.name === "Crash Marker" &&
       <div  className="marker"
-        //style={{ backgroundImage: `url("bike_rack_icon.png")`}} 
+        style={{ backgroundImage: `url("hazard.png")`}} 
         //onMouseEnter={onHover}
         category={props.name}
         lat={props.lat}
@@ -27,7 +27,7 @@ const Marker = (props) => {
       </div>} 
        </div>
        
-       <div> {props.name === "Bike Rack" && <div  className="bikeMarker"
+       <div> {props.name === "Bike Rack" && <div  className="bikeMarker" 
        style={{ backgroundImage: `url("bike_rack_small.png")`}} 
        //onMouseEnter={onHover}
        category={props.name}

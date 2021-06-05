@@ -1,5 +1,4 @@
 import NavBar from "./NavBar";
-import Footer from "./Footer";
 
 export default function Layout(props) {
   const user = props.user;
@@ -8,7 +7,6 @@ export default function Layout(props) {
     <div>
       <NavBar user={user} />
       {props.children}
-      <Footer />
     </div>
   );
 }

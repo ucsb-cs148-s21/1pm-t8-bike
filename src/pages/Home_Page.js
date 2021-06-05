@@ -371,12 +371,10 @@ export default function Home_Page() {
     console.log('homepage');
     return(
         <Layout user={user}>
-        <Container float="left">
+        <Container >
             <h1>Welcome to Gaucho Bike Map!</h1>
-            <br />
-            <div style={{ width: "75vw", height: "75vh" }}>
-                <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
-            </div>
+            {/* <br /> */}
+            <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
         </Container>
         <Container >
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
