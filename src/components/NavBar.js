@@ -8,17 +8,17 @@ export default function NavBar(props) {
   const user = props.user;
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar className="navbar-custom">
       <Container>
         <Navbar.Brand href="/">Gaucho Bike Map</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/">Map</Nav.Link>
-            <Nav.Link href="/lostandfound">Lost and Found</Nav.Link>
-            <Nav.Link href="/forum">Forum</Nav.Link>
-            <Nav.Link href="/aboutus">About Us</Nav.Link>
-            {user && <Nav.Link href="/profile">Profile</Nav.Link>}
+            <Nav.Link className="tab" href="/">Map</Nav.Link>
+            <Nav.Link className="tab" href="/lostandfound">Lost and Found</Nav.Link>
+            <Nav.Link className="tab" href="/forum">Forum</Nav.Link>
+            <Nav.Link className="tab" href="/aboutus">About Us</Nav.Link>
+            {user && <Nav.Link className="tab" href="/profile">Profile</Nav.Link>}
           </Nav>
 
           <Nav>

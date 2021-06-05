@@ -423,7 +423,7 @@ export default function Home_Page() {
             </div>
             </div>
             </div>
-            <div style={{paddingLeft: '280px'}}>
+            <div style={{paddingLeft: '11vh'}}>
             <span style={{ padding: '5px'}}>
             <button className="button2 button" href="tel:18058932000">CALL CSO</button>
             </span>
@@ -434,6 +434,7 @@ export default function Home_Page() {
                 {isLoading && "Adding Marker"}
             </button></span> }
             </div>
+            <br></br>
         </Layout>
     );
 };
