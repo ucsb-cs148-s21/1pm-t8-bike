@@ -382,7 +382,9 @@ export default function Home_Page() {
                 <div className='colC'>
                     <div style={{paddingLeft: '12vh'}}>
                     <span style={{ padding: '5px'}}>
-                    <button className="button2 button" href="tel:18058932000">CALL CSO</button>
+                    <button className="button2 button">
+                        <a style={{textDecoration: 'none', color: 'unset'}} href="tel:18058932000">CALL CSO</a>
+                    </button>
                     </span>
                     
                     {user && <span style={{ padding: '5px'}}><button className="button2 button" onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
