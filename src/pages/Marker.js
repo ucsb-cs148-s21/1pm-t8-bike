@@ -17,17 +17,17 @@ const Marker = (props) => {
       
       <div>{props.name === "Crash Marker" &&
       <div  className="marker"
-        //style={{ backgroundImage: `url("bike_rack_icon.png")`}} 
+        style={{ backgroundImage: `url("hazard.png")`}} 
         //onMouseEnter={onHover}
         category={props.name}
         lat={props.lat}
         lng={props.lng}
         time={props.date}> 
-      <div>{props.name === "Crash Marker" && <span className="tooltiptext">{(props.date).toString().substring(0,10)} {(props.date).toString().substring(11,16)}</span>}</div>
+      <div>{props.name === "Crash Marker" && <span className="tooltiptext">{"Crash reported at: "} {(props.date).toString().substring(0,10)} {(props.date).toString().substring(11,16)}</span>}</div>
       </div>} 
        </div>
        
-       <div> {props.name === "Bike Rack" && <div  className="bikeMarker"
+       <div> {props.name === "Bike Rack" && <div  className="bikeMarker" 
        style={{ backgroundImage: `url("bike_rack_small.png")`}} 
        //onMouseEnter={onHover}
        category={props.name}

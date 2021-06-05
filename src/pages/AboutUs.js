@@ -33,38 +33,48 @@ export default function MemberPage() {
           {/* remove className="aboutUs" to left-align "Team Members" */}
           <h1 className="aboutUs" > Team Members</h1> 
           <div className="box">
-            <img src="anika.png" className="image"/>
+            <img src="anika2.png" className="image"/>
             <div className="member-text">
               <body className="member-name">Anika Arora</body>
               <body className="member-role">Developer</body>
-              <body className="member-description">Anika is a 2nd year Computer Science major.</body>
+              <body className="member-description">Anika is a 2nd year Computer Science major. 
+              She enjoys reading, baking, playing video games, and playing the guitar.</body>
             </div>
           </div>
           <div className="box">
-            <img src="rukmini.png" className="image"/>
+            <img src="ruk2.png" className="image"/>
             <div className="member-text">
               <p className="member-name">Rukmini Bapat</p>
               <p className="member-role">Developer</p>
-              <p className="member-description">Rukmini is a 2nd year Computer Science major.</p>
+              <p className="member-description">Rukmini is a 2nd year Computer Science major.
+              She enjoys hiking, baking, and playing table-tennis.</p>
             </div>
           </div>
           <div className="box">
-            <img src="calvin.png" className="image"/>
+            <img src="calvin2.png" className="image"/>
             <div className="member-text">
               <p className="member-name">Calvin Dougher</p>
               <p className="member-role">Developer</p>
-              <p className="member-description">Calvin is a 2nd year Computer Science major.</p>
+              <p className="member-description">Calvin is a 2nd year Computer Science major.
+              He enjoys exercising outdoors and is a member of UCSB's Ultimate Frisbee team, Black Tide.</p>
             </div>
           </div>
           <div className="box">
-            <img src="yvonne.png" className="image"/>
+            <img src="yvonne2.png" className="image"/>
             <div className="member-text">
               <p className="member-name">Yvonne Liu</p>
               <p className="member-role">Developer</p>
-              <p className="member-description">Yvonne is a 2nd year Computer Science major.</p>
+              <p className="member-description">Yvonne is a 2nd year Computer Science major.
+              She enjoys watching tv shows and playing on her Nintendo Switch.</p>
             </div>
+          </div> 
+          <div className="box">
+            <p>App developed for CS148 S21. Check out the source code{" "}
+              <a href="https://github.com/ucsb-cs148-s21/1pm-t8-bike">here</a>.
+            </p>
           </div>
         </div>
+        
       </div>
     </Layout>
   );

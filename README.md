@@ -44,3 +44,6 @@ A map of UCSB's bike path that has features such as lost and found, traffic, and
 
 # Known Problems
 * N/A
+
+# Deployment 
+https://cs148-bikeproject.herokuapp.com/
