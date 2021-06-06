@@ -132,7 +132,8 @@ const EditComment = props => {
 
         //template comment to be submitted
         const comment = {
-            username: props.comment.displayname,
+            displayname: props.comment.displayname,
+            username: props.comment.username,
             description: description.trim(),
             date: new Date(),
         }

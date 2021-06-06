@@ -1,6 +1,9 @@
 const router = require('express').Router();
 var distance = require('google-distance-matrix'); 
-distance.key('AIzaSyBagPLQYd_ild9r_JDJ6DHcGNyWJ2J17to'); 
+//so it can read the .env from root dir
+require('dotenv').config({ path: '.env'});
+
+distance.key(process.env.REACT_APP_DISTANCE_KEY); 
 router.route('/bicycling/:originLat/:originLng/:destLat/:destLng').get((req,res) => {
     distance.mode('bicycling');
     var origins = [`${req.params.originLat},${req.params.originLng}`];
