@@ -47,8 +47,8 @@ const styles = {
         paddingRight: '10px',
         fontSize: '12px',
         textDecoration: 'none',
-        background: 'blue',
-        color: "white",
+        background: '#7cc5fd',
+        color: "navy",
     },
       statusStyle: {
         borderRadius: '20px',
@@ -57,8 +57,8 @@ const styles = {
         paddingRight: '10px',
         fontSize: '12px',
         textDecoration: 'none',
-        background: 'red',
-        color: "white",
+        background: '#F6CF65',
+        color: "black",
     },
   }
 
@@ -141,7 +141,7 @@ const EditComment = props => {
 
         //update to db
         axios.post(`/posts/update/${props.postID}/update-comment/${props.commentID}`,comment)
-            .then(res => {               
+            .then(res => {             
                  props.afterOnSubmitEditComment();
             })
 
@@ -494,7 +494,7 @@ class ForumPost extends Component{
             .then(res => {
                  console.log("onSubmit: " + res.data)
                  console.log("after adding new comment to db");
-
+                 window.alert("Comment Added!");  
                  //update this.state.comments with new comments
                  axios.get(`/posts/${this.postID}/get-comments`)
                     .then(res=>{
