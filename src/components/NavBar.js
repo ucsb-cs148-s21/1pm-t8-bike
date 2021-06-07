@@ -8,7 +8,7 @@ export default function NavBar(props) {
   const user = props.user;
 
   return (
-    <Navbar className="navbar-custom">
+    <Navbar expand="lg" className="navbar-custom">
       <Container>
        <p><img className="brand" src={'/favicon-removebg-preview.png'} alt = "Gaucho Bike Map Logo" /></p>
         <Navbar.Brand href="/">Gaucho Bike Map</Navbar.Brand>

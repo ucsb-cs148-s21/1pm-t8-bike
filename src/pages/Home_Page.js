@@ -378,9 +378,9 @@ export default function Home_Page() {
             {/* <br /> */}
             <br></br>
             {/* <div style={{display:'flex',flex: '1', flexDirection:"row", alignItems:'stretch', padding: '10px'}}> */}
-            <div className='rowC'>
-                <div className='colC'>
-                    <div style={{paddingLeft: '12vh'}}>
+            <div className='rowC'style={{paddingRight:'15px'}}>
+                <div className='colC' >
+                    <div style={{paddingLeft: '5.5vh'}}>
                     <span style={{ padding: '5px'}}>
                     <button className="button2 button">
                         <a style={{textDecoration: 'none', color: 'unset'}} href="tel:18058932000">CALL CSO</a>
@@ -388,17 +388,17 @@ export default function Home_Page() {
                     </span>
                     
                     {user && <span style={{ padding: '5px'}}><button className="button2 button" onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
-                        {!isLoading && "Report"}
+                        {!isLoading && "Report Crash"}
                         {isLoading && <i className="fa fa-refresh fa-spin"></i>}
                         {isLoading && "Adding Marker"}
                     </button></span> }
                     </div>
-                    <div style={{paddingLeft: '50px'}}>
+                    <div style={{paddingLeft: '36px'}}>
                     <hr></hr>
                     <Map bootstrapURLKeys={process.env.REACT_APP_GOOGLE_KEY} positions={positions}></Map>
                     </div>
                 </div>
-            <div style={{ padding: '25px'}}></div>
+            <div style={{ padding: '15px'}}></div>
             <div className='colC'>
             {user && <div>
                 <span style={{ padding: '5px'}}>
