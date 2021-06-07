@@ -32,11 +32,11 @@ A map of UCSB's bike path that has features such as lost and found, forum, and c
 # [Deployment Instructions](./docs/DEPLOY.md)
 
 # Functionality
-* First, login to your ucsb gmail account. There are four tabs to the website: Map, Lost & Found (L&F), Forum, Profile
-* In Map tab: Can view map of UCSB/IV with markers designating bike rack locations, report crashes, and view a custom itinerary for the day based on your course schedule, updating the user on estimated travel times depending on whether you are walking or biking, as well as providing the recommended time to leave for the upcoming class so as to be on-time. Can also conveniently call CSO with the click of a button.
-* In Lost and Found Tab：Can create a new L&F card (if ucsb user), view L&F card along with any attached images, as well as respond to L&F cards. Report any lost items including bikes.
-* In Forums: Posts can be crash reports, L&F, anouncements, or other posts related to the bike path. Users can create a new post (if ucsb user), view posts, and respond to posts via comments.
-* Profile: When logged in, users can view personal info, such as your name, email, and profile picture. Users are able to update their schedule of courses for the quarter and can view a history of their L&F/forum posts, where they have the option to change the OPEN/CLOSED status of their posts.
+* First, login to your ucsb gmail account. There are four tabs to the website: Map, Lost & Found (L&F), Forum, Profile.
+* In the landing page, Map: Can view map of UCSB/IV with markers designating bike rack locations, report crashes, and view a custom itinerary for the day based on your course schedule, updating the user on estimated travel times depending on whether you are walking or biking, as well as providing the recommended time to leave for the upcoming class so as to be on-time. Can also conveniently call CSO with the click of a button.
+* In Lost and Found：Can create a new L&F card (if ucsb user), view L&F card along with any attached images, as well as respond to L&F cards. Report any lost items including bikes.
+* In Forum: Posts can be crash reports, L&F, anouncements, or other posts related to the bike path. Users can create a new post (if ucsb user), view posts, and respond to posts via comments.
+* In Profile: When logged in, users can view personal info, such as your name, email, and profile picture. Users are able to update their schedule of courses for the quarter and can view a history of their L&F/forum posts, where they have the option to change the OPEN/CLOSED status of their posts.
 
 # Known Problems
 * N/A
