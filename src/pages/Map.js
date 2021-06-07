@@ -8,7 +8,7 @@ const Map = (props) => {
     const [zoom, setZoom] = useState(15);
     console.log(props.positions); //create positions array and pass that in here 
     return (
-        <div style={{ height: '80vh', width: '115vh' }}>
+        <div style={{ height: '70vh', width: '105vh' }}>
         <GoogleMapReact
           bootstrapURLKeys={props.bootstrapURLKeys} //props.bootstrapURLKeys or {bootstrapURLKeys}
           defaultCenter={center}
