@@ -1,14 +1,14 @@
 # Project: Gaucho Bike Map 
-A map of UCSB's bike path that has features such as lost and found, traffic, and crash reports. Users can find the fastest route to their destination and an optimal time for departure. Users can also view overall traffic in their area. Bikers are able to also see nearby available bike racks and report crashes. Walkers are able to view/report/claim lost and found items that are found on the bike paths.
+A map of UCSB's bike path that has features such as lost and found, forum, and crash reports. Users can request an estimated travel time to their destination and an optimal time for departure. Bikers are able to also see nearby available bike racks and report crashes. Walkers are able to view/report/claim lost and found items that are found on the bike paths.
 
 # Links:
 * https://cs148-bikeproject.herokuapp.com/
 
 # Team info: 
 * Anika Arora, github id: AnikaArora 
-* Rukmini Bapat, github id: minibapat 
-* Yvonne Liu, github id: yvonneliu0201 
+* Rukmini Bapat, github id: minibapat
 * Calvin Dougher, github id: calvitronic 
+* Yvonne Liu, github id: yvonneliu0201 
 
 # User Roles
 * Bikers
@@ -24,14 +24,10 @@ A map of UCSB's bike path that has features such as lost and found, traffic, and
 * MongoDB
 * Heroku 
 
-# Installation
-* Prerequisites
-* git v2.24+
-* npm install
-
 # Dependencies
 * Google OAuth
 * Google Maps
+* Google Cloud
 
 # [Deployment Instructions](./docs/DEPLOY.md)
 
@@ -47,3 +43,6 @@ A map of UCSB's bike path that has features such as lost and found, traffic, and
 
 # Deployment 
 https://cs148-bikeproject.herokuapp.com/
+
+# Changes after Final Release
+* Deleted the following garbage files: data.js, Map(old).js, Forum_Post_OLD.js, alerts.js.
