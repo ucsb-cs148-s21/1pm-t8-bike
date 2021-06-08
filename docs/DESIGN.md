@@ -2,7 +2,7 @@
 
 ## High-level Architecture Diagram
 
-![Lab6PT1Diagram](https://user-images.githubusercontent.com/56051313/119194521-0f25c300-ba38-11eb-821e-ba5239b92ff3.png)
+![image](https://user-images.githubusercontent.com/60118889/121272150-16dbc900-c87a-11eb-82d9-bb254fc0c72c.png)
 
 ## Architecture Description
 
