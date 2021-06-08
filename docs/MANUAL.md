@@ -27,6 +27,6 @@
 ## Profile
 * Only logged in users can view this page, where personal information such as your name, email, and profile pic are displayed.
 * On this page, users are able to add classes to their schedule and view their L&F/Forum post history. Any classes added to the schedule will appear within the daily itinerary on the Map (Home Page) whenever the user has class on that current day.
-* Every class consists of a title, location (selected from a dropdown of all UCSB buildings), days of the week, as well as a start and end time.
-* Users can also have their own 'bio' which they can edit.
+* Every class consists of a title, location (selected from a dropdown of all UCSB buildings), days of the week, and a time interval.
+* Users also have their own 'bio' which they can update at any time.
 
