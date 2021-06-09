@@ -41,6 +41,9 @@
 ## Map (Home Page)
 * This is our Home Page and the first page that users will see when opening up our website.
 * On this page, users will see a map, and above it 'Report Crash' and 'Call CSO' button. If you are logged in, on the right of this, users can view their daily itinerary, which displays your upcoming class followed by an estimated travel time and a recommended time to leave based on whether you select 'I'm biking!' or 'I'm walking'. The default mode is set to biking and users may click 'Refresh' whenever they'd like to recieve the most recent time calculations. Below the upcoming class, users can view a list of their future classes that day followed by a list of already past classes. In order to fill your itinerary with classes, reference the schedule section of the profile page.
+
+* Map (Home Page) Layout
+![image](https://user-images.githubusercontent.com/56051313/121295064-494dec00-c8a3-11eb-8300-6069a05504bb.png)
 * Class Schedule and Estimated Commute Time
 ![image](https://user-images.githubusercontent.com/56051313/121298143-3853a980-c8a8-11eb-91d2-b8c6af7f1638.png)
 
