@@ -31,6 +31,8 @@ A map of UCSB's bike path that has features such as lost and found, forum, and c
 
 # [User Manual](./docs/MANUAL.md)
 
+# [Design Doc](./docs/DESIGN.md)
+
 # Functionality
 * First, login to your ucsb gmail account. There are four tabs to the website: Map, Lost & Found (L&F), Forum, Profile.
 * In the landing page, Map: Can view map of UCSB/IV with markers designating bike rack locations, report crashes, and view a custom itinerary for the day based on your course schedule, updating the user on estimated travel times depending on whether you are walking or biking, as well as providing the recommended time to leave for the upcoming class so as to be on-time. Can also conveniently call CSO with the click of a button.
