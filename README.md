@@ -27,9 +27,12 @@ A map of UCSB's bike path that has features such as lost and found, forum, and c
 # Dependencies
 * Google OAuth
 * Google Maps
+* Google Distance Matrix
 * Google Cloud
 
 # [Deployment Instructions](./docs/DEPLOY.md)
+
+# [User Manual](./docs/MANUAL.md)
 
 # Functionality
 * First, login to your ucsb gmail account. There are four tabs to the website: Map, Lost & Found (L&F), Forum, Profile.
@@ -44,6 +47,9 @@ A map of UCSB's bike path that has features such as lost and found, forum, and c
 # Deployment 
 https://cs148-bikeproject.herokuapp.com/
 
+# Final Presentation Video
+
+
 # Changes after Final Release
 * Deleted the following garbage files: data.js, Map(old).js, Forum_Post_OLD.js, alerts.js.
-* Minimal resizing and touching up of Map page.
+* Minimal resizing and touching up styling of Map (Home Page).
