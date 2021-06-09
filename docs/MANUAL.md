@@ -26,7 +26,7 @@
 
 # General Outline
 * Gaucho Bike Map has 5 tabs that enhance the user's experience and can change depending on the type of user. The tabs are: HomePage/Map, Lost and Found, Forum, About Us, and Profile. 
-*
+
 # Type of Users
 * There are two kinds of users that will use this website. The first kind of users are users who are not logged into their UCSB Google account, referred to as "Guest Users." Guest users only have the ability to view posts and the marked map. Guest users can benefit from this website by being able to view crash reports on the Home Page or just to browse the forum. 
 * Guest User's Perspective of Home Page:
