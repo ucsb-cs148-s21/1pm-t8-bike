@@ -44,9 +44,10 @@ A map of UCSB's bike path that has features such as lost and found, forum, and c
 # Deployment 
 https://cs148-bikeproject.herokuapp.com/
 
-# Final Presentation Video
-
+# Final Presentation Video Link
+https://youtu.be/R8szhhHcQyo
 
 # Changes after Final Release
 * Deleted the following garbage files: data.js, Map(old).js, Forum_Post_OLD.js, alerts.js.
 * Minimal resizing and touching up styling of Map (Home Page).
+
