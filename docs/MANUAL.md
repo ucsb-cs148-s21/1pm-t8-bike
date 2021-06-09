@@ -61,7 +61,7 @@
 
 ### Changing Status
 * Lost and Found posts are capable of being closed by the user so that others can know that an item has been returned/found.
-![image](https://user-images.githubusercontent.com/56051313/121299462-4efb0000-c8aa-11eb-9fb0-9255a94c77b3.png)
+![status](https://user-images.githubusercontent.com/56051313/121303309-c8492180-c8af-11eb-9625-b504d2326e5a.png)
 
 ### Adding a New Post
 * Logged in users are able to create a new Lost and Found post and/or add comments to existing posts.
