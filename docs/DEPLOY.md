@@ -15,8 +15,8 @@
 1. REACT_APP_AUTH_CLIENT_ID = '425045287491-hopbavpi7dkcan749qnkdr2avfn5gj6c.apps.googleusercontent.com'
   * Follow these instructions: In your .env file, add this line: **REACT_APP_AUTH_CLIENT_ID = '425045287491-hopbavpi7dkcan749qnkdr2avfn5gj6c.apps.googleusercontent.com'**. Now, the map should be able to render properly on the page. This API key is enabled for users to be able to access the map and its features. 
 
-2. REACT_APP_GOOGLE_KEY = 'AIzaSyD6uJFBrWLVwIr8NuiOqgCOHZCvOOxb3MA'
-  * Follow these instructions: In your .env file, add this line: **REACT_APP_GOOGLE_KEY = 'AIzaSyD6uJFBrWLVwIr8NuiOqgCOHZCvOOxb3MA'**. Now, the map should be able to render properly on the page. This API key is enabled for users to be able to access the map and its features.
+2. REACT_APP_GOOGLE_KEY = 'AIzaSyD2VESQR4CHLs90L0NkvYOP7mjR3zC40zc'
+  * Follow these instructions: In your .env file, add this line: **REACT_APP_GOOGLE_KEY = 'AIzaSyD2VESQR4CHLs90L0NkvYOP7mjR3zC40zc'**. Now, the map should be able to render properly on the page. This API key is enabled for users to be able to access the map and its features.
 
 3. REACT_APP_DISTANCE_KEY = 'AIzaSyBagPLQYd_ild9r_JDJ6DHcGNyWJ2J17to'
   * Follow these instructions: In your .env file, add this line: **REACT_APP_DISTANCE_KEY = 'AIzaSyBagPLQYd_ild9r_JDJ6DHcGNyWJ2J17to'**. Now, features related to travel time should function properly. This API key is enabled for users to be able to recieve travel time estimates.
