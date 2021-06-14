@@ -388,7 +388,7 @@ export default function Home_Page() {
                     </span>
                     
                     {user && <span style={{ padding: '5px'}}><button className="button2 button" onClick={() => addMarker(setPositions,setIsLoading)} disabled={isLoading}>
-                        {!isLoading && "Report Crash"}
+                        {!isLoading && "Report a Crash"}
                         {isLoading && <i className="fa fa-refresh fa-spin"></i>}
                         {isLoading && "Adding Marker"}
                     </button></span> }
